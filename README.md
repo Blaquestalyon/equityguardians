@@ -1,6 +1,6 @@
 # Equity Guardians
 
-Production site for **Equity Guardians** — foreclosure protection, curated savings, and foreclosure recovery services. Built with [Astro](https://astro.build) (SSR via Node adapter), a small Airtable-backed contact form endpoint, and deployed on [Railway](https://railway.app).
+Production site for **Equity Guardians** — foreclosure protection, curated savings, and foreclosure recovery services. Coverage is **free to the buyer** when represented by an affiliated Buyer's Realtor, and lasts for the life of the deed of trust. Built with [Astro](https://astro.build) (SSR via Node adapter), a small Airtable-backed contact form endpoint, and deployed on [Railway](https://railway.app).
 
 > **SAVE — EARN — PROTECT**
 

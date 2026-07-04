@@ -3,7 +3,7 @@ export const site = {
   tagline: 'Protecting Your Most Precious Asset — Today and Tomorrow',
   motto: 'SAVE — EARN — PROTECT',
   description:
-    'Mortgage-based foreclosure protection, curated savings, and equity recovery. The only service of its kind in the United States.',
+    'Mortgage-based foreclosure protection, curated savings, and equity recovery — free to the buyer when represented by an affiliated Buyer’s Realtor, for the life of the deed of trust.',
   url: 'https://equityguardians.com',
   contact: {
     email: 'admin@equityguardians.com',
@@ -22,8 +22,9 @@ export const site = {
     x: '#',
   },
   pricing: {
-    monthly: 28,
-    monthlyDisplay: '$28 / month',
+    display: 'Free to the buyer',
+    subDisplay: 'when represented by an affiliated Buyer’s Realtor',
+    coverageDuration: 'For the life of the deed of trust',
   },
 } as const;
 

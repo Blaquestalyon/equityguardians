@@ -37,17 +37,17 @@ import { site } from '../data/site';
         <p class="lede">
           Equity Guardians is the only mortgage-based foreclosure protection service of its kind in
           the United States — pairing a nationwide network of attorneys with curated savings and
-          equity-recovery tools. For {site.pricing.monthlyDisplay}, we make sure your equity works
-          for you, not against you.
+          equity-recovery tools. Coverage is <strong>free to the buyer</strong> when represented by
+          an affiliated Buyer's Realtor, and lasts for the life of the deed of trust.
         </p>
         <div class="hero-cta">
           <a href="/contact" class="btn btn-accent">Get Protected Today</a>
           <a href="/services" class="btn btn-outline-light">How It Works</a>
         </div>
         <ul class="hero-proof">
+          <li><strong>$0</strong><span>Cost to the buyer</span></li>
           <li><strong>100+</strong><span>Attorneys nationwide</span></li>
-          <li><strong>$28</strong><span>Per month, all-in</span></li>
-          <li><strong>2040</strong><span>Loan-foreclosure-free vision</span></li>
+          <li><strong>Life of loan</strong><span>Coverage duration</span></li>
         </ul>
       </div>
 
@@ -243,11 +243,12 @@ import { site } from '../data/site';
     <div class="container why-inner">
       <div class="why-copy reveal">
         <span class="eyebrow">Why Equity Guardians</span>
-        <h2>A safety net that costs less than most streaming bundles.</h2>
+        <h2>A homeowner safety net — at no cost to the buyer.</h2>
         <p class="lede">
           Equity Guardians is a state-of-the-art business model focused exclusively on the financial
           interests of homebuyers — from the point of ownership until the day they no longer own
-          their home.
+          their home. When your Buyer's Realtor is affiliated with us, your coverage is free and
+          runs for the entire life of your deed of trust.
         </p>
         <ul class="why-list">
           <li>
@@ -256,7 +257,7 @@ import { site } from '../data/site';
           </li>
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-            Predictable flat pricing — no percentage-of-equity fees, no surprise invoices
+            Zero cost to buyers who use an affiliated Buyer's Realtor at closing
           </li>
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
@@ -270,15 +271,14 @@ import { site } from '../data/site';
       </div>
 
       <div class="pricing-card reveal">
-        <span class="motto">Membership</span>
+        <span class="motto">Your coverage</span>
         <div class="price">
-          <span class="price-currency">$</span>
-          <span class="price-num">28</span>
-          <span class="price-unit">/ month</span>
+          <span class="price-num">$0</span>
         </div>
-        <p>All four pillars — foreclosure protection, curated savings, recovery representation, and dedicated case management — for one flat monthly fee.</p>
-        <a href="/contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Start Protecting My Equity</a>
-        <p class="pricing-note">Cancel anytime · No long-term contract</p>
+        <p class="price-headline">Free to the buyer — when represented by an affiliated Buyer's Realtor.</p>
+        <p class="price-body">Coverage begins at closing and lasts for the <strong>life of the deed of trust</strong>. All four pillars — foreclosure protection, curated savings, recovery representation, and dedicated case management — included.</p>
+        <a href="/contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Find an Affiliated Realtor</a>
+        <p class="pricing-note">Are you a realtor? <a href="/contact">Join the network →</a></p>
       </div>
     </div>
   </section>
@@ -666,18 +666,26 @@ import { site } from '../data/site';
     display: flex;
     align-items: baseline;
     gap: 0.35rem;
-    margin: 1rem 0 1.5rem;
+    margin: 1rem 0 1rem;
     color: var(--navy-900);
     font-family: var(--font-serif);
   }
-  .price-currency { font-size: 1.8rem; font-weight: 500; }
   .price-num { font-size: 4.5rem; font-weight: 500; line-height: 1; letter-spacing: -0.03em; }
-  .price-unit { font-size: 1rem; color: var(--slate-500); font-family: var(--font-sans); }
+  .price-headline {
+    color: var(--navy-900);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    font-family: var(--font-sans);
+  }
+  .price-body { color: var(--slate-600); font-size: 0.92rem; margin-bottom: 1.5rem; line-height: 1.55; }
   .pricing-card p { color: var(--slate-600); font-size: 0.95rem; margin-bottom: 1.5rem; }
   .pricing-note {
     text-align: center;
     margin-top: 0.85rem;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: var(--slate-500);
   }
+  .pricing-note a { color: var(--teal-700); font-weight: 600; }
+  .pricing-note a:hover { color: var(--navy-900); }
 </style>
