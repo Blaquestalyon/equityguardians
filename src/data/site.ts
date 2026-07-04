@@ -1,9 +1,9 @@
 export const site = {
   name: 'Equity Guardians',
-  tagline: 'Protecting Your Most Precious Asset — Today and Tomorrow',
-  motto: 'SAVE — EARN — PROTECT',
+  tagline: 'Protecting Your Most Precious Asset, Today and Tomorrow',
+  motto: 'SAVE · EARN · PROTECT',
   description:
-    'Mortgage-based foreclosure protection, curated savings, and equity recovery — free to the buyer when represented by an affiliated Buyer’s Realtor, for the life of the deed of trust.',
+    'Mortgage-based foreclosure protection, curated savings, and equity recovery: free to the buyer when represented by an affiliated Buyer’s Realtor, for the life of the deed of trust.',
   url: 'https://equityguardians.com',
   contact: {
     email: 'admin@equityguardians.com',

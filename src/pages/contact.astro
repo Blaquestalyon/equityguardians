@@ -6,18 +6,18 @@ import { site } from '../data/site';
 
 <BaseLayout
   title="Contact"
-  description="Reach the Equity Guardians team — call, email, or send us a message and we'll get back to you within one business day."
+  description="Reach the Equity Guardians team: call, email, or send us a message and we'll get back to you within one business day."
 >
   <PageHero
     eyebrow="Get in touch"
-    title="We're here when hardship hits — and long before it does."
+    title="We're here when hardship hits, and long before it does."
     description="Send us a message between 9 AM and 4 PM EST and we will call you back at your very earliest opportunity."
   />
 
   <section>
     <div class="container contact-grid">
       <aside class="contact-info reveal">
-        <span class="motto">SAVE — EARN — PROTECT</span>
+        <span class="motto">SAVE · EARN · PROTECT</span>
         <h2>Reach the team.</h2>
 
         <div class="info-block">
@@ -157,7 +157,7 @@ import { site } from '../data/site';
 
       if (!res.ok) throw new Error(json?.error || 'Something went wrong. Please try again.');
 
-      status.textContent = "Thanks — we've received your message and will be in touch within one business day.";
+      status.textContent = "Thanks. We've received your message and will be in touch within one business day.";
       status.classList.add('is-success');
       form.reset();
     } catch (err: any) {
