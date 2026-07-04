@@ -58,20 +58,30 @@ export const POST: APIRoute = async ({ request }) => {
     return jsonResponse({ error: 'Please include your name and a short message.' }, 400);
   }
 
-  const token = import.meta.env.AIRTABLE_TOKEN;
-  const baseId = import.meta.env.AIRTABLE_BASE_ID;
-  const table = import.meta.env.AIRTABLE_TABLE || 'Inquiries';
+  // Support both server-only (import.meta.env) and process.env variable names,
+  // and accept common alternate variable names in case an operator sets them differently.
+  const env = { ...process.env, ...(import.meta.env as any) };
+  const token =
+    env.AIRTABLE_TOKEN ||
+    env.AIRTABLE_API_KEY ||
+    env.AIRTABLE_PAT ||
+    env.AIRTABLE_ACCESS_TOKEN;
+  const baseId = env.AIRTABLE_BASE_ID || env.AIRTABLE_BASE;
+  const table = env.AIRTABLE_TABLE || env.AIRTABLE_TABLE_NAME || 'Inquiries';
 
   if (!token || !baseId) {
-    // Fail gracefully so the site works pre-Airtable-config.
-    // We still log so the operator can see submissions in Railway logs.
-    console.log('[contact] Missing Airtable config. Submission:', {
-      name, email, phone, address, subject, message, source,
+    console.error('[contact] Missing Airtable config.', {
+      hasToken: Boolean(token),
+      hasBaseId: Boolean(baseId),
+      table,
     });
-    return jsonResponse({
-      ok: true,
-      warning: 'Received (Airtable not configured — check Railway logs).',
-    });
+    return jsonResponse(
+      {
+        error:
+          'Our contact system is not fully configured yet. Please email admin@equityguardians.com or call +1 (888) 954-0999. (Server missing AIRTABLE_TOKEN or AIRTABLE_BASE_ID)',
+      },
+      503,
+    );
   }
 
   const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}`;
@@ -109,10 +119,16 @@ export const POST: APIRoute = async ({ request }) => {
     if (!res.ok) {
       const errText = await res.text();
       console.error('[contact] Airtable error', res.status, errText);
-      return jsonResponse(
-        { error: 'Our form service is temporarily unavailable. Please email admin@equityguardians.com.' },
-        502,
-      );
+      // Surface a helpful hint to the operator in the response body without leaking secrets.
+      let hint = 'Please email admin@equityguardians.com or call +1 (888) 954-0999.';
+      if (res.status === 401 || res.status === 403) {
+        hint = 'Airtable rejected our credentials (401/403). Check AIRTABLE_TOKEN scope & base access.';
+      } else if (res.status === 404) {
+        hint = `Airtable table not found. Verify AIRTABLE_BASE_ID and AIRTABLE_TABLE (looking for "${table}").`;
+      } else if (res.status === 422) {
+        hint = 'Airtable schema mismatch. Ensure fields Name/Email/Phone/Address/Subject/Message/Source exist.';
+      }
+      return jsonResponse({ error: hint, airtableStatus: res.status }, 502);
     }
 
     return jsonResponse({ ok: true });
