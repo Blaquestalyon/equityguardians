@@ -1,0 +1,215 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<BaseLayout
+  title="Services"
+  description="Foreclosure protection, curated savings, and foreclosure recovery — the only integrated home equity guardianship service in the United States."
+>
+  <PageHero
+    eyebrow="What we do"
+    title="One membership. Every layer of home-equity protection."
+    description="Legal defense, financial acceleration, and last-resort recovery — combined into a single low-cost program built exclusively around homeowners."
+  />
+
+  <section id="foreclosure-protection">
+    <div class="container service-block reveal">
+      <div class="service-copy">
+        <span class="motto">01 · Foreclosure Protection</span>
+        <h2>Counsel, defense, and options before you fall behind.</h2>
+        <p class="lede">
+          The moment financial hardship threatens your mortgage, we intervene. We work with your
+          servicer, review your loan and hardship documentation, and put every legal and financial
+          option on the table before a Notice of Default is filed.
+        </p>
+        <ul class="service-list">
+          <li>Direct advocacy with your loan servicer or bank</li>
+          <li>Loan-modification and hardship-program analysis</li>
+          <li>Legal review of every notice, filing, and deadline</li>
+          <li>Structured payment-plan negotiations</li>
+        </ul>
+      </div>
+      <div class="service-illust illust-shield" aria-hidden="true">
+        <svg viewBox="0 0 200 200" fill="none">
+          <path d="M100 20 L170 45 V110 C170 145 140 175 100 190 C60 175 30 145 30 110 V45 Z" fill="#0F2E5C"/>
+          <path d="M100 30 L160 52 V108 C160 138 135 163 100 178 C65 163 40 138 40 108 V52 Z" fill="none" stroke="#4FB3B3" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <circle cx="100" cy="105" r="20" fill="#4FB3B3"/>
+          <rect x="97" y="105" width="6" height="26" rx="2" fill="#4FB3B3"/>
+          <path d="M90 100l7 8 15-16" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="curated-savings" class="section-alt">
+    <div class="container service-block reverse reveal">
+      <div class="service-copy">
+        <span class="motto">02 · Curated Savings</span>
+        <h2>Turn everyday spending into equity acceleration.</h2>
+        <p class="lede">
+          We negotiate savings and rebates on the everyday purchases you already make — from home
+          services to utilities to insurance — and channel that recaptured money back toward your
+          principal, so your equity grows faster than your mortgage.
+        </p>
+        <ul class="service-list">
+          <li>Vetted rebate and cashback partnerships</li>
+          <li>Utility, insurance, and home-service audits</li>
+          <li>Optional principal-reduction routing</li>
+          <li>Quarterly savings statement</li>
+        </ul>
+      </div>
+      <div class="service-illust illust-savings" aria-hidden="true">
+        <svg viewBox="0 0 200 200" fill="none">
+          <circle cx="100" cy="100" r="80" fill="#E4F4F4"/>
+          <path d="M60 130L100 90l30 30 30-50" stroke="#0F2E5C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="100" cy="90" r="6" fill="#0F2E5C"/>
+          <circle cx="130" cy="120" r="6" fill="#4FB3B3"/>
+          <circle cx="160" cy="70" r="6" fill="#C89A3E"/>
+          <text x="100" y="170" text-anchor="middle" font-family="Fraunces, serif" font-size="14" fill="#0F2E5C" font-weight="500">SAVE — EARN — PROTECT</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="foreclosure-recovery">
+    <div class="container service-block reveal">
+      <div class="service-copy">
+        <span class="motto">03 · Foreclosure Recovery*</span>
+        <h2>If the worst happens, we go the extra mile.</h2>
+        <p class="lede">
+          If foreclosure becomes unavoidable, we attempt to recover your home at or before auction
+          and refinance it back to you — protecting your surplus equity and giving you a real
+          chance to stay in the home you built a life in.
+        </p>
+        <ul class="service-list">
+          <li>Pre-auction negotiation and buyback strategy</li>
+          <li>Auction representation in eligible jurisdictions</li>
+          <li>Refinance pathway and lender introductions</li>
+          <li>Surplus-equity recovery filings</li>
+        </ul>
+        <p class="fine-print">
+          * Recovery is subject to auction outcomes, jurisdictional rules, and refinance
+          qualification. Results are not guaranteed.
+        </p>
+      </div>
+      <div class="service-illust illust-recovery" aria-hidden="true">
+        <svg viewBox="0 0 200 200" fill="none">
+          <rect x="30" y="80" width="140" height="90" fill="#0F2E5C" rx="4"/>
+          <path d="M30 80L100 30L170 80" stroke="#4FB3B3" stroke-width="4" fill="none" stroke-linejoin="round"/>
+          <rect x="86" y="115" width="28" height="55" fill="#E4F4F4"/>
+          <circle cx="108" cy="140" r="2" fill="#0F2E5C"/>
+          <path d="M60 130L60 170 M140 130L140 170" stroke="#4FB3B3" stroke-width="2"/>
+          <rect x="55" y="130" width="10" height="20" fill="#E4F4F4"/>
+          <rect x="135" y="130" width="10" height="20" fill="#E4F4F4"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="representation" class="section-dark">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="eyebrow">Full-service representation</span>
+        <h2>Four strategic components — one integrated engagement.</h2>
+      </div>
+      <div class="grid grid-4 mt-4">
+        {[
+          { n: '01', t: 'Intervention',     b: 'Immediate outreach to servicers, courts, and counterparties.' },
+          { n: '02', t: 'Consulting',       b: 'Financial and legal counsel tailored to your loan and equity.' },
+          { n: '03', t: 'Education',        b: 'Clear playbooks so you understand every option before deciding.' },
+          { n: '04', t: 'Representation',   b: 'Full legal representation from vetted foreclosure-defense attorneys.' },
+        ].map((s) => (
+          <div class="step-dark reveal">
+            <span class="step-n">{s.n}</span>
+            <h3>{s.t}</h3>
+            <p>{s.b}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container cta-inner">
+      <div class="reveal">
+        <span class="motto">Membership · $28 / month</span>
+        <h2>Every service, every attorney, one flat fee.</h2>
+        <p class="lede">Cancel anytime. No long-term contracts. Just a safety net for the largest asset you own.</p>
+      </div>
+      <a href="/contact" class="btn btn-primary reveal">Become a member</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .service-block {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .service-block.reverse { grid-template-columns: 1fr 1.3fr; }
+  .service-block.reverse .service-copy { order: 2; }
+  @media (max-width: 900px) {
+    .service-block, .service-block.reverse { grid-template-columns: 1fr; gap: 2rem; }
+    .service-block.reverse .service-copy { order: 0; }
+  }
+  .service-copy .motto { display: block; margin-bottom: 1rem; }
+  .service-copy h2 { margin-bottom: 1rem; }
+  .service-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .service-list li {
+    padding-left: 1.4rem;
+    position: relative;
+    color: var(--slate-700);
+  }
+  .service-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--teal-500);
+  }
+  .service-illust svg {
+    width: 100%;
+    max-width: 380px;
+    margin-inline: auto;
+    filter: drop-shadow(0 20px 40px rgba(15, 46, 92, 0.15));
+  }
+  .fine-print { font-size: 0.8rem; color: var(--slate-500); margin-top: 1.25rem; }
+
+  .step-dark {
+    padding: 1.5rem 0;
+    border-top: 2px solid var(--teal-500);
+  }
+  .step-dark .step-n {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    color: var(--teal-400);
+    font-weight: 600;
+  }
+  .step-dark h3 { color: white; font-size: 1.25rem; margin: 0.75rem 0 0.5rem; }
+  .step-dark p { color: rgba(255,255,255,0.72); font-size: 0.9rem; }
+
+  .cta-band { background: var(--sand-50); padding-block: 4.5rem; }
+  .cta-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .cta-inner h2 { max-width: 22ch; margin-top: 0.5rem; }
+  .cta-inner .lede { margin-top: 0.75rem; }
+</style>

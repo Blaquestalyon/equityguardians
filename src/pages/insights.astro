@@ -1,0 +1,213 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+
+const posts = [
+  {
+    tag: 'Foreclosure',
+    date: 'Jun 2026',
+    read: '6 min read',
+    title: 'What actually happens between missed payment #1 and the auction gavel',
+    excerpt:
+      'A month-by-month walkthrough of the foreclosure timeline in most U.S. jurisdictions — and the intervention windows most homeowners never learn about.',
+  },
+  {
+    tag: 'Equity',
+    date: 'May 2026',
+    read: '4 min read',
+    title: 'Surplus equity: the money most foreclosed homeowners never recover',
+    excerpt:
+      'After a tax-lien or mortgage foreclosure, the sale price often exceeds what is owed. Here is who is entitled to that surplus — and how it disappears.',
+  },
+  {
+    tag: 'Savings',
+    date: 'Apr 2026',
+    read: '5 min read',
+    title: 'Five recurring bills that quietly slow down your equity growth',
+    excerpt:
+      'From homeowners insurance to service contracts, these are the line items our members most often recover savings on — and route back to principal.',
+  },
+  {
+    tag: 'Legal',
+    date: 'Mar 2026',
+    read: '3 min read',
+    title: 'When to call an attorney (and when a loan modification is enough)',
+    excerpt:
+      'Not every hardship needs a lawyer. Here is the decision tree we use with new members during their first consultation.',
+  },
+  {
+    tag: 'Realtors',
+    date: 'Feb 2026',
+    read: '7 min read',
+    title: 'Why the top 5% of realtors are adopting foreclosure-protection partnerships',
+    excerpt:
+      'Client retention is a compounding game. Realtors who help homeowners stay in their homes outperform on referrals over a decade — the data is striking.',
+  },
+  {
+    tag: 'Policy',
+    date: 'Jan 2026',
+    read: '5 min read',
+    title: 'The 2030 tax-lien surplus reform: what to expect state by state',
+    excerpt:
+      'After Tyler v. Hennepin County, dozens of states began rewriting their tax-lien laws. Here is the current landscape and what changes are still coming.',
+  },
+];
+---
+
+<BaseLayout
+  title="Insights"
+  description="Real estate, foreclosure, and equity insights for American homeowners from the Equity Guardians team."
+>
+  <PageHero
+    eyebrow="Latest news & insights"
+    title="Real estate insights for the homeowner side of the table."
+    description="We write about foreclosure, equity, mortgage servicing, and the quiet financial mechanics that determine whether homeowners keep — or lose — the wealth in their homes."
+  />
+
+  <section>
+    <div class="container">
+      <div class="insight-grid">
+        {posts.map((p, i) => (
+          <article class:list={['post-card', 'reveal', i === 0 && 'post-card--feature']}>
+            <div class="post-cover" aria-hidden="true">
+              <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                  <linearGradient id={`pg${i}`} x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color={i % 2 ? '#0F2E5C' : '#2E8888'}/>
+                    <stop offset="1" stop-color={i % 2 ? '#4FB3B3' : '#0B1F3F'}/>
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="240" fill={`url(#pg${i})`}/>
+                <path d={`M0 ${140 + i * 8} Q ${100 + i * 20} ${100 + i * 4} ${200} ${140 + i * 6} T 400 ${140 + i * 10}`} stroke="rgba(255,255,255,0.28)" stroke-width="2" fill="none"/>
+                <path d={`M0 ${180 + i * 4} Q ${140 + i * 8} ${150 - i * 3} ${220} ${170 + i * 3} T 400 ${180}`} stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none"/>
+              </svg>
+            </div>
+            <div class="post-body">
+              <div class="post-meta">
+                <span class="badge">{p.tag}</span>
+                <span>{p.date}</span>
+                <span aria-hidden="true">·</span>
+                <span>{p.read}</span>
+              </div>
+              <h3>{p.title}</h3>
+              <p>{p.excerpt}</p>
+              <a href="/contact" class="post-cta">
+                Read more
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container newsletter-inner">
+      <div class="reveal">
+        <span class="motto">Stay informed</span>
+        <h2>Get one homeowner-side briefing per month.</h2>
+        <p class="lede">
+          No spam. No servicer talking points. Just clear, actionable insight for people who own
+          their home and want to keep it.
+        </p>
+      </div>
+      <form class="newsletter-form" action="/api/contact" method="post" novalidate>
+        <input type="hidden" name="subject" value="Newsletter signup" />
+        <input type="hidden" name="source" value="insights_page_newsletter" />
+        <label class="sr-only" for="nl-email">Email address</label>
+        <input id="nl-email" type="email" name="email" placeholder="you@example.com" required />
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .post-card--feature {
+    grid-column: span 3;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 0;
+  }
+  .post-card--feature .post-cover { aspect-ratio: auto; height: 100%; min-height: 320px; }
+  .post-card--feature .post-body { padding: 3rem; }
+  .post-card--feature h3 { font-size: clamp(1.5rem, 2.4vw, 2rem); }
+
+  @media (max-width: 900px) {
+    .insight-grid { grid-template-columns: 1fr; }
+    .post-card--feature { grid-column: span 1; grid-template-columns: 1fr; }
+    .post-card--feature .post-body { padding: 2rem; }
+  }
+  @media (min-width: 601px) and (max-width: 1024px) {
+    .insight-grid { grid-template-columns: repeat(2, 1fr); }
+    .post-card--feature { grid-column: span 2; }
+  }
+
+  .post-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--slate-200);
+    transition: transform 0.25s, box-shadow 0.25s;
+    display: flex;
+    flex-direction: column;
+  }
+  .post-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .post-cover { aspect-ratio: 16 / 10; overflow: hidden; }
+  .post-cover svg { width: 100%; height: 100%; }
+  .post-body { padding: 1.75rem; flex: 1; display: flex; flex-direction: column; }
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--slate-500);
+    margin-bottom: 1rem;
+  }
+  .post-card h3 { font-size: 1.3rem; margin-bottom: 0.6rem; }
+  .post-card p { color: var(--slate-600); font-size: 0.94rem; flex: 1; }
+  .post-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.25rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--teal-700);
+  }
+  .post-cta:hover { color: var(--navy-900); }
+
+  .newsletter-inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (max-width: 900px) { .newsletter-inner { grid-template-columns: 1fr; } }
+  .newsletter-form {
+    display: flex;
+    gap: 0.6rem;
+    background: white;
+    padding: 0.6rem;
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+    flex-wrap: wrap;
+  }
+  .newsletter-form input[type=email] {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.85rem 1.1rem;
+    border: 0;
+    background: transparent;
+    outline: none;
+    font-size: 0.95rem;
+  }
+  .newsletter-form button { border-radius: 999px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+</style>

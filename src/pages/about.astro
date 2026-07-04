@@ -1,0 +1,174 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<BaseLayout
+  title="About Us"
+  description="Equity Guardians is a first-of-its-kind foreclosure protection service focused exclusively on the financial interests of American homeowners."
+>
+  <PageHero
+    eyebrow="Who we are"
+    title="Passionate, dedicated, professional — we drive success into every homeowner's story."
+    description="Equity Guardians is a state-of-the-art business model built to protect the single largest asset most Americans will ever own: the equity in their home."
+  />
+
+  <section>
+    <div class="container about-grid">
+      <div class="about-copy reveal">
+        <span class="eyebrow">Our story</span>
+        <h2>The safety net homeowners always deserved.</h2>
+        <p class="lede">
+          Every year, thousands of American homeowners lose their homes — and often the surplus
+          equity within them — to foreclosure processes designed to protect lenders, not families.
+          We started Equity Guardians to close that gap.
+        </p>
+        <p>
+          Our team brings together foreclosure-defense attorneys, financial coaches, and technology
+          builders under one mission: make sure the equity you have earned in your home is
+          protected, deployable, and — if the worst happens — recoverable.
+        </p>
+      </div>
+
+      <aside class="metrics reveal">
+        <div class="metric">
+          <span class="metric-num">100+</span>
+          <span class="metric-label">Attorneys nationwide</span>
+        </div>
+        <div class="metric">
+          <span class="metric-num">50</span>
+          <span class="metric-label">States served</span>
+        </div>
+        <div class="metric">
+          <span class="metric-num">$28<small>/mo</small></span>
+          <span class="metric-label">Membership</span>
+        </div>
+        <div class="metric">
+          <span class="metric-num">2040</span>
+          <span class="metric-label">Foreclosure-free vision</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="section-heading text-center reveal" style="margin-inline: auto;">
+        <span class="eyebrow">What we believe</span>
+        <h2>Three commitments to every homeowner we serve.</h2>
+      </div>
+
+      <div class="grid grid-3 mt-4">
+        <div class="belief-card reveal">
+          <div class="belief-num">01</div>
+          <h3>Impactful Relationships</h3>
+          <p>
+            Every member is paired with a dedicated case manager who knows their file, timeline,
+            and goals. No call queues. No re-explaining your situation.
+          </p>
+        </div>
+        <div class="belief-card reveal">
+          <div class="belief-num">02</div>
+          <h3>Experience You Can Verify</h3>
+          <p>
+            Our attorney network is vetted for foreclosure-defense expertise and jurisdictional
+            fit — not by paid placement.
+          </p>
+        </div>
+        <div class="belief-card reveal">
+          <div class="belief-num">03</div>
+          <h3>Top-Rated Service</h3>
+          <p>
+            Membership includes protection, savings, and recovery representation — the only
+            all-in-one program of its kind in the United States.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band section-dark">
+    <div class="container cta-inner">
+      <div class="reveal">
+        <span class="motto">SAVE — EARN — PROTECT</span>
+        <h2>Ready to protect what you have already earned?</h2>
+      </div>
+      <a href="/contact" class="btn btn-accent reveal">Get in touch</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } }
+  .metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    background: var(--navy-950);
+    color: white;
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+  }
+  .metric {
+    padding: 1rem;
+    background: rgba(255,255,255,0.04);
+    border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .metric-num {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 2.4rem;
+    font-weight: 500;
+    color: var(--teal-400);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .metric-num small {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+  }
+  .metric-label {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.65);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .belief-card {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--slate-200);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .belief-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .belief-num {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--teal-600);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .belief-card h3 { font-size: 1.3rem; margin-bottom: 0.6rem; }
+  .belief-card p { color: var(--slate-600); font-size: 0.94rem; }
+
+  .cta-band { padding-block: 4rem; }
+  .cta-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .cta-inner h2 { max-width: 22ch; margin-top: 0.5rem; }
+</style>

@@ -1,0 +1,323 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Reach the Equity Guardians team — call, email, or send us a message and we'll get back to you within one business day."
+>
+  <PageHero
+    eyebrow="Get in touch"
+    title="We're here when hardship hits — and long before it does."
+    description="Send us a message between 9 AM and 4 PM EST and we will call you back at your very earliest opportunity."
+  />
+
+  <section>
+    <div class="container contact-grid">
+      <aside class="contact-info reveal">
+        <span class="motto">SAVE — EARN — PROTECT</span>
+        <h2>Reach the team.</h2>
+
+        <div class="info-block">
+          <div class="info-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <h4>Office Location</h4>
+            <p>{site.contact.address.line1}<br />{site.contact.address.line2}</p>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16c1 0 2 1 2 2v12c0 1-1 2-2 2H4c-1 0-2-1-2-2V6c0-1 1-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <h4>Email Our Team</h4>
+            <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.1 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7 12.8 12.8 0 0 0 .7 2.8 2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5 12.8 12.8 0 0 0 2.8.7A2 2 0 0 1 22 16.9z"/></svg>
+          </div>
+          <div>
+            <h4>Call or Text</h4>
+            <a href={site.contact.phoneHref}>{site.contact.phone}</a>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </div>
+          <div>
+            <h4>Working Hours</h4>
+            <p>{site.contact.hours}</p>
+          </div>
+        </div>
+      </aside>
+
+      <div class="contact-form-wrap reveal">
+        <div class="form-header">
+          <h2>Send your query or request a callback.</h2>
+          <p>We reply within one business day. Fields marked with <span class="req">*</span> are required.</p>
+        </div>
+
+        <form id="contact-form" class="contact-form" method="post" action="/api/contact" novalidate>
+          <input type="hidden" name="source" value="contact_page" />
+
+          <div class="field-row">
+            <label class="field">
+              <span>Full name <span class="req">*</span></span>
+              <input type="text" name="name" required autocomplete="name" />
+            </label>
+            <label class="field">
+              <span>Email <span class="req">*</span></span>
+              <input type="email" name="email" required autocomplete="email" />
+            </label>
+          </div>
+
+          <div class="field-row">
+            <label class="field">
+              <span>Phone</span>
+              <input type="tel" name="phone" autocomplete="tel" placeholder="(optional)" />
+            </label>
+            <label class="field">
+              <span>Property address</span>
+              <input type="text" name="address" autocomplete="street-address" placeholder="(optional)" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>How can we help? <span class="req">*</span></span>
+            <select name="subject" required>
+              <option value="">Select a topic…</option>
+              <option>Foreclosure Protection membership</option>
+              <option>Curated Savings program</option>
+              <option>Foreclosure Recovery consultation</option>
+              <option>Realtor / partner inquiry</option>
+              <option>Something else</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Message <span class="req">*</span></span>
+            <textarea name="message" required rows="5" placeholder="Tell us a little about your situation…"></textarea>
+          </label>
+
+          <label class="consent">
+            <input type="checkbox" required />
+            <span>
+              I understand submitting this form does not create an attorney-client relationship
+              and that a team member may contact me at the number or email provided.
+            </span>
+          </label>
+
+          <button type="submit" class="btn btn-primary submit-btn">
+            <span class="btn-label">Send message</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+
+          <div class="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = form?.querySelector('.form-status') as HTMLElement | null;
+  const btn = form?.querySelector('.submit-btn') as HTMLButtonElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form || !status || !btn) return;
+
+    status.textContent = '';
+    status.className = 'form-status';
+    btn.classList.add('is-loading');
+    btn.disabled = true;
+
+    const data = new FormData(form);
+    const payload: Record<string, string> = {};
+    data.forEach((v, k) => (payload[k] = String(v)));
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json().catch(() => ({}));
+
+      if (!res.ok) throw new Error(json?.error || 'Something went wrong. Please try again.');
+
+      status.textContent = "Thanks — we've received your message and will be in touch within one business day.";
+      status.classList.add('is-success');
+      form.reset();
+    } catch (err: any) {
+      status.textContent = err.message || 'We could not submit right now. Please email admin@equityguardians.com.';
+      status.classList.add('is-error');
+    } finally {
+      btn.classList.remove('is-loading');
+      btn.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
+
+  .contact-info h2 { margin: 0.85rem 0 2rem; }
+  .info-block {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--slate-200);
+  }
+  .info-block:last-child { border-bottom: 1px solid var(--slate-200); }
+  .info-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    background: var(--teal-100);
+    color: var(--teal-700);
+    border-radius: 12px;
+  }
+  .info-icon svg { width: 20px; height: 20px; }
+  .info-block h4 {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--slate-500);
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+  .info-block p, .info-block a {
+    font-size: 1rem;
+    color: var(--navy-900);
+    font-weight: 500;
+  }
+  .info-block a:hover { color: var(--teal-700); }
+
+  .contact-form-wrap {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    border: 1px solid var(--slate-200);
+    box-shadow: var(--shadow);
+  }
+  .form-header h2 { font-size: 1.65rem; margin-bottom: 0.5rem; }
+  .form-header p { color: var(--slate-500); font-size: 0.9rem; }
+  .req { color: var(--danger); }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .field > span {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--slate-700);
+  }
+  .field input, .field select, .field textarea {
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--slate-300);
+    border-radius: var(--radius);
+    background: white;
+    font-size: 0.95rem;
+    color: var(--slate-900);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    font-family: var(--font-sans);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--teal-500);
+    box-shadow: 0 0 0 3px rgba(79,179,179,0.18);
+  }
+  .field textarea { resize: vertical; min-height: 120px; }
+
+  .consent {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    padding: 0.9rem 1rem;
+    background: var(--slate-50);
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    color: var(--slate-600);
+  }
+  .consent input { margin-top: 4px; }
+
+  .submit-btn {
+    margin-top: 0.5rem;
+    align-self: flex-start;
+    position: relative;
+  }
+  .submit-btn.is-loading .btn-label { opacity: 0; }
+  .btn-spinner {
+    position: absolute;
+    inset: 0;
+    display: none;
+    place-items: center;
+  }
+  .submit-btn.is-loading .btn-spinner {
+    display: grid;
+  }
+  .btn-spinner::after {
+    content: "";
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .form-status {
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius);
+    font-size: 0.92rem;
+    display: none;
+  }
+  .form-status.is-success {
+    display: block;
+    background: rgba(18, 183, 106, 0.1);
+    color: #027A48;
+    border: 1px solid rgba(18, 183, 106, 0.3);
+  }
+  .form-status.is-error {
+    display: block;
+    background: rgba(180, 35, 24, 0.08);
+    color: var(--danger);
+    border: 1px solid rgba(180, 35, 24, 0.25);
+  }
+</style>

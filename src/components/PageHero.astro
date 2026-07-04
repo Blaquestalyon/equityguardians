@@ -1,0 +1,59 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+}
+const { eyebrow, title, description } = Astro.props;
+---
+
+<section class="page-hero">
+  <div class="page-hero-bg" aria-hidden="true"></div>
+  <div class="container page-hero-inner">
+    {eyebrow && <span class="eyebrow eyebrow-light">{eyebrow}</span>}
+    <h1>{title}</h1>
+    {description && <p class="lede">{description}</p>}
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    color: white;
+    padding-block: clamp(5rem, 9vw, 7rem) clamp(4rem, 8vw, 6rem);
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 82% 15%, rgba(79,179,179,0.25), transparent 50%),
+      linear-gradient(135deg, #0F2E5C 0%, #0B1F3F 100%);
+  }
+  .page-hero-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at 30% 50%, black, transparent 70%);
+  }
+  .page-hero h1 {
+    color: white;
+    font-weight: 500;
+    max-width: 20ch;
+    margin-top: 1rem;
+    font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+  }
+  .page-hero .lede {
+    margin-top: 1.25rem;
+    color: rgba(255,255,255,0.72);
+    max-width: 62ch;
+  }
+  .eyebrow-light { color: var(--teal-400); }
+  .eyebrow-light::before { background: var(--teal-400); }
+</style>

@@ -1,0 +1,683 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout>
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0F2E5C"/>
+            <stop offset="1" stop-color="#0B1F3F"/>
+          </linearGradient>
+          <radialGradient id="g2" cx="0.8" cy="0.15" r="0.6">
+            <stop offset="0" stop-color="#4FB3B3" stop-opacity="0.35"/>
+            <stop offset="1" stop-color="#4FB3B3" stop-opacity="0"/>
+          </radialGradient>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M40 0H0V40" stroke="rgba(255,255,255,0.05)" fill="none"/>
+          </pattern>
+        </defs>
+        <rect width="800" height="600" fill="url(#g1)"/>
+        <rect width="800" height="600" fill="url(#grid)"/>
+        <rect width="800" height="600" fill="url(#g2)"/>
+      </svg>
+    </div>
+
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <span class="eyebrow eyebrow-light">Foreclosure Protection · Guaranteed</span>
+        <h1>
+          Protecting the most<br />
+          <span class="accent">precious asset</span> you own.
+        </h1>
+        <p class="lede">
+          Equity Guardians is the only mortgage-based foreclosure protection service of its kind in
+          the United States — pairing a nationwide network of attorneys with curated savings and
+          equity-recovery tools. For {site.pricing.monthlyDisplay}, we make sure your equity works
+          for you, not against you.
+        </p>
+        <div class="hero-cta">
+          <a href="/contact" class="btn btn-accent">Get Protected Today</a>
+          <a href="/services" class="btn btn-outline-light">How It Works</a>
+        </div>
+        <ul class="hero-proof">
+          <li><strong>100+</strong><span>Attorneys nationwide</span></li>
+          <li><strong>$28</strong><span>Per month, all-in</span></li>
+          <li><strong>2040</strong><span>Loan-foreclosure-free vision</span></li>
+        </ul>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="shield-card">
+          <img src="/logo.jpg" alt="" />
+          <div class="shield-glow"></div>
+        </div>
+        <div class="floating-stat stat-1">
+          <span class="stat-label">Homeowners protected</span>
+          <span class="stat-value">Guaranteed</span>
+        </div>
+        <div class="floating-stat stat-2">
+          <span class="stat-label">Attorney response</span>
+          <span class="stat-value">Same day</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VALUE PILLARS ============ -->
+  <section class="pillars section-alt">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="motto">SAVE — EARN — PROTECT</span>
+        <h2>Four pillars of home-equity guardianship</h2>
+        <p class="lede">
+          We built Equity Guardians around a simple belief: your lender's interest is protected the
+          moment you sign — yours should be too.
+        </p>
+      </div>
+
+      <div class="grid grid-4 mt-4">
+        <div class="pillar reveal">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l9 4v6c0 4.5-3 8-9 11-6-3-9-6.5-9-11V7l9-4z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <h3>Experienced Team</h3>
+          <p>Over 100 vetted foreclosure attorneys serving clients nationwide, coordinated by a dedicated case manager.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v4M16 4v4"/></svg>
+          </div>
+          <h3>Custom Solutions</h3>
+          <p>Tailored strategies built around your loan structure, hardship timeline, and long-term equity goals.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </div>
+          <h3>Unrivaled Support</h3>
+          <p>A dedicated account manager on your file from intake through resolution — one number, one team.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg>
+          </div>
+          <h3>Uniquely Effective</h3>
+          <p>An innovative model that combines legal defense, curated savings, and last-resort recovery under one program.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES SPLIT ============ -->
+  <section class="services">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="eyebrow">What we do</span>
+        <h2>Serving our clients value <em>and</em> protection</h2>
+        <p class="lede">
+          We are the only service of its kind in the United States — combining legal
+          intervention, financial acceleration, and equity-recovery representation into a single
+          low-cost membership.
+        </p>
+      </div>
+
+      <div class="service-grid mt-4">
+        <article class="service-card reveal">
+          <div class="service-index">01</div>
+          <h3>Foreclosure Protection</h3>
+          <p>
+            We counsel and represent you the moment financial hardship threatens your mortgage —
+            exercising every option to keep you in your home.
+          </p>
+          <a class="service-cta" href="/services#foreclosure-protection">
+            Explore protection
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
+
+        <article class="service-card featured reveal">
+          <div class="service-index">02</div>
+          <span class="badge">Most valued</span>
+          <h3>Curated Savings</h3>
+          <p>
+            We negotiate savings and rebates on the purchases you already make — recycling that
+            money into accelerated equity growth on your home.
+          </p>
+          <a class="service-cta" href="/services#curated-savings">
+            See savings
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
+
+        <article class="service-card reveal">
+          <div class="service-index">03</div>
+          <h3>Foreclosure Recovery<span class="asterisk">*</span></h3>
+          <p>
+            If foreclosure becomes unavoidable, we attempt to recover your home at or before
+            auction and refinance it back to you — going the extra mile.
+          </p>
+          <a class="service-cta" href="/services#foreclosure-recovery">
+            Learn recovery
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </article>
+      </div>
+
+      <p class="fine-print">
+        <span class="asterisk">*</span> Foreclosure Recovery is subject to auction outcomes, jurisdictional rules,
+        and refinance qualification. Results are not guaranteed.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ MISSION / VISION ============ -->
+  <section class="mission section-dark">
+    <div class="container mission-inner">
+      <div class="mission-content reveal">
+        <span class="eyebrow">Our mission</span>
+        <h2>Your lender's interests are protected. So should yours be.</h2>
+        <p class="lede">
+          Equity Guardians exists to empower homeowners to protect and utilize their home's most
+          valuable asset — equity — and to eliminate the predatory practices they face in
+          moments of hardship.
+        </p>
+        <div class="mission-goals">
+          <div class="goal">
+            <span class="goal-year">2030</span>
+            <p>Eliminate <strong>all surplus-equity forfeitures</strong> from tax-lien-based foreclosures.</p>
+          </div>
+          <div class="goal">
+            <span class="goal-year">2040</span>
+            <p>Virtually eliminate <strong>all loan-based foreclosures</strong> in the United States.</p>
+          </div>
+        </div>
+      </div>
+      <aside class="mission-callout reveal">
+        <span class="motto">SAVE — EARN — PROTECT</span>
+        <h3>Interested realtors and partners</h3>
+        <p>
+          We work with real-estate professionals across all 50 states. Call our partner line
+          during business hours to learn how referrals work.
+        </p>
+        <a href={site.contact.phoneHref} class="callout-phone">
+          <span class="callout-label">Partner Line</span>
+          {site.contact.phone}
+        </a>
+        <p class="callout-hours">{site.contact.hours}</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ APPROACH ============ -->
+  <section class="approach">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="eyebrow">The four components</span>
+        <h2>Achieve your goals with purpose &amp; strategy</h2>
+      </div>
+
+      <div class="grid grid-4 mt-4">
+        {[
+          { n: '01', title: 'Intervention', body: 'Immediate outreach to servicers, courts, and counterparties the moment a hardship signal appears.' },
+          { n: '02', title: 'Consulting', body: 'Financial and legal counsel tailored to your loan, income, and equity position.' },
+          { n: '03', title: 'Education', body: 'Clear playbooks so you understand every option before a decision is made.' },
+          { n: '04', title: 'Representation', body: 'Full legal representation from vetted foreclosure-defense attorneys in your state.' },
+        ].map((step) => (
+          <div class="step reveal">
+            <span class="step-n">{step.n}</span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY / CTA ============ -->
+  <section class="why-cta">
+    <div class="container why-inner">
+      <div class="why-copy reveal">
+        <span class="eyebrow">Why Equity Guardians</span>
+        <h2>A safety net that costs less than most streaming bundles.</h2>
+        <p class="lede">
+          Equity Guardians is a state-of-the-art business model focused exclusively on the financial
+          interests of homebuyers — from the point of ownership until the day they no longer own
+          their home.
+        </p>
+        <ul class="why-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Nationwide attorney network coordinated by a dedicated case manager
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Predictable flat pricing — no percentage-of-equity fees, no surprise invoices
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Curated savings program that turns spending into equity acceleration
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Recovery representation if the worst-case scenario ever arrives
+          </li>
+        </ul>
+      </div>
+
+      <div class="pricing-card reveal">
+        <span class="motto">Membership</span>
+        <div class="price">
+          <span class="price-currency">$</span>
+          <span class="price-num">28</span>
+          <span class="price-unit">/ month</span>
+        </div>
+        <p>All four pillars — foreclosure protection, curated savings, recovery representation, and dedicated case management — for one flat monthly fee.</p>
+        <a href="/contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Start Protecting My Equity</a>
+        <p class="pricing-note">Cancel anytime · No long-term contract</p>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    overflow: clip;
+    color: white;
+    padding-block: clamp(5rem, 10vw, 8rem);
+    isolation: isolate;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .hero-bg svg { width: 100%; height: 100%; }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .hero h1 { color: white; font-weight: 500; }
+  .hero h1 .accent {
+    background: linear-gradient(120deg, var(--teal-400), var(--teal-500));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .hero .lede { color: rgba(255,255,255,0.78); margin-top: 1.4rem; }
+  .eyebrow-light { color: var(--teal-400); }
+  .eyebrow-light::before { background: var(--teal-400); }
+
+  .hero-cta {
+    display: flex;
+    gap: 0.85rem;
+    margin-top: 2.2rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-proof {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    list-style: none;
+    padding-left: 0;
+  }
+  .hero-proof li { display: flex; flex-direction: column; }
+  .hero-proof strong {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    color: white;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .hero-proof span {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.62);
+    margin-top: 4px;
+  }
+
+  .hero-visual {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    aspect-ratio: 1;
+    margin-left: auto;
+    padding: 2rem;
+    justify-self: end;
+  }
+  .shield-card {
+    position: absolute;
+    inset: 14% 14% 14% 14%;
+    background: white;
+    border-radius: 28px;
+    display: grid;
+    place-items: center;
+    padding: 2.5rem;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    overflow: hidden;
+  }
+  .shield-card img {
+    width: 78%;
+    height: auto;
+    filter: drop-shadow(0 8px 22px rgba(15, 46, 92, 0.2));
+  }
+  .shield-glow {
+    position: absolute;
+    width: 220%;
+    height: 220%;
+    top: -60%;
+    left: -60%;
+    background: radial-gradient(circle, rgba(79,179,179,0.25), transparent 60%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); opacity: 0.7; }
+    50%     { transform: scale(1.08); opacity: 1; }
+  }
+  .floating-stat {
+    position: absolute;
+    background: white;
+    color: var(--navy-900);
+    padding: 0.9rem 1.2rem;
+    border-radius: 14px;
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+  .stat-label {
+    font-size: 0.68rem;
+    color: var(--slate-500);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+  }
+  .stat-value {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--navy-900);
+    margin-top: 4px;
+  }
+  .stat-1 { top: 4%; left: 0; animation: float 7s ease-in-out infinite; }
+  .stat-2 { bottom: 4%; right: 0; animation: float 8s ease-in-out infinite 1.5s; }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-8px); }
+  }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .hero-proof { gap: 1.5rem; flex-wrap: wrap; }
+  }
+
+  /* ============ Section headings ============ */
+  .section-heading {
+    max-width: 62ch;
+  }
+  .section-heading .motto,
+  .section-heading .eyebrow { margin-bottom: 0.9rem; display: inline-block; }
+  .section-heading h2 { margin-bottom: 1rem; }
+  .section-heading h2 em {
+    font-style: italic;
+    color: var(--teal-700);
+    font-weight: 400;
+  }
+
+  /* ============ Pillars ============ */
+  .pillar {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--slate-200);
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s, border-color 0.25s;
+  }
+  .pillar:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--teal-400); }
+  .pillar-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    background: var(--teal-100);
+    color: var(--teal-700);
+    border-radius: 12px;
+    margin-bottom: 1.2rem;
+  }
+  .pillar-icon svg { width: 26px; height: 26px; }
+  .pillar h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+  .pillar p { color: var(--slate-600); font-size: 0.94rem; line-height: 1.6; }
+
+  /* ============ Services split ============ */
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  @media (max-width: 900px) {
+    .service-grid { grid-template-columns: 1fr; }
+  }
+  .service-card {
+    position: relative;
+    background: white;
+    padding: 2.5rem 2rem 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--slate-200);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--teal-500), var(--navy-700));
+    transform-origin: left;
+    transform: scaleX(0.15);
+    transition: transform 0.4s var(--ease-out);
+  }
+  .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: transparent; }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card.featured {
+    background: var(--navy-950);
+    color: rgba(255,255,255,0.85);
+    border-color: transparent;
+  }
+  .service-card.featured h3 { color: white; }
+  .service-card.featured p { color: rgba(255,255,255,0.72); }
+  .service-card.featured .service-index { color: var(--teal-400); }
+  .service-card.featured .service-cta { color: var(--teal-400); }
+  .service-card.featured .service-cta:hover { color: white; }
+  .service-card.featured .badge { background: rgba(79,179,179,0.18); color: var(--teal-400); }
+  .service-index {
+    font-family: var(--font-serif);
+    font-size: 0.9rem;
+    letter-spacing: 0.14em;
+    color: var(--slate-400);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+  .service-card h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .service-card p { color: var(--slate-600); flex: 1; margin-bottom: 1.5rem; }
+  .service-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--navy-800);
+  }
+  .service-cta svg { transition: transform 0.2s; }
+  .service-cta:hover svg { transform: translateX(4px); }
+  .asterisk { color: var(--teal-600); font-weight: 500; }
+  .fine-print {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    color: var(--slate-500);
+    text-align: center;
+  }
+  .badge { position: absolute; top: 1.25rem; right: 1.25rem; }
+
+  /* ============ Mission ============ */
+  .mission-inner {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .mission-inner { grid-template-columns: 1fr; }
+  }
+  .mission-goals {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+  }
+  .goal { display: flex; flex-direction: column; max-width: 22ch; }
+  .goal-year {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 500;
+    color: var(--teal-400);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .goal p { color: rgba(255,255,255,0.72); font-size: 0.95rem; margin-top: 0.75rem; }
+  .goal strong { color: white; font-weight: 600; }
+
+  .mission-callout {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+  }
+  .mission-callout h3 { color: white; margin: 0.85rem 0 0.75rem; font-size: 1.25rem; }
+  .mission-callout p { color: rgba(255,255,255,0.72); font-size: 0.94rem; }
+  .callout-phone {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.2rem;
+    background: var(--navy-800);
+    border-radius: 12px;
+    color: white;
+    margin-top: 1.25rem;
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+  .callout-phone:hover { background: var(--teal-700); color: white; }
+  .callout-label {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--teal-400);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .callout-hours {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.85rem;
+  }
+
+  /* ============ Approach steps ============ */
+  .step {
+    padding: 1.5rem 0;
+    border-top: 2px solid var(--navy-900);
+    position: relative;
+  }
+  .step-n {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    color: var(--teal-700);
+    font-weight: 600;
+  }
+  .step h3 {
+    font-size: 1.35rem;
+    margin: 0.75rem 0 0.5rem;
+  }
+  .step p { color: var(--slate-600); font-size: 0.94rem; }
+
+  /* ============ Why / CTA ============ */
+  .why-cta { background: var(--sand-50); padding-block: clamp(4rem, 8vw, 7rem); }
+  .why-inner {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .why-inner { grid-template-columns: 1fr; }
+  }
+  .why-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .why-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: var(--slate-700);
+  }
+  .why-list svg {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    background: var(--teal-100);
+    color: var(--teal-700);
+    border-radius: 50%;
+    padding: 4px;
+    margin-top: 2px;
+  }
+
+  .pricing-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--slate-200);
+    text-align: left;
+  }
+  .price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    margin: 1rem 0 1.5rem;
+    color: var(--navy-900);
+    font-family: var(--font-serif);
+  }
+  .price-currency { font-size: 1.8rem; font-weight: 500; }
+  .price-num { font-size: 4.5rem; font-weight: 500; line-height: 1; letter-spacing: -0.03em; }
+  .price-unit { font-size: 1rem; color: var(--slate-500); font-family: var(--font-sans); }
+  .pricing-card p { color: var(--slate-600); font-size: 0.95rem; margin-bottom: 1.5rem; }
+  .pricing-note {
+    text-align: center;
+    margin-top: 0.85rem;
+    font-size: 0.8rem;
+    color: var(--slate-500);
+  }
+</style>

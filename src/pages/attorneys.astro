@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+
+const attorneys = [
+  {
+    initials: 'JH',
+    name: 'John Helstowski',
+    credentials: 'JD, BA',
+    firm: 'J. Hels Law, PLLC',
+    focus: 'Real estate & foreclosure defense',
+    state: 'Texas',
+    bio: 'John leads our Texas real-estate practice with more than a decade of experience representing homeowners in foreclosure, deed-of-trust, and lender-liability litigation.',
+  },
+  {
+    initials: 'ZL',
+    name: 'Zachary D. Long',
+    credentials: 'JD, MS',
+    firm: 'Long Legal Group',
+    focus: 'Consumer finance & mortgage servicing',
+    state: 'Texas',
+    bio: 'Zach handles complex mortgage-servicing disputes and RESPA/TILA matters, with a particular focus on wrongful-foreclosure and surplus-equity claims.',
+  },
+];
+---
+
+<BaseLayout
+  title="Attorneys"
+  description="Meet a sample of the vetted foreclosure defense attorneys in the Equity Guardians nationwide network."
+>
+  <PageHero
+    eyebrow="Meet our attorneys"
+    title="A nationwide network of foreclosure defense attorneys."
+    description="Our attorneys are truly the best in the business — vetted for foreclosure-defense expertise, jurisdictional fit, and homeowner-first advocacy. Below are just a few of our featured firms."
+  />
+
+  <section>
+    <div class="container">
+      <div class="attorney-grid">
+        {attorneys.map((a) => (
+          <article class="attorney-card reveal">
+            <div class="avatar" aria-hidden="true">{a.initials}</div>
+            <div class="attorney-meta">
+              <span class="badge">{a.state}</span>
+              <h3>{a.name}<span class="creds">, {a.credentials}</span></h3>
+              <p class="firm">{a.firm} — Attorney at Law</p>
+              <p class="focus">{a.focus}</p>
+              <p class="bio">{a.bio}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="network-note reveal">
+        <div>
+          <span class="eyebrow">Nationwide coverage</span>
+          <h3>100+ attorneys across all 50 states.</h3>
+          <p>
+            When you become a member, your case is routed to a vetted foreclosure-defense attorney
+            licensed in your state — coordinated by your dedicated Equity Guardians case manager.
+          </p>
+        </div>
+        <a href="/contact" class="btn btn-primary">Get matched with an attorney</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="eyebrow">Vetting standards</span>
+        <h2>How we choose the firms in our network.</h2>
+      </div>
+      <div class="grid grid-3 mt-4">
+        <div class="std reveal">
+          <div class="std-num">01</div>
+          <h4>Verified experience</h4>
+          <p>Minimum threshold of foreclosure-defense caseload and outcomes in the relevant jurisdiction.</p>
+        </div>
+        <div class="std reveal">
+          <div class="std-num">02</div>
+          <h4>Clean disciplinary record</h4>
+          <p>Ongoing monitoring of state bar standing and disciplinary history.</p>
+        </div>
+        <div class="std reveal">
+          <div class="std-num">03</div>
+          <h4>Homeowner-first advocacy</h4>
+          <p>References and case reviews confirm firms represent homeowners — not the servicing industry.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .attorney-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+  }
+  @media (max-width: 800px) { .attorney-grid { grid-template-columns: 1fr; } }
+
+  .attorney-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    border: 1px solid var(--slate-200);
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  }
+  .attorney-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--teal-400); }
+  .avatar {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--navy-800), var(--teal-700));
+    color: white;
+    border-radius: 50%;
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .attorney-card h3 { font-size: 1.3rem; margin-top: 0.6rem; margin-bottom: 0.25rem; }
+  .creds { color: var(--slate-500); font-family: var(--font-sans); font-size: 0.9rem; font-weight: 400; }
+  .firm { font-size: 0.9rem; color: var(--navy-800); font-weight: 500; }
+  .focus { color: var(--teal-700); font-size: 0.85rem; margin-top: 0.35rem; font-weight: 600; }
+  .bio { color: var(--slate-600); font-size: 0.94rem; margin-top: 0.9rem; }
+
+  .network-note {
+    margin-top: 3rem;
+    padding: 2.25rem;
+    background: var(--navy-950);
+    color: white;
+    border-radius: var(--radius-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .network-note h3 { color: white; font-size: 1.5rem; margin: 0.6rem 0 0.5rem; }
+  .network-note p { color: rgba(255,255,255,0.72); max-width: 46ch; font-size: 0.94rem; }
+  .network-note .eyebrow { color: var(--teal-400); }
+  .network-note .eyebrow::before { background: var(--teal-400); }
+
+  .std { padding: 1.5rem 0; border-top: 2px solid var(--navy-900); }
+  .std-num { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.2em; color: var(--teal-700); font-weight: 600; }
+  .std h4 { font-size: 1.15rem; margin: 0.65rem 0 0.5rem; }
+  .std p { color: var(--slate-600); font-size: 0.92rem; }
+</style>
