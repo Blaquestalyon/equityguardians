@@ -1,8 +1,17 @@
+# Nixpacks configuration for Railway.
+# Keep install and build in separate phases so Nixpacks' cache mounts
+# (which live under node_modules/.cache) don't collide with `npm ci`.
+
 [phases.setup]
 nixPkgs = ["nodejs_20", "npm-9_x"]
 
 [phases.install]
-cmds = ["npm ci"]
+# Point npm's cache OUTSIDE node_modules so the Nixpacks cache mount
+# at /app/node_modules/.cache does not conflict with `npm ci`'s rmdir.
+cmds = [
+  "npm config set cache /tmp/.npm --global",
+  "npm ci --no-audit --prefer-offline"
+]
 
 [phases.build]
 cmds = ["npm run build"]
