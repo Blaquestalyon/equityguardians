@@ -1,6 +1,14 @@
 import type { APIRoute } from 'astro';
 
-const routes = ['/', '/about', '/services', '/attorneys', '/insights', '/contact'];
+const routes = [
+  '/',
+  '/about',
+  '/services',
+  '/attorneys',
+  '/insights',
+  '/insights/missed-payment-to-auction-gavel',
+  '/contact',
+];
 
 export const GET: APIRoute = ({ site }) => {
   const base = site?.toString().replace(/\/$/, '') || 'https://equityguardians.com';
