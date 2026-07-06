@@ -11,6 +11,8 @@ const posts = [
     excerpt:
       'A month-by-month walkthrough of the foreclosure timeline in most U.S. jurisdictions, plus the intervention windows most homeowners never learn about.',
     slug: 'missed-payment-to-auction-gavel',
+    cover: '/insights/missed-payment-to-auction-gavel.jpg',
+    coverAlt: 'A row of doors receding down a deep navy corridor, each progressively more closed, symbolizing the successive intervention windows a homeowner has during the foreclosure timeline.',
   },
   {
     tag: 'Equity',
@@ -70,18 +72,22 @@ const posts = [
       <div class="insight-grid">
         {posts.map((p, i) => (
           <article class:list={['post-card', 'reveal', i === 0 && 'post-card--feature']}>
-            <div class="post-cover" aria-hidden="true">
-              <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
-                <defs>
-                  <linearGradient id={`pg${i}`} x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color={i % 2 ? '#0F2E5C' : '#2E8888'}/>
-                    <stop offset="1" stop-color={i % 2 ? '#4FB3B3' : '#0B1F3F'}/>
-                  </linearGradient>
-                </defs>
-                <rect width="400" height="240" fill={`url(#pg${i})`}/>
-                <path d={`M0 ${140 + i * 8} Q ${100 + i * 20} ${100 + i * 4} ${200} ${140 + i * 6} T 400 ${140 + i * 10}`} stroke="rgba(255,255,255,0.28)" stroke-width="2" fill="none"/>
-                <path d={`M0 ${180 + i * 4} Q ${140 + i * 8} ${150 - i * 3} ${220} ${170 + i * 3} T 400 ${180}`} stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none"/>
-              </svg>
+            <div class="post-cover" aria-hidden={p.cover ? undefined : 'true'}>
+              {p.cover ? (
+                <img src={p.cover} alt={p.coverAlt || ''} loading={i === 0 ? 'eager' : 'lazy'} />
+              ) : (
+                <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+                  <defs>
+                    <linearGradient id={`pg${i}`} x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0" stop-color={i % 2 ? '#0F2E5C' : '#2E8888'}/>
+                      <stop offset="1" stop-color={i % 2 ? '#4FB3B3' : '#0B1F3F'}/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="400" height="240" fill={`url(#pg${i})`}/>
+                  <path d={`M0 ${140 + i * 8} Q ${100 + i * 20} ${100 + i * 4} ${200} ${140 + i * 6} T 400 ${140 + i * 10}`} stroke="rgba(255,255,255,0.28)" stroke-width="2" fill="none"/>
+                  <path d={`M0 ${180 + i * 4} Q ${140 + i * 8} ${150 - i * 3} ${220} ${170 + i * 3} T 400 ${180}`} stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none"/>
+                </svg>
+              )}
             </div>
             <div class="post-body">
               <div class="post-meta">
@@ -160,8 +166,9 @@ const posts = [
     flex-direction: column;
   }
   .post-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-  .post-cover { aspect-ratio: 16 / 10; overflow: hidden; }
+  .post-cover { aspect-ratio: 16 / 10; overflow: hidden; background: var(--navy-950); }
   .post-cover svg { width: 100%; height: 100%; }
+  .post-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .post-body { padding: 1.75rem; flex: 1; display: flex; flex-direction: column; }
   .post-meta {
     display: flex;

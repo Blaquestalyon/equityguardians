@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <BaseLayout
   title="What Actually Happens Between Missed Payment #1 and the Auction Gavel"
   description="A month-by-month walkthrough of the foreclosure timeline in most U.S. jurisdictions, plus the intervention windows most homeowners never learn about."
+  image="/insights/missed-payment-to-auction-gavel.jpg"
 >
   <article class="article">
     <div class="container article-container">
@@ -25,6 +26,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           the intervention windows most homeowners never learn about.
         </p>
       </header>
+
+      <figure class="article-hero reveal">
+        <img
+          src="/insights/missed-payment-to-auction-gavel.jpg"
+          alt="A row of doors receding down a deep navy corridor, each progressively more closed, symbolizing the successive intervention windows a homeowner has during the foreclosure timeline."
+          loading="eager"
+        />
+        <figcaption>
+          Each stage of the foreclosure timeline is a door. Most homeowners lose their home not
+          because they ran out of doors, but because nobody told them the doors were there.
+        </figcaption>
+      </figure>
 
       <div class="article-body reveal">
         <p>
@@ -445,6 +458,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     color: var(--slate-600);
     line-height: 1.55;
     max-width: 65ch;
+  }
+
+  .article-hero {
+    margin: 0 0 3rem;
+  }
+  .article-hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-lg);
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+  .article-hero figcaption {
+    margin-top: 0.85rem;
+    font-size: 0.88rem;
+    color: var(--slate-500);
+    font-style: italic;
+    line-height: 1.5;
+    max-width: 55ch;
   }
 
   .article-body { color: var(--slate-800, #2a3446); }
