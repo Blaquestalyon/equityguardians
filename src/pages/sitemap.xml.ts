@@ -10,6 +10,7 @@ const routes = [
   '/insights/surplus-equity',
   '/insights/recurring-bills-slow-equity',
   '/insights/when-to-call-an-attorney',
+  '/insights/realtors-foreclosure-protection',
   '/contact',
 ];
 
