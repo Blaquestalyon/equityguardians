@@ -8,6 +8,7 @@ const routes = [
   '/insights',
   '/insights/missed-payment-to-auction-gavel',
   '/insights/surplus-equity',
+  '/insights/recurring-bills-slow-equity',
   '/contact',
 ];
 
