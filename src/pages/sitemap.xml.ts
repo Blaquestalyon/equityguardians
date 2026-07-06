@@ -7,6 +7,7 @@ const routes = [
   '/attorneys',
   '/insights',
   '/insights/missed-payment-to-auction-gavel',
+  '/insights/surplus-equity',
   '/contact',
 ];
 
