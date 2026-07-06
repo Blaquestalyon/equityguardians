@@ -23,6 +23,26 @@ const attorneys = [
     state: 'Texas',
     bio: 'Richard leads a Houston and San Antonio real-estate practice recognized by Super Lawyers, with a litigation record spanning investigation through trial and post-judgment proceedings in real estate, business, and construction matters.',
   },
+  {
+    initials: 'RW',
+    name: 'Ronald D. Weiss',
+    credentials: 'JD',
+    firm: 'Ronald D. Weiss, P.C.',
+    website: 'https://www.ny-bankruptcy.com/',
+    focus: 'Foreclosure defense & bankruptcy',
+    state: 'New York',
+    bio: 'Ronald anchors a Long Island and NYC practice active since 1993, with a 25-person team handling foreclosure defense, bankruptcy, and appellate work including reversals at the Appellate Division, Second Department.',
+  },
+  {
+    initials: 'RR',
+    name: 'Raymond D. Radow',
+    credentials: 'JD',
+    firm: 'The Radow Law Group, P.C.',
+    website: 'https://www.radowlawgroup.com/',
+    focus: 'Foreclosure defense, loan modifications & real estate',
+    state: 'New York',
+    bio: 'Raymond represents homeowners across Nassau, Suffolk, Westchester, and the five boroughs, focusing on foreclosure defense, loan modifications, and short-sale matters with a personalized, homeowner-first approach.',
+  },
 ];
 ---
 
@@ -71,6 +91,10 @@ const attorneys = [
         </div>
         <a href="/contact" class="btn btn-primary">Get matched with an attorney</a>
       </div>
+
+      <aside class="network-disclaimer reveal">
+        <strong>A note on our featured firms.</strong> The preferred attorneys and law firms listed above are selected based on confidence in performance, as determined by Equity Guardians’ ongoing due diligence. Featured selections may change over time as our review process continues and the network evolves.
+      </aside>
     </div>
   </section>
 
@@ -169,6 +193,18 @@ const attorneys = [
   .network-note p { color: rgba(255,255,255,0.72); max-width: 46ch; font-size: 0.94rem; }
   .network-note .eyebrow { color: var(--teal-400); }
   .network-note .eyebrow::before { background: var(--teal-400); }
+
+  .network-disclaimer {
+    margin-top: 2rem;
+    padding: 1.25rem 1.5rem;
+    background: #FBF7EE;
+    border: 1px solid #E9DEC1;
+    border-radius: var(--radius-lg);
+    color: var(--slate-700);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .network-disclaimer strong { color: var(--navy-800); font-weight: 600; }
 
   .std { padding: 1.5rem 0; border-top: 2px solid var(--navy-900); }
   .std-num { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.2em; color: var(--teal-700); font-weight: 600; }
