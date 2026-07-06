@@ -11,6 +11,7 @@ const routes = [
   '/insights/recurring-bills-slow-equity',
   '/insights/when-to-call-an-attorney',
   '/insights/realtors-foreclosure-protection',
+  '/insights/tax-lien-surplus-reform',
   '/contact',
 ];
 
