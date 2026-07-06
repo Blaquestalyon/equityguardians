@@ -13,6 +13,8 @@ const routes = [
   '/insights/realtors-foreclosure-protection',
   '/insights/tax-lien-surplus-reform',
   '/contact',
+  '/privacy',
+  '/terms',
 ];
 
 export const GET: APIRoute = ({ site }) => {

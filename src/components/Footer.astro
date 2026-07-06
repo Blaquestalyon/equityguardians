@@ -56,7 +56,13 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="footer-bottom">
-      <p>© {year} Equity Guardians. All rights reserved.</p>
+      <div class="footer-bottom-row">
+        <p>© {year} Equity Guardians. All rights reserved.</p>
+        <ul class="legal-links">
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+        </ul>
+      </div>
       <p class="disclaimer">
         Legal representation subject to attorney-client engagement. Results are not guaranteed;
         past outcomes do not predict future results. Service availability varies by state.
@@ -146,6 +152,10 @@ const year = new Date().getFullYear();
     color: rgba(255,255,255,0.5);
   }
   .disclaimer { max-width: 60ch; text-align: right; }
+  .footer-bottom-row { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .legal-links { display: flex; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
+  .legal-links a { color: rgba(255,255,255,0.7); text-decoration: none; }
+  .legal-links a:hover { color: rgba(255,255,255,0.95); text-decoration: underline; }
 
   @media (max-width: 900px) {
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
