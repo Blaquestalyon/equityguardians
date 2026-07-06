@@ -103,8 +103,49 @@ const attorneys = [
   <section class="section-alt">
     <div class="container">
       <div class="section-heading reveal">
+        <span class="eyebrow">Selection methodology</span>
+        <h2>A three-layer process behind every preferred attorney.</h2>
+        <p class="section-dek">
+          We do not simply pick names off a list. Every preferred attorney in the network clears a stack
+          of three independent evaluations, beginning with one of the most rigorous peer-review
+          methodologies in the legal profession.
+        </p>
+      </div>
+      <div class="grid grid-3 mt-4">
+        <div class="layer reveal">
+          <div class="layer-num">Layer 01</div>
+          <h4>Super Lawyers peer-review methodology</h4>
+          <p>
+            We start with the multi-phase peer nomination and research process powered by
+            <a href="https://www.superlawyers.com/about/selection-process/" target="_blank" rel="noopener noreferrer">Super Lawyers</a>,
+            which is protected under
+            <a href="https://patents.justia.com/assignee/thomson-reuters-grc-inc" target="_blank" rel="noopener noreferrer">U.S. Pat. No. 8,412,564</a>
+            (Thomson Reuters, granted April 2, 2013): a patented system and method for identifying excellence within a profession.
+          </p>
+        </div>
+        <div class="layer reveal">
+          <div class="layer-num">Layer 02</div>
+          <h4>Equity Guardians individual research</h4>
+          <p>
+            On top of that baseline, our team performs firm-by-firm research: foreclosure-defense caseload,
+            outcomes in the relevant jurisdiction, disciplinary history, and references confirming a
+            homeowner-first posture rather than a servicing-industry one.
+          </p>
+        </div>
+        <div class="layer reveal">
+          <div class="layer-num">Layer 03</div>
+          <h4>VERIDEX decision analytics</h4>
+          <p>
+            Finally, VERIDEX decision analytics scores and cross-checks the picture, so every preferred
+            attorney reflects a converging judgment from peer review, our own research, and quantitative signal,
+            not any single opinion.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-heading reveal mt-6">
         <span class="eyebrow">Vetting standards</span>
-        <h2>How we choose the firms in our network.</h2>
+        <h2>The bar every firm must clear.</h2>
       </div>
       <div class="grid grid-3 mt-4">
         <div class="std reveal">
@@ -212,4 +253,14 @@ const attorneys = [
   .std-num { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.2em; color: var(--teal-700); font-weight: 600; }
   .std h4 { font-size: 1.15rem; margin: 0.65rem 0 0.5rem; }
   .std p { color: var(--slate-600); font-size: 0.92rem; }
+
+  .section-dek { color: var(--slate-600); font-size: 1rem; max-width: 62ch; margin-top: 0.75rem; }
+  .mt-6 { margin-top: 4rem; }
+
+  .layer { padding: 1.5rem 0; border-top: 2px solid var(--teal-700); }
+  .layer-num { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.2em; color: var(--teal-700); font-weight: 600; text-transform: uppercase; }
+  .layer h4 { font-size: 1.15rem; margin: 0.65rem 0 0.5rem; }
+  .layer p { color: var(--slate-600); font-size: 0.92rem; }
+  .layer a { color: var(--navy-800); text-decoration: none; border-bottom: 1px solid var(--teal-400); padding-bottom: 1px; transition: color 0.2s, border-color 0.2s; }
+  .layer a:hover { color: var(--teal-700); border-color: var(--teal-700); }
 </style>
