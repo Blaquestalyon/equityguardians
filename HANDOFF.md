@@ -1,174 +1,277 @@
-# Equity Guardians — Site Handoff
+# Equity Guardians — Editing Handoff
 
-> Paste this whole document at the start of a fresh chat when you want another agent (or a new session with fresh tokens) to make changes to the equityguardians.com site.
+Working document for continuing edits to **equityguardians.com** in a fresh chat.
+Read this file in full before making any change.
+
+**Repo:** `Blaquestalyon/equityguardians` (GitHub)
+**Working directory in sandbox:** `/home/user/workspace/equityguardians/`
+**Live site:** equityguardians.com (deployed from `main`)
+**HEAD at handoff:** `c42ad05` — content(services): reframe Curated Savings as dynamic catalog, remove specifics
+**Branch:** `main`. All work commits and pushes directly to `main`.
 
 ---
 
-## 1. Who + What
+## 1. Standing rules (binding on every edit)
 
-- **Site**: [equityguardians.com](https://equityguardians.com) — a rebuild of the original marketing site for Equity Guardians, a network of attorneys offering foreclosure protection / equity protection to homeowners.
-- **Owner**: Jay Davis (admin@power-in-numbers.net), based in Houston, TX. GitHub handle: `Blaquestalyon`.
-- **Company contact info (hardcoded in the site)**:
-  - Email: `admin@equityguardians.com`
-  - Phone: `+1 (888) 954-0999`
-  - Address: `1 World Trade Center, 85th Floor, New York, NY 10007`
-- **Motto**: "SAVE — EARN — PROTECT"
+These are Jay Davis's non-negotiable rules. Enforce them on every edit, even when the user does not repeat them.
 
-## 2. Repo + Hosting
+1. **No em-dashes (—) or en-dashes (–) anywhere in body copy.** Use commas, colons, parens, or the middle dot `·` (the middle dot is reserved for the motto `SAVE · EARN · PROTECT`).
+2. **Recovery language is fixed.** When describing Foreclosure Recovery, always phrase it as: *refinance at 0% interest on a new 30-year mortgage*. Do not invent alternate framings.
+3. **Team framing is fixed:**
+   - **Attorneys = cornerstone**
+   - **Realtors = foundation**
+   - **Case managers = coordination layer**
+   - **Technology = enabler only.** Never call the technology team "builders." Never elevate technology above the human roles.
+4. **Mission language must stay identical between Home and About.** If you edit the mission paragraph on one page, sync the other.
+5. **Pricing:** Coverage is **FREE to the buyer when represented by an affiliated Buyer's Realtor**, for **the life of the deed of trust**. **Never mention a $28/month price on the site.** (Sweep for `$28` before every commit.)
+6. **Voice:** precise, editorial, long-form on articles (roughly 2000 words). "Not X, but Y" constructions are welcome. Clear h2/h3 hierarchy.
+7. **Do not proactively refactor without an explicit ask.** Fix what the user asks; flag adjacent issues in your response instead of silently editing them.
+8. **Do not promise specifics that are not guaranteed.** The Curated Savings catalog is dynamic. Discounts, rebates, and partnerships come and go. Do not name specific categories (utilities, insurance, home services, etc.) or specific offers on marketing pages (`/`, `/services`, `/about`, `/attorneys`) as if they are guaranteed. Educational **article** content that discusses categories of overcharges homeowners face is different from a service promise; leave article bodies alone unless the user asks. If in doubt, ask before edit.
+9. **Commit style:** `type(scope): short description`
+   Common types: `content`, `feat`, `fix`, `chore`, `refactor`.
+   Common scopes: `attorneys`, `services`, `insights`, `about`, `site`.
+10. **Commit author (always):**
+    `-c user.email=admin@power-in-numbers.net -c user.name="Jay Davis"`
+11. **Git push:** always with `api_credentials=["github"]`. Remote is `git-agent-proxy.perplexity.ai`.
 
-- **GitHub**: https://github.com/Blaquestalyon/equityguardians (public, `main` branch is deployed)
-- **Local project path (in workspace)**: `/home/user/workspace/equityguardians/`
-- **Hosting**: Railway
-  - Builder: Nixpacks (config in `nixpacks.toml`, `railway.json`)
-  - Start command: `node ./dist/server/entry.mjs`
-  - Auto-deploys on push to `main`
-- **CI / build**: none besides Railway's own Nixpacks build
+---
 
-## 3. Stack
-
-- **Framework**: [Astro 4](https://astro.build) with the `@astrojs/node` **standalone** adapter (SSR)
-- **Language**: TypeScript for endpoints, `.astro` files for pages/components
-- **Styling**: Plain CSS in `src/styles/global.css` — no Tailwind, no CSS-in-JS
-- **Fonts**: Fraunces (serif, headings) + Inter (sans, body) — loaded via `<link>` in `src/layouts/BaseLayout.astro`
-- **Form backend**: Airtable REST API (POST `records`) — called server-side from `src/pages/api/contact.ts`
-
-## 4. Design System
-
-- **Colors**: navy `#0B1F3F` / `#0F2E5C` + teal `#4FB3B3` + ivory + gold accents (all defined as CSS variables in `src/styles/global.css`)
-- **Type**: Fraunces (serif display), Inter (sans body)
-- **Vibe**: institutional / legal / trust-oriented (like a big-law firm's marketing site, but warmer)
-
-## 5. File Layout
+## 2. Repo layout
 
 ```
-equityguardians/
+/home/user/workspace/equityguardians/
 ├── src/
-│   ├── layouts/
-│   │   └── BaseLayout.astro          # <html> shell, fonts, meta, header/footer
 │   ├── components/
-│   │   ├── Header.astro              # top nav
-│   │   ├── Footer.astro              # bottom nav + contact
-│   │   └── PageHero.astro            # reusable page-title hero (used on all inner pages)
-│   ├── pages/
-│   │   ├── index.astro               # HOME — hero + pillars + services split + mission + approach + pricing
-│   │   ├── about.astro               # About Us — metrics + beliefs
-│   │   ├── services.astro            # Services — 3 service sections + representation
-│   │   ├── attorneys.astro           # Attorneys — John Helstowski, Zachary Long + vetting standards
-│   │   ├── insights.astro            # Blog stubs + newsletter signup
-│   │   ├── contact.astro             # Contact info + form
-│   │   ├── 404.astro                 # Not found
-│   │   ├── sitemap.xml.ts            # generated sitemap
-│   │   └── api/
-│   │       └── contact.ts            # POST endpoint — writes to Airtable
+│   │   ├── Footer.astro
+│   │   ├── Header.astro
+│   │   └── PageHero.astro                   # <PageHero eyebrow="" title="" description="" />
 │   ├── data/
-│   │   └── site.ts                   # site.name, contact info, pricing, nav items
-│   └── styles/
-│       └── global.css                # ALL styles live here (CSS variables + component styles)
+│   │   ├── attorneys.ts                     # attorneyNetwork: StateGroup[]
+│   │   └── site.ts
+│   ├── layouts/
+│   │   └── BaseLayout.astro                 # <BaseLayout title="" description="" image?="">
+│   └── pages/
+│       ├── 404.astro
+│       ├── about.astro
+│       ├── attorneys.astro
+│       ├── contact.astro
+│       ├── index.astro                      # Home
+│       ├── insights.astro                   # Insights index (list of cards)
+│       ├── insights/
+│       │   ├── missed-payment-to-auction-gavel.astro
+│       │   ├── realtors-foreclosure-protection.astro
+│       │   ├── recurring-bills-slow-equity.astro
+│       │   ├── surplus-equity.astro
+│       │   ├── tax-lien-surplus-reform.astro
+│       │   └── when-to-call-an-attorney.astro
+│       ├── services.astro
+│       ├── sitemap.xml.ts                   # sitemap routes list
+│       └── api/contact.ts                   # contact form endpoint
 ├── public/
-│   ├── logo.jpg                      # shield logo
-│   ├── favicon.svg
-│   └── robots.txt
-├── astro.config.mjs
-├── package.json
-├── tsconfig.json
-├── railway.json                      # Railway build/start config
-├── nixpacks.toml                     # Nixpacks phases (install / build)
-├── .npmrc                            # audit=false, prefer-offline=true
-├── .env.example                      # documents required env vars
-└── README.md
+│   └── insights/                            # feature images (.jpg + .webp per slug)
+├── dist/                                    # build output (gitignored)
+└── HANDOFF.md                               # this file
 ```
-
-## 6. Environment Variables (Railway → Variables tab)
-
-**Required** — form will return 503 without these:
-
-| Variable | What it is | Format |
-|---|---|---|
-| `AIRTABLE_TOKEN` | Personal Access Token with `data.records:write` scope, granted access to the "Equity Guardians Site" base | starts with `pat...` |
-| `AIRTABLE_BASE_ID` | The base ID (current value: `appyu9pThSniK2DGJ`) | starts with `app...` |
-| `AIRTABLE_TABLE` | Table name — must be `Inquiries` | plain string |
-
-**Optional**:
-
-| Variable | Default | Purpose |
-|---|---|---|
-| `PUBLIC_CONTACT_EMAIL` | `admin@equityguardians.com` | Shown in some page footers |
-
-The endpoint accepts several alternate names for resilience (`AIRTABLE_API_KEY`, `AIRTABLE_PAT`, `AIRTABLE_ACCESS_TOKEN`, `AIRTABLE_BASE`, `AIRTABLE_TABLE_NAME`) — but the canonical names above are what's documented in `.env.example`.
-
-## 7. Airtable Schema
-
-- **Base name**: "Equity Guardians Site"
-- **Base ID**: `appyu9pThSniK2DGJ`
-- **Table**: `Inquiries`
-- **Fields** (all optional in Airtable, but the endpoint sends these keys):
-  - `Name` (single line text)
-  - `Email` (single line text)
-  - `Phone` (single line text)
-  - `Address` (single line text)
-  - `Subject` (single select — allowed values include "Foreclosure Protection membership", "Foreclosure Recovery / active foreclosure", "Curated Savings", "Referral Partnerships", "General inquiry")
-  - `Message` (long text)
-  - `Source` (single line text — used to distinguish `contact_page` from `insights_page_newsletter`)
-  - `Submitted At` (date/time — ISO string)
-
-The endpoint uses `typecast: true` so Airtable coerces Single-Select values on the fly.
-
-## 8. Pricing Model (IMPORTANT — CONTENT RULE)
-
-**Coverage is FREE to the buyer when they use an Equity Guardians affiliated Buyer's Realtor. Coverage lasts the life of the deed of trust.**
-
-- Do **NOT** reintroduce `$28/month` or any per-month price anywhere.
-- Hero proof strip currently shows: `$0` (cost to buyer) / `100+` (attorneys nationwide) / `Life of loan` (coverage duration).
-- Pricing card CTA: "Find an Affiliated Realtor".
-
-Pricing values are in `src/data/site.ts` under `pricing.{display, subDisplay, coverageDuration}`.
-
-## 9. Content Rules
-
-- **Attorney response time**: "1 business day" (as of commit `27da8e9`) — appears in the home hero's floating stat card.
-- Team members: John Helstowski, Zachary Long (Attorneys page).
-- Three core services: Foreclosure Protection, Curated Savings, Foreclosure Recovery.
-- Vision milestones: 2030 and 2040 goals (see home page mission section — keep the wording as-is unless the user asks to change it).
-- Legal disclaimer on the contact form: "I understand submitting this form does not create an attorney-client relationship..."
-
-## 10. How to Make Changes
-
-**Standard flow:**
-
-1. Edit files in `/home/user/workspace/equityguardians/` locally
-2. Test the build: `cd /home/user/workspace/equityguardians && npm run build`
-3. Commit + push:
-   ```bash
-   cd /home/user/workspace/equityguardians
-   git add -A
-   git commit -m "content: <what you changed>"
-   git push origin main
-   ```
-4. Railway auto-deploys on push. Watch the Deployments tab.
-
-**For contact-form / API changes**, remember: `src/pages/api/contact.ts` runs on the Node server, so it needs `process.env` (which Railway injects at runtime). No rebuild needed after changing env vars — Railway restarts the container automatically.
-
-## 11. Commit History (as of handoff)
-
-| Commit | What |
-|---|---|
-| `a236c1d` | Initial rebuild — Astro + Airtable + Railway config |
-| `1280c5b` | Fix Railway EBUSY on `node_modules/.cache` (moved npm cache to `/tmp/.npm`) |
-| `dea7523` | Content: pricing model → free-to-buyer / life-of-deed |
-| `7211293` | Fix contact endpoint — return real 503 errors instead of fake success when Airtable env vars are missing |
-| `27da8e9` | Content: attorney response time → "1 business day" |
-
-## 12. Known Gotchas
-
-- **Astro SSR + env vars**: The endpoint reads from BOTH `process.env` and `import.meta.env`. If a variable "isn't visible", the fix is almost never in code — it's a Railway service/environment scoping issue. Confirm the variable is set on the correct service and the deployment is fresh.
-- **Nixpacks cache**: The npm cache is redirected to `/tmp/.npm` in `nixpacks.toml` to avoid `EBUSY` errors on `node_modules/.cache`. Don't remove that config.
-- **Do not use** `astro dev` for production — the `@astrojs/node` **standalone** adapter is required, and `railway.json` starts `node ./dist/server/entry.mjs`.
-- **Contact form success behavior**: On successful Airtable POST, the endpoint returns `{ok: true}` with status 200. The client-side JS in `contact.astro` swaps the form for a "Thanks" message. If you see "Thanks" but no Airtable record, look at the network tab — a 200 means it really did write; a 503/502 means the endpoint rejected it.
-
-## 13. Prompt to Give the Next Agent
-
-> I have an Astro 4 + Airtable + Railway site at https://github.com/Blaquestalyon/equityguardians (repo path locally: `/home/user/workspace/equityguardians/`, deployed via Railway auto-deploy on push to `main`). Read `HANDOFF.md` in the repo root before making any changes. I want to [describe the change]. Please make the edit, run `npm run build` to confirm no errors, commit with a clear message, and push to `main`. Do not change pricing wording (coverage is free to the buyer for the life of the deed of trust) unless I explicitly ask.
 
 ---
 
-_Last updated: July 4, 2026 — commit `27da8e9`_
+## 3. Attorney data (dynamic on `/attorneys`)
+
+- **File:** `src/data/attorneys.ts`
+- **Shape:**
+  ```ts
+  type Attorney = { name: string; firm?: string; website?: string; bio?: string };
+  type StateGroup = { state: string; attorneys: Attorney[]; note?: string };
+  export const attorneyNetwork: StateGroup[]  // 50 states, alphabetical
+  ```
+- **Rules:**
+  - Bios only for attorneys where Jay has personally provided one. Currently: NY (Weiss, Radow) and TX (Helstowski, Weaver). Never invent a bio.
+  - Ignore any Super Lawyers ratings, Rising Stars, selection-year labels, or internal notes when Jay provides raw lists. Strip them.
+  - Pending states (currently **Delaware, Idaho**) use `attorneys: []` plus:
+    ```ts
+    note: 'Coverage under active build-out. Members with matters in [state] are routed through our nearest partnering jurisdiction while local counsel is confirmed.'
+    ```
+  - Firm cleanup examples: solo practitioners → `"Solo practice, [City]"`; in-house counsel → `"In-house counsel, [Employer]"` with no website; firms without a public URL → firm name only.
+- **Computed on `attorneys.astro`:** `totalAttorneys` (sum), `coveredStates` (groups with attorneys.length > 0). Coverage strip currently reads **93 / 48 / 50**. As attorneys are added, these numbers update automatically.
+- **Site-wide manual number:** The "**90+**" figure on Home and About is a rounded marketing counter, not computed. Update it as the roster crosses meaningful thresholds. Do not sync it to the live `totalAttorneys` unless Jay asks.
+
+---
+
+## 4. Insights articles
+
+Each article is a self-contained Astro page under `src/pages/insights/[slug].astro`. To publish a new article:
+
+1. Write the article page (BaseLayout wrapper, article-head with badge/date/read-time, article-hero image, article-body sections with h2/h3, closing `.cta-band` section).
+2. Add a card to the array in `src/pages/insights.astro` with `tag`, `date`, `read`, `title`, `excerpt`, `slug`, `cover`, `coverAlt`.
+3. Add the route to `src/pages/sitemap.xml.ts`.
+4. Generate a feature image (see §7) at `public/insights/[slug].jpg` and `.webp`.
+
+**Existing articles (all live):**
+- `missed-payment-to-auction-gavel` — Foreclosure
+- `surplus-equity` — Equity
+- `recurring-bills-slow-equity` — Savings (educational, do not add EG-specific promises)
+- `when-to-call-an-attorney` — Legal
+- `realtors-foreclosure-protection` — Realtors
+- `tax-lien-surplus-reform` — Policy
+
+**Article-vs-marketing distinction:** Article bodies teach homeowners about categories of financial risk and recovery. That is education, not a service promise. Do not add or remove category names inside article bodies unless Jay asks. Marketing pages (`/`, `/services`, `/about`, `/attorneys`) are where guarantee language must be tight (see rule #8).
+
+---
+
+## 5. Standard local workflow
+
+```bash
+# Always work in the repo dir
+cd /home/user/workspace/equityguardians
+
+# Build (Astro server output)
+npm run build
+
+# Kill any stale preview server
+ps aux | grep entry.mjs | grep -v grep | awk '{print $2}' | xargs -r kill
+
+# Start local preview (background=true in the bash tool)
+HOST=127.0.0.1 PORT=4321 node dist/server/entry.mjs
+# then: curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:4321/
+```
+
+### Em-dash / $28 sweep (run before every commit)
+
+```python
+import re
+files = ['src/pages/index.astro', 'src/pages/about.astro', 'src/pages/services.astro',
+         'src/pages/attorneys.astro', 'src/pages/insights.astro']  # add edited files
+for f in files:
+    t = open(f).read()
+    t2 = re.sub(r'<style>.*?</style>', '', t, flags=re.S)  # ignore inline CSS
+    em = len(re.findall(r'[—–]', t2))
+    d28 = len(re.findall(r'\$28', t2))
+    print(f, 'em/en-dash:', em, '$28:', d28)
+```
+
+### Commit and push
+
+```bash
+cd /home/user/workspace/equityguardians && \
+git add -A && \
+git -c user.email=admin@power-in-numbers.net -c user.name="Jay Davis" \
+    commit -m "<type>(<scope>): <message>" && \
+git push origin main
+```
+Push tool call must include `api_credentials=["github"]`.
+
+---
+
+## 6. Screenshot verification (Playwright via js_repl)
+
+Every visual edit must be verified with a screenshot before committing. Reveals are hidden behind `.reveal` opacity animations, so always inject the override.
+
+```js
+const pw = require('playwright');
+const b = await pw.chromium.launch();
+const ctx = await b.newContext({ viewport: { width: 1280, height: 1000 } });
+const p = await ctx.newPage();
+await p.goto('http://127.0.0.1:4321/services#curated-savings', { waitUntil: 'networkidle' });
+await p.addStyleTag({ content:
+  '.reveal{opacity:1 !important; transform:none !important;} ' +
+  '*,*::before,*::after{animation:none !important; transition:none !important;}'
+});
+await p.waitForTimeout(500);
+// Scroll to a specific element (by id or nearest section)
+await p.evaluate(() => {
+  const el = document.getElementById('curated-savings');
+  if (el) window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80));
+});
+await p.waitForTimeout(400);
+await p.screenshot({ path: '/home/user/workspace/shot.png' });
+await b.close();
+```
+
+**Notes:**
+- Use `js_repl reset=true` on a new screenshot session to avoid identifier collisions.
+- Use `chromium.launch()` (Playwright is installed).
+- Reading a `.png` in `/home/user/workspace/` with the `read` tool returns the image inline for visual review.
+- Prefer navigating to `url#anchor` and re-scrolling by absolute coordinates rather than relying on `scrollIntoView`, which can misfire with sticky headers.
+
+---
+
+## 7. Feature image generation (for insights)
+
+```bash
+asi-generate-image '<json_params_single_arg>'   # api_credentials=["llm-api:image"]
+# model: gpt_image_2
+# Then compress:
+magick <src>.png -resize 1600x -quality 82 -strip <slug>.jpg
+magick <src>.png -resize 1600x -quality 82 -strip <slug>.webp
+# Place both at public/insights/<slug>.{jpg,webp}
+```
+
+Image aesthetic: navy-walled study, dim editorial light, brass and teal accents, symbolic objects (statute books, scales, ledgers, coins). No living faces.
+
+---
+
+## 8. Design tokens (from inline styles)
+
+- **Palette:** navy-900 (primary bg), navy-800, teal-400, teal-500, teal-700 (accents), slate-200/500/700 (neutrals), cream `#FBF7EE` with border `#E9DEC1` (notes/asides), white cards.
+- **Radii:** `--radius-lg` for cards.
+- **Type:** serif for headings (`var(--font-serif)`), sans for body, mono uppercase for eyebrows/labels (`var(--font-mono)`).
+- **Card styles used repeatedly:**
+  - `.state-block` — teal-500 bottom border on the h2 header row.
+  - `.attorney-row` — white card, slate-200 border, teal-400 hover border, translateY(-2px) on hover.
+  - `.partner-card` — white with a teal-500 left accent, mono-uppercase "FEATURED MEMBER BENEFIT" eyebrow.
+  - `.network-note` — navy background block on `/attorneys`.
+  - `.network-disclaimer` — cream aside on `/attorneys`.
+- **Motto:** `SAVE · EARN · PROTECT` (only place the middle dot is used).
+
+---
+
+## 9. Recent commit history (for context)
+
+```
+c42ad05 content(services): reframe Curated Savings as dynamic catalog, remove specifics
+94714fe fix(services): remove unverified Curated Savings bullets
+0f323ae content(site): unify attorney network to 90+, strengthen vetted/proven framing
+0f994cc content(attorneys): expand to full 50-state featured, preferred network
+5a4065d content(services): frame Curated Savings as a living catalog that grows with membership at no cost
+2d72fa0 content(services): add Tax2Go DeSoto 20% member discount to Curated Savings section
+5b111a9 feat(insights): publish 'The 2030 tax-lien surplus reform' article
+6a52216 content(attorneys): add three-layer selection methodology (Super Lawyers patent, EG research, VERIDEX)
+bf1cd6e content(attorneys): tighten hero description to 'rigorously vetted and preferred attorneys'
+4ee5b22 content(attorneys): correct membership description to reflect close-of-home activation and life-of-deed protection
+8d9de9d content(attorneys): reframe CTA to 'Learn about membership' since network is member-only
+c8bb2a0 content(attorneys): add NY firms Weiss and Radow, add network-selection disclaimer
+f707ec0 content(attorneys): replace Long Legal Group with The Weaver Law Firm
+```
+
+---
+
+## 10. Common gotchas from prior sessions
+
+- **`scrollIntoView` misfires** with sticky headers plus reveal animations. Use absolute-coord scroll: `getBoundingClientRect().top + window.scrollY - 80`.
+- **Reveal animations hide content in screenshots.** Always inject the reveal override CSS.
+- **Astro build is fast (~2s).** Rebuild after every source change or the preview server serves stale HTML.
+- **State jump-nav anchors on `/attorneys`** are lowercased and hyphenated by `stateSlug()`: "New York" → `#new-york`.
+- **Delaware and Idaho** currently render as pending states with a cream note and no attorney cards.
+- **git-agent-proxy** transport has occasionally been fragile early in a session. If a push fails, wait a beat and retry once before assuming a bigger issue.
+- **The `research-assistant` skill is not needed for editorial content.** Article writing is voice work, not research work.
+
+---
+
+## 11. Open items / likely next asks
+
+Not blocking, but Jay may address these next:
+
+- Coverage-strip on `/attorneys` currently reads **93 featured / 48 with confirmed local counsel / 50 covered**. The "90+" figure on Home and About is intentionally rounded. Confirm before syncing them.
+- If Jay eventually confirms Delaware or Idaho attorneys, add them to `attorneyNetwork` in `attorneys.ts` and their state-note field will be ignored automatically once `attorneys.length > 0`.
+- If the insights article `recurring-bills-slow-equity` grows into a series, its cover art aesthetic is already established (see §7).
+- Bios for the 89 attorneys without bios (currently only NY and TX have bios) will be added over time as Jay provides them.
+
+---
+
+## 12. When starting a new chat
+
+Kick off the new chat with something like:
+
+> Read `/home/user/workspace/equityguardians/HANDOFF.md` in full, then wait for my next instruction.
+
+That single message loads all standing rules, repo layout, workflows, and recent history into the fresh context.
