@@ -5,64 +5,84 @@ import PageHero from '../components/PageHero.astro';
 
 <BaseLayout
   title="Services"
-  description="Foreclosure protection, curated savings, and foreclosure recovery: the only integrated home equity guardianship service in the United States."
+  description="One integrated service, delivered in phases across the life of your mortgage: equity building while you are strong, foreclosure protection when hardship threatens, a realtor-led sale if keeping the home is not realistic, and foreclosure recovery if foreclosure still happens."
 >
   <PageHero
     eyebrow="What we do"
-    title="One membership. Every layer of home-equity protection."
-    description="Legal defense, financial acceleration, and last-resort recovery, combined into a single low-cost program built exclusively around homeowners."
+    title="One service. Delivered in phases. Across the life of your mortgage."
+    description="Equity Guardians is not four products in a bundle. It is one service that begins while you are strong, adapts when hardship arrives, and stays with you if things get worse."
   />
 
-  <section id="foreclosure-protection">
-    <div class="container service-block reveal">
-      <div class="service-copy">
-        <span class="motto">01 · Foreclosure Protection</span>
-        <h2>Counsel, defense, and options before you fall behind.</h2>
+  <section id="how-it-works" class="section-alt">
+    <div class="container">
+      <div class="section-heading reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>Three coordinated roles, one integrated service.</h2>
         <p class="lede">
-          The moment financial hardship threatens your mortgage, we intervene. We work with your
-          servicer, review your loan and hardship documentation, and put every legal and financial
-          option on the table before a Notice of Default is filed.
+          Every family is supported by three roles working together. Real estate matters go through
+          your Buyer's Realtor. Legal matters go through your Legal Team. And a dedicated Case
+          Manager keeps the process moving so nothing falls through the cracks.
         </p>
-        <ul class="service-list">
-          <li>Direct advocacy with your loan servicer or bank</li>
-          <li>Loan-modification and hardship-program analysis</li>
-          <li>Legal review of every notice, filing, and deadline</li>
-          <li>Structured payment-plan negotiations</li>
-        </ul>
       </div>
-      <div class="service-illust illust-shield" aria-hidden="true">
-        <svg viewBox="0 0 200 200" fill="none">
-          <path d="M100 20 L170 45 V110 C170 145 140 175 100 190 C60 175 30 145 30 110 V45 Z" fill="#0F2E5C"/>
-          <path d="M100 30 L160 52 V108 C160 138 135 163 100 178 C65 163 40 138 40 108 V52 Z" fill="none" stroke="#4FB3B3" stroke-width="1.5" stroke-dasharray="4 4"/>
-          <circle cx="100" cy="105" r="20" fill="#4FB3B3"/>
-          <rect x="97" y="105" width="6" height="26" rx="2" fill="#4FB3B3"/>
-          <path d="M90 100l7 8 15-16" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
+      <div class="roles-grid mt-4">
+        <div class="role-card reveal">
+          <span class="role-eyebrow">The cornerstone</span>
+          <h3>Legal Team</h3>
+          <p>
+            A nationwide network of vetted foreclosure-defense attorneys. When hardship threatens
+            the home, they review notices and deadlines, communicate with your servicer, and
+            evaluate every legal option available in your state. Legal advice and representation
+            come from the attorney under a separate engagement, not from Equity Guardians.
+          </p>
+        </div>
+        <div class="role-card reveal">
+          <span class="role-eyebrow">The foundation</span>
+          <h3>Buyer's Realtor</h3>
+          <p>
+            A licensed real estate professional who purchases coverage for the family out of their
+            commission at closing, then stays involved for the life of the mortgage. If a sale
+            becomes the right move, the same Realtor who helped the family buy the home is
+            positioned to help them sell it, rent, and buy again.
+          </p>
+        </div>
+        <div class="role-card reveal">
+          <span class="role-eyebrow">The coordination layer</span>
+          <h3>Case Manager</h3>
+          <p>
+            The family's single point of contact. The Case Manager coordinates the team, keeps
+            everyone informed, connects the family with an appropriate attorney, and arranges
+            payment of the attorney's retainer through the program. Not a lawyer, not a broker, no
+            legal or real estate advice.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="curated-savings" class="section-alt">
-    <div class="container service-block reverse reveal">
+  <section id="phase-01">
+    <div class="container service-block reveal">
       <div class="service-copy">
-        <span class="motto">02 · Curated Savings</span>
-        <h2>A curated catalog of member savings.</h2>
+        <span class="motto">
+          <span class="motto-n">01</span>
+          <span class="motto-t">While You're Strong</span>
+        </span>
+        <h2>Build equity faster. Reduce interest. Create a cushion before hardship ever arrives.</h2>
         <p class="lede">
-          We pursue discounts, rebates, and cashback partnerships across categories that matter to
-          homeowners, and pass every one we secure through to members. Offers are added, refreshed,
-          and sometimes retired as partners come and go, so the catalog our members see today is not
-          a promise of any specific discount, product, or service in the future.
+          Most foreclosure companies wait for a crisis. Equity Guardians starts on day one. While
+          the family is financially strong, we help them build equity faster, reduce the long-term
+          interest they will pay, and create a cushion large enough to change what is possible if
+          hardship ever comes.
         </p>
         <p class="lede">
-          This is a living catalog, not a fixed list. As our membership grows, so does our
-          collective buying power, and every new partnership we secure becomes available to every
-          existing member automatically. Included with membership, at no cost to the buyer or
-          homeowner, for the life of the deed of trust.
+          A homeowner with meaningful equity has more ways to avoid foreclosure altogether. They
+          can refinance. They can sell before things get bad. They can weather a hardship without
+          losing the home. Every dollar of accelerated equity is a dollar of future optionality.
         </p>
         <ul class="service-list">
-          <li>Vetted rebate and cashback partnerships</li>
-          <li>Member discount on professional tax prep (see below)</li>
-          <li>Optional principal-reduction routing</li>
+          <li>Guidance on paying down principal faster and reducing lifetime interest</li>
+          <li>A living catalog of member discounts, rebates, and cashback partnerships</li>
+          <li>Optional routing of realized savings toward principal reduction</li>
+          <li>Ongoing equity education, available to members even after a refinance</li>
         </ul>
 
         <aside class="partner-card">
@@ -74,6 +94,11 @@ import PageHero from '../components/PageHero.astro';
             Present your active membership at booking to apply the discount.
           </p>
         </aside>
+
+        <p class="phase-note">
+          The curated catalog changes over time. Specific discounts, partners, and offers are not
+          promised or guaranteed.
+        </p>
       </div>
       <div class="service-illust illust-savings" aria-hidden="true">
         <svg viewBox="0 0 200 200" fill="none">
@@ -88,25 +113,118 @@ import PageHero from '../components/PageHero.astro';
     </div>
   </section>
 
-  <section id="foreclosure-recovery">
+  <section id="phase-02" class="section-alt">
+    <div class="container service-block reverse reveal">
+      <div class="service-copy">
+        <span class="motto">
+          <span class="motto-n">02</span>
+          <span class="motto-t">When Hardship Threatens</span>
+        </span>
+        <h2>Legal defense, servicer communication, and every option on the table.</h2>
+        <p class="lede">
+          Hardship rarely announces itself. Job loss, income reduction, illness, disability, a
+          death in the household, divorce, a missed payment, or even an anticipated missed payment
+          are all signals that the family needs to move quickly. The moment one of those signals
+          arrives, the team goes to work.
+        </p>
+        <p class="lede">
+          The Legal Team reviews notices and deadlines, opens the right communications with the
+          servicer, and analyzes what is available under the law and under the loan. The Case
+          Manager keeps everyone informed. The goal at this phase is straightforward: keep the
+          family in the home.
+        </p>
+        <ul class="service-list">
+          <li>Legal advocacy and communication with your loan servicer</li>
+          <li>Review of every notice, filing, and deadline before it becomes a problem</li>
+          <li>Analysis of loan-modification and hardship-program options</li>
+          <li>Negotiation of structured payment plans, where available</li>
+          <li>Full legal representation if a foreclosure filing arrives</li>
+        </ul>
+      </div>
+      <div class="service-illust illust-shield" aria-hidden="true">
+        <svg viewBox="0 0 200 200" fill="none">
+          <path d="M100 20 L170 45 V110 C170 145 140 175 100 190 C60 175 30 145 30 110 V45 Z" fill="#0F2E5C"/>
+          <path d="M100 30 L160 52 V108 C160 138 135 163 100 178 C65 163 40 138 40 108 V52 Z" fill="none" stroke="#4FB3B3" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <circle cx="100" cy="105" r="20" fill="#4FB3B3"/>
+          <rect x="97" y="105" width="6" height="26" rx="2" fill="#4FB3B3"/>
+          <path d="M90 100l7 8 15-16" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="phase-03">
     <div class="container service-block reveal">
       <div class="service-copy">
-        <span class="motto">03 · Foreclosure Recovery*</span>
-        <h2>If the worst happens, we go the extra mile.</h2>
+        <span class="motto">
+          <span class="motto-n">03</span>
+          <span class="motto-t">When Keeping the Home Isn't Realistic</span>
+        </span>
+        <h2>Sell before foreclosure. Protect the family's credit and their equity.</h2>
         <p class="lede">
-          If foreclosure becomes unavoidable, we attempt to recover your home at or before auction
-          and refinance it back to you at 0% interest on a new 30-year mortgage, protecting your
-          surplus equity and giving you a real chance to stay in the home you built a life in.
+          Not every hardship can be reversed. If keeping the home is no longer realistic, the goal
+          is not to let the family be erased at auction. The Buyer's Realtor moves to sell the home
+          before foreclosure, while the family's credit is still strong and the Legal Team works to
+          hold foreclosure at bay.
+        </p>
+        <p class="lede">
+          A sale at market value protects far more than an auction ever will. Credit stays intact.
+          Equity is preserved instead of forfeited. The family transitions into a rental with cash
+          in hand to weather the hardship. And when their financial footing is restored, the same
+          Realtor who helped them buy the first home is positioned to help them buy again.
+        </p>
+        <ul class="service-list">
+          <li>Realtor-led sale before a foreclosure ever hits the family's record</li>
+          <li>Market-value pricing instead of forced-auction pricing</li>
+          <li>Preservation of surplus equity for the family, not the servicer</li>
+          <li>Transition support into an appropriate rental home</li>
+          <li>Positioning for a future purchase when the family recovers</li>
+        </ul>
+      </div>
+      <div class="service-illust illust-sale" aria-hidden="true">
+        <svg viewBox="0 0 200 200" fill="none">
+          <circle cx="100" cy="100" r="80" fill="#E4F4F4"/>
+          <path d="M40 130L100 70L160 130" stroke="#0F2E5C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="70" y="110" width="60" height="45" fill="#0F2E5C" rx="2"/>
+          <rect x="92" y="128" width="16" height="27" fill="#E4F4F4"/>
+          <rect x="115" y="55" width="42" height="28" fill="#4FB3B3" rx="2"/>
+          <text x="136" y="73" text-anchor="middle" font-family="Fraunces, serif" font-size="11" fill="white" font-weight="500">SOLD</text>
+          <path d="M119 78L119 100" stroke="#0F2E5C" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="phase-04" class="section-alt">
+    <div class="container service-block reverse reveal">
+      <div class="service-copy">
+        <span class="motto">
+          <span class="motto-n">04</span>
+          <span class="motto-t">When Foreclosure Still Happens*</span>
+        </span>
+        <h2>Foreclosure Recovery. We don't walk away.</h2>
+        <p class="lede">
+          If a sale is not possible and foreclosure still happens, Equity Guardians does not
+          consider the case closed. This is the phase most companies would walk away from. It is
+          the phase our name is built around. The team continues to work, at or before the auction,
+          to recover the home and put the family back in it.
+        </p>
+        <p class="lede">
+          If the home can be recovered at or before auction, we attempt to refinance it back to the
+          family at 0% interest on a new 30-year mortgage, protecting surplus equity and giving
+          them a real chance to stay in the home they built a life in. Where the home cannot be
+          recovered, we still pursue any surplus-equity the family is legally entitled to.
         </p>
         <ul class="service-list">
           <li>Pre-auction negotiation and buyback strategy</li>
           <li>Auction representation in eligible jurisdictions</li>
-          <li>Refinance pathway and lender introductions</li>
-          <li>Surplus-equity recovery filings</li>
+          <li>Refinance pathway and lender introductions, at 0% interest on a new 30-year mortgage</li>
+          <li>Surplus-equity recovery filings where the home cannot be recovered</li>
         </ul>
         <p class="fine-print">
-          * Recovery is subject to auction outcomes, jurisdictional rules, and refinance
-          qualification. Results are not guaranteed.
+          * Foreclosure Recovery is a last-resort service. It is subject to auction outcomes,
+          jurisdictional rules, and refinance qualification, and its results are not guaranteed.
+          Past outcomes do not predict future results.
         </p>
       </div>
       <div class="service-illust illust-recovery" aria-hidden="true">
@@ -126,15 +244,19 @@ import PageHero from '../components/PageHero.astro';
   <section id="representation" class="section-dark">
     <div class="container">
       <div class="section-heading reveal">
-        <span class="eyebrow">Full-service representation</span>
-        <h2>Four strategic components, one integrated engagement.</h2>
+        <span class="eyebrow">The four components</span>
+        <h2>Across every phase, four things always happen.</h2>
+        <p class="lede lede-dark">
+          The phases describe when. These four describe how. Whichever phase the family is in, the
+          work runs on the same four rails.
+        </p>
       </div>
       <div class="grid grid-4 mt-4">
         {[
-          { n: '01', t: 'Intervention',     b: 'Immediate outreach to servicers, courts, and counterparties.' },
-          { n: '02', t: 'Consulting',       b: 'Financial and legal counsel tailored to your loan and equity.' },
-          { n: '03', t: 'Education',        b: 'Clear playbooks so you understand every option before deciding.' },
-          { n: '04', t: 'Representation',   b: 'Full legal representation from vetted foreclosure-defense attorneys.' },
+          { n: '01', t: 'Intervention',     b: 'Timely outreach to servicers, courts, and counterparties, with legal contact handled by the Legal Team and real estate matters by the Buyer\u2019s Realtor.' },
+          { n: '02', t: 'Consulting',       b: 'Financial coordination by the Case Manager and legal counsel by the Legal Team.' },
+          { n: '03', t: 'Education',        b: 'Clear explanation of every option before a decision is made.' },
+          { n: '04', t: 'Representation',   b: 'Legal representation by the Legal Team, real estate representation by the Buyer\u2019s Realtor.' },
         ].map((s) => (
           <div class="step-dark reveal">
             <span class="step-n">{s.n}</span>
@@ -149,9 +271,9 @@ import PageHero from '../components/PageHero.astro';
   <section class="cta-band">
     <div class="container cta-inner">
       <div class="reveal">
-        <span class="motto">Free to the buyer · Life of the deed of trust</span>
+        <span class="eyebrow">Free to the buyer, for the life of the deed of trust</span>
         <h2>Every service, every attorney, at no cost to the buyer.</h2>
-        <p class="lede">When you buy your home with an Equity Guardians affiliated Buyer's Realtor, coverage is included for as long as your deed of trust exists.</p>
+        <p class="lede">When you buy your home with an Equity Guardians affiliated Buyer's Realtor, coverage is included for as long as your original deed of trust exists.</p>
       </div>
       <a href="/contact" class="btn btn-primary reveal">Find an affiliated realtor</a>
     </div>
@@ -171,7 +293,6 @@ import PageHero from '../components/PageHero.astro';
     .service-block, .service-block.reverse { grid-template-columns: 1fr; gap: 2rem; }
     .service-block.reverse .service-copy { order: 0; }
   }
-  .service-copy .motto { display: block; margin-bottom: 1rem; }
   .service-copy h2 { margin-bottom: 1rem; }
   .service-copy .lede + .lede { margin-top: 1rem; }
   .service-list {
@@ -203,7 +324,74 @@ import PageHero from '../components/PageHero.astro';
     margin-inline: auto;
     filter: drop-shadow(0 20px 40px rgba(15, 46, 92, 0.15));
   }
-  .fine-print { font-size: 0.8rem; color: var(--slate-500); margin-top: 1.25rem; }
+
+  /* Phase eyebrow: number + title, no middle dot */
+  .service-copy .motto {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    color: var(--teal-700);
+    font-weight: 600;
+  }
+  .service-copy .motto-n {
+    color: var(--teal-500);
+    font-weight: 700;
+  }
+  .service-copy .motto-t { color: var(--teal-700); }
+
+  .phase-note {
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+    color: var(--slate-500);
+    font-style: italic;
+  }
+  .fine-print { font-size: 0.85rem; color: var(--slate-500); margin-top: 1.25rem; line-height: 1.6; }
+
+  /* How it works: three role cards */
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 900px) {
+    .roles-grid { grid-template-columns: 1fr; }
+  }
+  .role-card {
+    background: white;
+    border: 1px solid var(--slate-200);
+    border-top: 3px solid var(--teal-500);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: 0 8px 20px rgba(15, 46, 92, 0.05);
+  }
+  .role-eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-700);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+  .role-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    line-height: 1.3;
+    color: var(--navy-900);
+    margin: 0 0 0.75rem;
+  }
+  .role-card p {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--slate-700);
+    margin: 0;
+  }
 
   .partner-card {
     margin-top: 2rem;
@@ -259,6 +447,7 @@ import PageHero from '../components/PageHero.astro';
   }
   .step-dark h3 { color: white; font-size: 1.25rem; margin: 0.75rem 0 0.5rem; }
   .step-dark p { color: rgba(255,255,255,0.72); font-size: 0.9rem; }
+  .lede-dark { color: rgba(255,255,255,0.78); }
 
   .cta-band { background: var(--sand-50); padding-block: 4.5rem; }
   .cta-inner {
