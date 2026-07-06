@@ -8,6 +8,7 @@ const attorneys = [
     name: 'John Helstowski',
     credentials: 'JD, BA',
     firm: 'J. Hels Law, PLLC',
+    website: 'https://texascreditlaw.com/',
     focus: 'Real estate & foreclosure defense',
     state: 'Texas',
     bio: 'John leads our Texas real-estate practice with more than a decade of experience representing homeowners in foreclosure, deed-of-trust, and lender-liability litigation.',
@@ -17,6 +18,7 @@ const attorneys = [
     name: 'Zachary D. Long',
     credentials: 'JD, MS',
     firm: 'Long Legal Group',
+    website: 'https://hubcitylawoffice.com/',
     focus: 'Consumer finance & mortgage servicing',
     state: 'Texas',
     bio: 'Zach handles complex mortgage-servicing disputes and RESPA/TILA matters, with a particular focus on wrongful-foreclosure and surplus-equity claims.',
@@ -43,7 +45,14 @@ const attorneys = [
             <div class="attorney-meta">
               <span class="badge">{a.state}</span>
               <h3>{a.name}<span class="creds">, {a.credentials}</span></h3>
-              <p class="firm">{a.firm}, Attorney at Law</p>
+              <p class="firm">
+                {a.website ? (
+                  <a href={a.website} target="_blank" rel="noopener noreferrer" class="firm-link">
+                    {a.firm}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+                  </a>
+                ) : a.firm}, Attorney at Law
+              </p>
               <p class="focus">{a.focus}</p>
               <p class="bio">{a.bio}</p>
             </div>
@@ -128,6 +137,19 @@ const attorneys = [
   .attorney-card h3 { font-size: 1.3rem; margin-top: 0.6rem; margin-bottom: 0.25rem; }
   .creds { color: var(--slate-500); font-family: var(--font-sans); font-size: 0.9rem; font-weight: 400; }
   .firm { font-size: 0.9rem; color: var(--navy-800); font-weight: 500; }
+  .firm-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--navy-800);
+    text-decoration: none;
+    border-bottom: 1px solid var(--teal-400);
+    padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .firm-link:hover { color: var(--teal-700); border-color: var(--teal-700); }
+  .firm-link svg { opacity: 0.7; transition: opacity 0.2s, transform 0.2s; }
+  .firm-link:hover svg { opacity: 1; transform: translate(1px, -1px); }
   .focus { color: var(--teal-700); font-size: 0.85rem; margin-top: 0.35rem; font-weight: 600; }
   .bio { color: var(--slate-600); font-size: 0.94rem; margin-top: 0.9rem; }
 
