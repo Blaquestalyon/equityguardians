@@ -55,11 +55,11 @@ export const texasFlyers: Flyer[] = [
     variants: [
       {
         kind: 'digital',
-        label: 'Digital PDF',
+        label: 'Digital PDF (fillable)',
         href: '/partners/texas/media/the-gap/EG-Buyer-Flyer-The-Gap-DIGITAL.pdf',
         filename: 'EG-Buyer-Flyer-The-Gap-DIGITAL.pdf',
-        note: 'Screen viewing, email, and standard laser / inkjet printing.',
-        fileSize: '105 KB',
+        note: 'Screen viewing and email. Fill in your name, brokerage, license, phone, and email once in Adobe / Preview, then save your personalized copy.',
+        fileSize: '117 KB',
       },
       {
         kind: 'print',
@@ -76,6 +76,44 @@ export const texasFlyers: Flyer[] = [
         filename: 'EG-Buyer-Flyer-The-Gap-cover.jpg',
         note: 'High-resolution image for social posts and email signatures.',
         fileSize: '340 KB',
+      },
+    ],
+  },
+  {
+    slug: 'the-ladder',
+    name: 'The Ladder',
+    audience: 'Buyer',
+    focus:
+      "Spend less on what they already buy, send the difference to their mortgage. Equity climbs faster, and that is wealth they can lean on when times get hard.",
+    cover: {
+      thumb: '/partners/texas/media/the-ladder/EG-Buyer-Flyer-The-Ladder-cover-thumb.jpg',
+      thumbWebp: '/partners/texas/media/the-ladder/EG-Buyer-Flyer-The-Ladder-cover-thumb.webp',
+      alt: 'The Ladder flyer preview: front page shows a rising equity curve and the headline "Spend less on what you already buy. Send the difference to your mortgage."',
+    },
+    variants: [
+      {
+        kind: 'digital',
+        label: 'Digital PDF (fillable)',
+        href: '/partners/texas/media/the-ladder/EG-Buyer-Flyer-The-Ladder-DIGITAL.pdf',
+        filename: 'EG-Buyer-Flyer-The-Ladder-DIGITAL.pdf',
+        note: 'Screen viewing and email. Fill in your name, brokerage, license, phone, and email once in Adobe / Preview, then save your personalized copy.',
+        fileSize: '121 KB',
+      },
+      {
+        kind: 'print',
+        label: 'Print PDF',
+        href: '/partners/texas/media/the-ladder/EG-Buyer-Flyer-The-Ladder-PRINT-CMYK-bleed.pdf',
+        filename: 'EG-Buyer-Flyer-The-Ladder-PRINT-CMYK-bleed.pdf',
+        note: 'For a professional printer: CMYK color, crop marks, and bleed. Do not open in a browser preview.',
+        fileSize: '110 KB',
+      },
+      {
+        kind: 'image',
+        label: 'Image (JPG)',
+        href: '/partners/texas/media/the-ladder/EG-Buyer-Flyer-The-Ladder-cover.jpg',
+        filename: 'EG-Buyer-Flyer-The-Ladder-cover.jpg',
+        note: 'High-resolution image for social posts and email signatures.',
+        fileSize: '420 KB',
       },
     ],
   },
