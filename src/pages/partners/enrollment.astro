@@ -465,11 +465,12 @@ const displayName = partner?.name ?? 'Partner';
       syncCobrandUploads();
     }
 
+    // "Print blank form": open the source PDF in a new tab so partners can
+    // use the browser's built-in PDF viewer (with its own print button) or
+    // save a clean copy of the fillable form.
     if (printBlank) {
       printBlank.addEventListener('click', () => {
-        document.body.classList.add('printing-form');
-        window.print();
-        setTimeout(() => document.body.classList.remove('printing-form'), 500);
+        window.open('/partners/texas/forms/EG-Partner-Realtor-Enrollment-Form-v1.0.pdf', '_blank', 'noopener');
       });
     }
 
