@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PartnerRibbon from '../../components/PartnerRibbon.astro';
 import { sortedStates } from '../../data/partner-states';
+import { texasFlyers } from '../../data/partner-media';
 
 const partner = (Astro.locals as any).partner as { name: string; expiresAt: number } | null;
 const displayName = partner?.name ?? 'Partner';
@@ -9,7 +10,18 @@ const displayName = partner?.name ?? 'Partner';
 const states = sortedStates();
 const active = states.filter((s) => s.status === 'active');
 const coming = states.filter((s) => s.status !== 'active');
-const totalResources = active.reduce((n, s) => n + s.resources.length, 0);
+
+// Promotional media lives in a separate catalog per state (see partner-media.ts).
+// The counter should reflect everything a partner can actually download from a state page.
+function promoCountFor(slug: string): number {
+  if (slug === 'texas') return texasFlyers.length;
+  return 0;
+}
+function resourceCountFor(state: { slug: string; resources: unknown[] }): number {
+  return state.resources.length + promoCountFor(state.slug);
+}
+
+const totalResources = active.reduce((n, s) => n + resourceCountFor(s), 0);
 ---
 
 <BaseLayout
@@ -62,7 +74,7 @@ const totalResources = active.reduce((n, s) => n + s.resources.length, 0);
       <ul class="state-grid" id="state-grid">
         {states.map((s) => {
           const isActive = s.status === 'active';
-          const count = s.resources.length;
+          const count = resourceCountFor(s);
           return (
             <li class:list={["state-tile", isActive ? "is-active" : "is-coming"]} data-status={isActive ? "active" : "coming"} data-name={s.name.toLowerCase()}>
               {isActive ? (
