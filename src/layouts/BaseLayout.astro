@@ -92,6 +92,37 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
     </main>
     <Footer />
 
+    <button type="button" id="back-to-top" class="back-to-top" aria-label="Back to top" hidden>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 19V5" />
+        <path d="M5 12l7-7 7 7" />
+      </svg>
+      <span class="back-to-top-label">Top</span>
+    </button>
+
+    <script>
+      // Back-to-top button: appears after scrolling past the hero, scrolls
+      // smoothly to the top when clicked.
+      const backToTop = document.getElementById('back-to-top');
+      if (backToTop) {
+        const SHOW_AT = 400;
+        const updateBackToTop = () => {
+          const shouldShow = window.scrollY > SHOW_AT;
+          backToTop.hidden = !shouldShow;
+          backToTop.classList.toggle('is-visible', shouldShow);
+        };
+        updateBackToTop();
+        window.addEventListener('scroll', updateBackToTop, { passive: true });
+        backToTop.addEventListener('click', () => {
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+          // Return keyboard focus to the top of the page for a11y.
+          const skip = document.querySelector('.skip-link');
+          if (skip instanceof HTMLElement) skip.focus({ preventScroll: true });
+        });
+      }
+    </script>
+
     <script>
       // Reveal-on-scroll
       const observer = new IntersectionObserver(
@@ -121,6 +152,71 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
         transition: top 0.2s;
       }
       .skip-link:focus { top: 12px; color: white; }
+
+      .back-to-top {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 90;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 14px 10px 12px;
+        border: none;
+        border-radius: 999px;
+        background: var(--navy-900, #0F2E5C);
+        color: #FFFFFF;
+        font: 600 13px/1 'Inter', system-ui, sans-serif;
+        letter-spacing: 0.02em;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 0.22s ease, transform 0.22s ease, background 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 8px 24px rgba(10, 25, 48, 0.22), 0 2px 6px rgba(10, 25, 48, 0.12);
+      }
+      .back-to-top[hidden] { display: none; }
+      .back-to-top.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .back-to-top:hover,
+      .back-to-top:focus-visible {
+        background: var(--teal-700, #2E8888);
+        box-shadow: 0 10px 28px rgba(10, 25, 48, 0.28), 0 3px 8px rgba(10, 25, 48, 0.16);
+        outline: none;
+      }
+      .back-to-top:focus-visible {
+        box-shadow: 0 0 0 3px rgba(79, 179, 179, 0.5), 0 10px 28px rgba(10, 25, 48, 0.28);
+      }
+      .back-to-top svg { display: block; }
+      .back-to-top-label {
+        display: inline-block;
+      }
+      @media (max-width: 520px) {
+        .back-to-top {
+          right: 14px;
+          bottom: 14px;
+          padding: 10px;
+        }
+        .back-to-top-label {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .back-to-top { transition: opacity 0.15s ease; transform: none; }
+        .back-to-top.is-visible { transform: none; }
+      }
+      @media print {
+        .back-to-top { display: none !important; }
+      }
     </style>
   </body>
 </html>
