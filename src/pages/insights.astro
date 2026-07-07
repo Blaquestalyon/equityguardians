@@ -2,6 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 
+// Newsletter signup is hidden pending activation. Flip to true to re-enable
+// the block near the bottom of this page. See comment at the block for the
+// full re-activation checklist (form endpoint wiring, etc.).
+const NEWSLETTER_ENABLED = false;
+
 const posts = [
   {
     tag: 'Foreclosure',
@@ -124,25 +129,34 @@ const posts = [
     </div>
   </section>
 
-  <section class="section-alt">
-    <div class="container newsletter-inner">
-      <div class="reveal">
-        <span class="motto">Stay informed</span>
-        <h2>Get one homeowner-side briefing per month.</h2>
-        <p class="lede">
-          No spam. No servicer talking points. Just clear, actionable insight for people who own
-          their home and want to keep it.
-        </p>
+  {/*
+    Newsletter signup: hidden pending activation.
+    To re-enable: set NEWSLETTER_ENABLED (in the component script above) to true,
+    AND wire the form to a real newsletter endpoint (currently posts to /api/contact
+    which would create a bogus contact record). Related styles (.newsletter-inner,
+    .newsletter-form) are preserved in the <style> block for clean re-activation.
+  */}
+  {NEWSLETTER_ENABLED && (
+    <section class="section-alt">
+      <div class="container newsletter-inner">
+        <div class="reveal">
+          <span class="motto">Stay informed</span>
+          <h2>Get one homeowner-side briefing per month.</h2>
+          <p class="lede">
+            No spam. No servicer talking points. Just clear, actionable insight for people who own
+            their home and want to keep it.
+          </p>
+        </div>
+        <form class="newsletter-form" action="/api/contact" method="post" novalidate>
+          <input type="hidden" name="subject" value="Newsletter signup" />
+          <input type="hidden" name="source" value="insights_page_newsletter" />
+          <label class="sr-only" for="nl-email">Email address</label>
+          <input id="nl-email" type="email" name="email" placeholder="you@example.com" required />
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
       </div>
-      <form class="newsletter-form" action="/api/contact" method="post" novalidate>
-        <input type="hidden" name="subject" value="Newsletter signup" />
-        <input type="hidden" name="source" value="insights_page_newsletter" />
-        <label class="sr-only" for="nl-email">Email address</label>
-        <input id="nl-email" type="email" name="email" placeholder="you@example.com" required />
-        <button type="submit" class="btn btn-primary">Subscribe</button>
-      </form>
-    </div>
-  </section>
+    </section>
+  )}
 </BaseLayout>
 
 <style>
