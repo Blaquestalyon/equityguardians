@@ -1,13 +1,14 @@
-# Equity Guardians — Editing Handoff
+# Equity Guardians · Editing Handoff
 
 Working document for continuing edits to **equityguardians.com** in a fresh chat.
 Read this file in full before making any change.
 
-**Repo:** `Blaquestalyon/equityguardians` (GitHub)
-**Working directory in sandbox:** `/home/user/workspace/equityguardians/`
-**Live site:** equityguardians.com (deployed from `main`)
-**HEAD at handoff:** `c42ad05` — content(services): reframe Curated Savings as dynamic catalog, remove specifics
-**Branch:** `main`. All work commits and pushes directly to `main`.
+- **Repo:** `Blaquestalyon/equityguardians` (GitHub)
+- **Working directory in sandbox:** `/home/user/workspace/equityguardians/`
+- **Live site:** [equityguardians.com](https://www.equityguardians.com) (Railway, deploys from `main`)
+- **Partner hub URL (live):** [equityguardians.com/partners](https://www.equityguardians.com/partners)
+- **Branch:** `main`. All work commits and pushes directly to `main`.
+- **HEAD at handoff:** `fe6b8f5` (fix(partners/hub): include promotional flyers in Texas resource count)
 
 ---
 
@@ -15,23 +16,20 @@ Read this file in full before making any change.
 
 These are Jay Davis's non-negotiable rules. Enforce them on every edit, even when the user does not repeat them.
 
-1. **No em-dashes (—) or en-dashes (–) anywhere in body copy.** Use commas, colons, parens, or the middle dot `·` (the middle dot is reserved for the motto `SAVE · EARN · PROTECT`).
-2. **Recovery language is fixed.** When describing Foreclosure Recovery, always phrase it as: *refinance at 0% interest on a new 30-year mortgage*. Do not invent alternate framings.
+1. **No em-dashes (—) or en-dashes (–) anywhere in body copy.** Use commas, colons, parens, or the middle dot `·`. The middle dot is reserved for the motto `SAVE · EARN · PROTECT`. Partner-ribbon middle dots are also OK. Sweep touched files before every commit.
+2. **Recovery language is fixed.** Foreclosure Recovery is always phrased as: *refinance at 0% interest on a new 30-year mortgage*. Do not invent alternate framings.
 3. **Team framing is fixed:**
    - **Attorneys = cornerstone**
    - **Realtors = foundation**
    - **Case managers = coordination layer**
    - **Technology = enabler only.** Never call the technology team "builders." Never elevate technology above the human roles.
 4. **Mission language must stay identical between Home and About.** If you edit the mission paragraph on one page, sync the other.
-5. **Pricing:** Coverage is **FREE to the buyer when represented by an affiliated Buyer's Realtor**, for **the life of the deed of trust**. **Never mention a $28/month price on the site.** (Sweep for `$28` before every commit.)
-6. **Voice:** precise, editorial, long-form on articles (roughly 2000 words). "Not X, but Y" constructions are welcome. Clear h2/h3 hierarchy.
+5. **Pricing:** Coverage is **FREE to the buyer when represented by an affiliated Buyer's Realtor**, for **the life of the deed of trust**. **Never mention a $28/month price on the site.** Sweep for `$28` before every commit.
+6. **Voice:** precise, editorial. Long-form on articles (roughly 2000 words). "Not X, but Y" constructions welcome. Clear h2/h3 hierarchy.
 7. **Do not proactively refactor without an explicit ask.** Fix what the user asks; flag adjacent issues in your response instead of silently editing them.
-8. **Do not promise specifics that are not guaranteed.** The Curated Savings catalog is dynamic. Discounts, rebates, and partnerships come and go. Do not name specific categories (utilities, insurance, home services, etc.) or specific offers on marketing pages (`/`, `/services`, `/about`, `/attorneys`) as if they are guaranteed. Educational **article** content that discusses categories of overcharges homeowners face is different from a service promise; leave article bodies alone unless the user asks. If in doubt, ask before edit.
-9. **Commit style:** `type(scope): short description`
-   Common types: `content`, `feat`, `fix`, `chore`, `refactor`.
-   Common scopes: `attorneys`, `services`, `insights`, `about`, `site`.
-10. **Commit author (always):**
-    `-c user.email=admin@power-in-numbers.net -c user.name="Jay Davis"`
+8. **Do not promise specifics that are not guaranteed.** The Curated Savings catalog is dynamic. Do not name specific categories (utilities, insurance, home services, etc.) or specific offers on marketing pages (`/`, `/services`, `/about`, `/attorneys`). Educational **article** content that discusses categories of overcharges homeowners face is different from a service promise. If in doubt, ask before editing.
+9. **Commit style:** `type(scope): short description`. Common types: `content`, `feat`, `fix`, `chore`, `refactor`, `legal`, `style`. Common scopes: `attorneys`, `services`, `insights`, `about`, `site`, `partners`, `partners/hub`.
+10. **Commit author (always):** `-c user.email=admin@power-in-numbers.net -c user.name="Jay Davis"`
 11. **Git push:** always with `api_credentials=["github"]`. Remote is `git-agent-proxy.perplexity.ai`.
 
 ---
@@ -44,233 +42,345 @@ These are Jay Davis's non-negotiable rules. Enforce them on every edit, even whe
 │   ├── components/
 │   │   ├── Footer.astro
 │   │   ├── Header.astro
-│   │   └── PageHero.astro                   # <PageHero eyebrow="" title="" description="" />
+│   │   ├── PageHero.astro                # <PageHero eyebrow title description>
+│   │   └── PartnerRibbon.astro           # Auth ribbon shown on /partners/* when logged in
 │   ├── data/
-│   │   ├── attorneys.ts                     # attorneyNetwork: StateGroup[]
-│   │   └── site.ts
+│   │   ├── attorneys.ts                  # attorneyNetwork: StateGroup[]
+│   │   ├── partner-media.ts              # Flyer[] catalog (promotional media)
+│   │   ├── partner-states.ts             # 50-state grid + per-state operational forms
+│   │   └── site.ts                       # name, phone, address, motto, nav
 │   ├── layouts/
-│   │   └── BaseLayout.astro                 # <BaseLayout title="" description="" image?="">
-│   └── pages/
-│       ├── 404.astro
-│       ├── about.astro
-│       ├── attorneys.astro
-│       ├── contact.astro
-│       ├── index.astro                      # Home
-│       ├── insights.astro                   # Insights index (list of cards)
-│       ├── insights/
-│       │   ├── missed-payment-to-auction-gavel.astro
-│       │   ├── realtors-foreclosure-protection.astro
-│       │   ├── recurring-bills-slow-equity.astro
-│       │   ├── surplus-equity.astro
-│       │   ├── tax-lien-surplus-reform.astro
-│       │   └── when-to-call-an-attorney.astro
-│       ├── services.astro
-│       ├── sitemap.xml.ts                   # sitemap routes list
-│       └── api/contact.ts                   # contact form endpoint
+│   │   └── BaseLayout.astro              # <BaseLayout title description image? noIndex?>
+│   ├── lib/
+│   │   └── partner-auth.ts               # Session cookie sign/verify helpers
+│   ├── pages/
+│   │   ├── 404.astro
+│   │   ├── about.astro
+│   │   ├── attorneys.astro
+│   │   ├── contact.astro
+│   │   ├── index.astro                   # Home
+│   │   ├── insights.astro                # Insights index (newsletter currently hidden)
+│   │   ├── insights/
+│   │   │   ├── missed-payment-to-auction-gavel.astro
+│   │   │   ├── realtors-foreclosure-protection.astro
+│   │   │   ├── recurring-bills-slow-equity.astro
+│   │   │   ├── surplus-equity.astro
+│   │   │   ├── tax-lien-surplus-reform.astro
+│   │   │   └── when-to-call-an-attorney.astro
+│   │   ├── privacy.astro
+│   │   ├── services.astro
+│   │   ├── sitemap.xml.ts
+│   │   ├── terms.astro
+│   │   ├── partners/
+│   │   │   ├── index.astro               # Login page (name + passcode)
+│   │   │   ├── hub.astro                 # 50-state grid + counters
+│   │   │   └── texas.astro               # State page: operational forms + promotional media
+│   │   └── api/
+│   │       ├── contact.ts                # Contact form → Airtable
+│   │       └── partners/
+│   │           ├── login.ts              # Passcode check, sets signed cookie
+│   │           ├── logout.ts             # Clears cookie
+│   │           └── intake/texas.ts       # Texas member intake → Airtable
+│   └── styles/                           # Global CSS
 ├── public/
-│   └── insights/                            # feature images (.jpg + .webp per slug)
-├── dist/                                    # build output (gitignored)
-└── HANDOFF.md                               # this file
+│   ├── insights/                         # Article feature images (.jpg + .webp per slug)
+│   └── partners/
+│       └── texas/
+│           ├── forms/
+│           │   └── EG-Texas-Member-Intake-Form-v1.0.pdf
+│           └── media/
+│               ├── the-gap/
+│               │   ├── EG-Buyer-Flyer-The-Gap-DIGITAL.pdf         # Fillable
+│               │   ├── EG-Buyer-Flyer-The-Gap-PRINT-CMYK-bleed.pdf
+│               │   ├── EG-Buyer-Flyer-The-Gap-cover.jpg
+│               │   ├── EG-Buyer-Flyer-The-Gap-cover-thumb.jpg
+│               │   └── EG-Buyer-Flyer-The-Gap-cover-thumb.webp
+│               └── the-ladder/
+│                   ├── EG-Buyer-Flyer-The-Ladder-DIGITAL.pdf      # Fillable
+│                   ├── EG-Buyer-Flyer-The-Ladder-PRINT-CMYK-bleed.pdf
+│                   ├── EG-Buyer-Flyer-The-Ladder-cover.jpg
+│                   ├── EG-Buyer-Flyer-The-Ladder-cover-thumb.jpg
+│                   └── EG-Buyer-Flyer-The-Ladder-cover-thumb.webp
+├── dist/                                 # build output (gitignored)
+├── .env.example                          # Template. Copy to .env for local dev.
+└── HANDOFF.md                            # This file
 ```
 
 ---
 
-## 3. Attorney data (dynamic on `/attorneys`)
+## 3. Site-wide constants (`src/data/site.ts`)
+
+Single source of truth for name, phone, address, motto, and top-nav. Edits here propagate everywhere via imports.
+
+- Current phone: `+1 (888) 364-0999` (tel: `+18883640999`)
+- Motto: `SAVE · EARN · PROTECT` (middle dots preserved)
+- Contact email: `admin@equityguardians.com`
+
+If phone or contact changes again, also sweep: `src/pages/privacy.astro`, `src/pages/terms.astro`, `src/pages/api/contact.ts`.
+
+---
+
+## 4. Attorney data (dynamic on `/attorneys`)
 
 - **File:** `src/data/attorneys.ts`
-- **Shape:**
-  ```ts
-  type Attorney = { name: string; firm?: string; website?: string; bio?: string };
-  type StateGroup = { state: string; attorneys: Attorney[]; note?: string };
-  export const attorneyNetwork: StateGroup[]  // 50 states, alphabetical
-  ```
-- **Rules:**
-  - Bios only for attorneys where Jay has personally provided one. Currently: NY (Weiss, Radow) and TX (Helstowski, Weaver). Never invent a bio.
-  - Ignore any Super Lawyers ratings, Rising Stars, selection-year labels, or internal notes when Jay provides raw lists. Strip them.
-  - Pending states (currently **Delaware, Idaho**) use `attorneys: []` plus:
-    ```ts
-    note: 'Coverage under active build-out. Members with matters in [state] are routed through our nearest partnering jurisdiction while local counsel is confirmed.'
-    ```
-  - Firm cleanup examples: solo practitioners → `"Solo practice, [City]"`; in-house counsel → `"In-house counsel, [Employer]"` with no website; firms without a public URL → firm name only.
-- **Computed on `attorneys.astro`:** `totalAttorneys` (sum), `coveredStates` (groups with attorneys.length > 0). Coverage strip currently reads **93 / 48 / 50**. As attorneys are added, these numbers update automatically.
-- **Site-wide manual number:** The "**90+**" figure on Home and About is a rounded marketing counter, not computed. Update it as the roster crosses meaningful thresholds. Do not sync it to the live `totalAttorneys` unless Jay asks.
+- Shape: `attorneyNetwork: StateGroup[]` where each `StateGroup` has `state`, optional `note` (rendered when `attorneys.length === 0`), and `attorneys: Attorney[]`.
+- Coverage strip on `/attorneys` reads `93 featured / 48 with confirmed local counsel / 50 covered`. The "90+" figure on Home and About is intentionally rounded. Confirm before syncing them.
+- Delaware and Idaho currently render as pending states with a cream note and no attorney cards.
+- State jump-nav anchors are lowercased and hyphenated by `stateSlug()`: "New York" → `#new-york`.
+- Bios exist for NY and TX only; more added as Jay provides them.
 
 ---
 
-## 4. Insights articles
+## 5. Partner Realtor portal
 
-Each article is a self-contained Astro page under `src/pages/insights/[slug].astro`. To publish a new article:
+Password-gated section at `/partners`. Anyone can visit the login page; everything under `/partners/hub` and `/partners/<state>` requires a valid signed session cookie.
 
-1. Write the article page (BaseLayout wrapper, article-head with badge/date/read-time, article-hero image, article-body sections with h2/h3, closing `.cta-band` section).
-2. Add a card to the array in `src/pages/insights.astro` with `tag`, `date`, `read`, `title`, `excerpt`, `slug`, `cover`, `coverAlt`.
-3. Add the route to `src/pages/sitemap.xml.ts`.
-4. Generate a feature image (see §7) at `public/insights/[slug].jpg` and `.webp`.
+### Auth flow
 
-**Existing articles (all live):**
-- `missed-payment-to-auction-gavel` — Foreclosure
-- `surplus-equity` — Equity
-- `recurring-bills-slow-equity` — Savings (educational, do not add EG-specific promises)
-- `when-to-call-an-attorney` — Legal
-- `realtors-foreclosure-protection` — Realtors
-- `tax-lien-surplus-reform` — Policy
+- **Login:** `POST /api/partners/login` with `name` and `passcode`. On success, sets a signed session cookie (`eg_partner`, HTTP-only, SameSite=Lax) and redirects to `/partners/hub`.
+- **Session length:** ~8 hours. Rotating `PARTNER_PASSCODE` does NOT invalidate existing cookies. Rotating `PARTNER_SESSION_SECRET` does.
+- **Passcode:** `PARTNER_PASSCODE` env var. Case-sensitive exact match.
+- **Cookie signing:** HMAC-SHA256 using `PARTNER_SESSION_SECRET`. If unset, a per-process random secret is generated at boot (fine for dev; every redeploy signs everyone out).
+- **Middleware:** `src/lib/partner-auth.ts` exposes `getPartnerSessionFromRequest(request)`; each protected page/API route calls it and returns 302/401 if missing.
+- **Local dev credentials:** passcode `Bl@queGu@rdX-999`, name any string.
 
-**Article-vs-marketing distinction:** Article bodies teach homeowners about categories of financial risk and recovery. That is education, not a service promise. Do not add or remove category names inside article bodies unless Jay asks. Marketing pages (`/`, `/services`, `/about`, `/attorneys`) are where guarantee language must be tight (see rule #8).
+### Hub (`/partners/hub`)
+
+- Stats strip: **States live · Resources available · Coming soon**.
+- The counter is computed by `resourceCountFor(state) = operational forms + promotional flyers`. Operational forms live in `partner-states.ts`; promotional flyers live in `partner-media.ts`. `promoCountFor(slug)` is currently hard-wired for Texas only (`return texasFlyers.length`). **Add a branch here when the next state gets media.**
+- State grid: 50 tiles. Active states link to `/partners/<slug>`; coming-soon tiles are inert with the "Coming soon" badge.
+
+### Texas state page (`/partners/texas`)
+
+Two labeled category sections in one shelf (not sub-pages, not filter chips):
+
+1. **Operational Forms & Documents**
+   - Texas Member Intake Form: "Open the form" (submits to Airtable) and "Download blank PDF" (`/partners/texas/forms/EG-Texas-Member-Intake-Form-v1.0.pdf`).
+
+2. **Promotional Media**
+   - Rendered from `texasFlyers` in `partner-media.ts`.
+   - Each flyer card: cover thumbnail (260px column) on the left, name + focus line + variant list on the right. Stacks on mobile <720px.
+   - Variant icon colors: **teal = digital**, **navy = print**, **amber = image**.
+   - Every download uses HTML5 `download` attribute so browsers save rather than preview.
+
+### Texas intake (`/api/partners/intake/texas`)
+
+- Accepts all fields from the Texas Member Intake Form (see `src/pages/api/partners/intake/texas.ts` for the `IntakePayload` interface).
+- Writes to Airtable table `AIRTABLE_TABLE_INTAKE_TX` (default: "Texas Intake") in base `AIRTABLE_BASE_ID`.
+- After create, writes the Airtable record's Reference field back into the record so it becomes the human-friendly ID.
+- "Submit another intake" button on the success screen resets its own disabled state (fixed in `465bf17`).
 
 ---
 
-## 5. Standard local workflow
+## 6. Flyer / promotional media system
+
+Adding a new flyer is a data change, not a code change. Everything below is defined in `src/data/partner-media.ts` (`Flyer[]`, `texasFlyers` export).
+
+### File convention
+
+Every flyer lives in its own folder under `public/partners/<state>/media/<slug>/`:
+
+```
+EG-<Audience>-Flyer-<Name>-DIGITAL.pdf              # Screen / email. Fillable AcroForm preferred.
+EG-<Audience>-Flyer-<Name>-PRINT-CMYK-bleed.pdf     # Professional printer: CMYK, crop marks, bleed.
+EG-<Audience>-Flyer-<Name>-cover.jpg                # High-res, downloadable as the "image" variant.
+EG-<Audience>-Flyer-<Name>-cover-thumb.jpg          # Card thumbnail (auto-generated).
+EG-<Audience>-Flyer-<Name>-cover-thumb.webp         # Same, WebP.
+```
+
+Thumbnail generation:
+```bash
+magick <cover>.jpg -resize 800x -quality 80 -strip <cover>-thumb.jpg
+magick <cover>.jpg -resize 800x -quality 80 -strip <cover>-thumb.webp
+```
+
+### Fillable form field standard
+
+The digital PDF should be a fillable AcroForm with these 6 fields (used across The Gap and The Ladder):
+- `EG_Name`, `EG_Title`, `EG_Brokerage`, `EG_License`, `EG_Phone`, `EG_Email`
+
+Verify with:
+```bash
+python3 -c "import pypdf; r=pypdf.PdfReader('path/to.pdf'); print(r.get_fields())"
+```
+
+### Adding a new flyer
+
+1. Drop the 3 source files into `public/partners/<state>/media/<slug>/` with the exact names above.
+2. Generate both thumbnails (jpg + webp).
+3. Append a `Flyer` entry to `texasFlyers` (or the new state's export) in `partner-media.ts`. Every entry needs: `slug`, `name`, `audience` (`'Buyer' | 'Realtor' | 'Both'`), `focus` (one-line C2A shown under the name), `cover` (thumb + optional webp + alt), and `variants` (each with `kind`, `label`, `href`, `filename`, optional `note` and `fileSize`).
+4. Bump the fileSize labels in the variant entries to match reality (use `du -b <file> | awk '{ print int(($1+512)/1024)" KB" }'`).
+5. If this is a new **state's first flyer**, add a branch to `promoCountFor()` in `src/pages/partners/hub.astro` so the hub counter includes it.
+6. Build (`npm run build`), spin up the local server (see §9), log in, take a screenshot to confirm the card renders, and verify all download links return 200.
+7. Commit and push (see §10).
+
+### Current Texas flyers
+
+| Slug | Audience | Digital | Print | Image |
+| --- | --- | --- | --- | --- |
+| the-gap | Buyer | 117 KB (fillable) | 105 KB | 340 KB |
+| the-ladder | Buyer | 121 KB (fillable) | 110 KB | 420 KB |
+
+---
+
+## 7. Insights (articles)
+
+- Index: `src/pages/insights.astro`. Newsletter signup is currently **hidden** via `const NEWSLETTER_ENABLED = false;` in the frontmatter, wrapping the whole `<section>` in `{NEWSLETTER_ENABLED && (...)}`. Flip the constant to re-enable (once the endpoint is wired).
+- One file per article under `src/pages/insights/<slug>.astro`.
+- Feature images live at `public/insights/<slug>.{jpg,webp}` (both formats, `<picture>` element).
+- Voice on articles: long-form (~2000 words), editorial, "Not X, but Y" welcome. Clear h2/h3.
+
+---
+
+## 8. Environment variables
+
+Copy `.env.example` to `.env` for local dev. Set the same in Railway → Variables for production.
+
+**Airtable (contact form + intake):**
+- `AIRTABLE_TOKEN`: PAT with `data.records:write` on the target base.
+- `AIRTABLE_BASE_ID`: starts with `app…`.
+- `AIRTABLE_TABLE`: contact-form table (e.g. "Inquiries").
+- `AIRTABLE_TABLE_INTAKE_TX`: Texas intake table (default: "Texas Intake").
+- `PUBLIC_CONTACT_EMAIL`: UI display fallback.
+
+**Partner portal:**
+- `PARTNER_PASSCODE`: shared passcode. Local dev: `Bl@queGu@rdX-999`.
+- `PARTNER_SESSION_SECRET`: 32+ char random string for cookie HMAC.
+
+---
+
+## 9. Local dev workflow
 
 ```bash
-# Always work in the repo dir
 cd /home/user/workspace/equityguardians
 
-# Build (Astro server output)
-npm run build
+# 1. Ensure .env exists (both partner-portal vars required)
+cat .env
+# PARTNER_PASSCODE=Bl@queGu@rdX-999
+# PARTNER_SESSION_SECRET=any-string-32-chars-or-more-abcdefghi
 
-# Kill any stale preview server
-ps aux | grep entry.mjs | grep -v grep | awk '{print $2}' | xargs -r kill
+# 2. Build
+npm run build            # ~2s
 
-# Start local preview (background=true in the bash tool)
+# 3. Serve. Use nohup + background=true; do NOT run in foreground (blocks).
+set -a && . ./.env && set +a
 HOST=127.0.0.1 PORT=4321 node dist/server/entry.mjs
-# then: curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:4321/
 ```
 
-### Em-dash / $28 sweep (run before every commit)
+Rebuild after **every** source change or the preview serves stale HTML.
 
-```python
-import re
-files = ['src/pages/index.astro', 'src/pages/about.astro', 'src/pages/services.astro',
-         'src/pages/attorneys.astro', 'src/pages/insights.astro']  # add edited files
-for f in files:
-    t = open(f).read()
-    t2 = re.sub(r'<style>.*?</style>', '', t, flags=re.S)  # ignore inline CSS
-    em = len(re.findall(r'[—–]', t2))
-    d28 = len(re.findall(r'\$28', t2))
-    print(f, 'em/en-dash:', em, '$28:', d28)
-```
+### Screenshot / login verification (Playwright via js_repl)
 
-### Commit and push
-
-```bash
-cd /home/user/workspace/equityguardians && \
-git add -A && \
-git -c user.email=admin@power-in-numbers.net -c user.name="Jay Davis" \
-    commit -m "<type>(<scope>): <message>" && \
-git push origin main
-```
-Push tool call must include `api_credentials=["github"]`.
-
----
-
-## 6. Screenshot verification (Playwright via js_repl)
-
-Every visual edit must be verified with a screenshot before committing. Reveals are hidden behind `.reveal` opacity animations, so always inject the override.
+Standard pattern the previous sessions used to verify partner pages:
 
 ```js
-const pw = require('playwright');
-const b = await pw.chromium.launch();
-const ctx = await b.newContext({ viewport: { width: 1280, height: 1000 } });
-const p = await ctx.newPage();
-await p.goto('http://127.0.0.1:4321/services#curated-savings', { waitUntil: 'networkidle' });
-await p.addStyleTag({ content:
-  '.reveal{opacity:1 !important; transform:none !important;} ' +
-  '*,*::before,*::after{animation:none !important; transition:none !important;}'
+const { chromium } = require('playwright');
+const browser = await chromium.launch();
+const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+const page = await ctx.newPage();
+
+// Kill reveal animations (they hide content in screenshots)
+await page.addInitScript(() => {
+  const style = document.createElement('style');
+  style.innerHTML = `*, *::before, *::after { animation-duration: 0s !important; animation-delay: 0s !important; transition-duration: 0s !important; opacity: 1 !important; transform: none !important; }`;
+  document.documentElement.appendChild(style);
 });
-await p.waitForTimeout(500);
-// Scroll to a specific element (by id or nearest section)
-await p.evaluate(() => {
-  const el = document.getElementById('curated-savings');
-  if (el) window.scrollTo(0, Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80));
-});
-await p.waitForTimeout(400);
-await p.screenshot({ path: '/home/user/workspace/shot.png' });
-await b.close();
+
+await page.goto('http://127.0.0.1:4321/partners/', { waitUntil: 'networkidle' });
+await page.fill('#name', 'Jay Davis');
+await page.fill('#passcode', 'Bl@queGu@rdX-999');
+await Promise.all([
+  page.waitForURL(u => u.pathname !== '/partners/', { timeout: 5000 }).catch(() => {}),
+  page.click('.submit-btn'),
+]);
+// Use waitForURL, NOT waitForNavigation (the latter times out).
+
+await page.goto('http://127.0.0.1:4321/partners/texas', { waitUntil: 'networkidle' });
+await page.screenshot({ path: '/tmp/out.png', fullPage: true });
+await browser.close();
 ```
 
-**Notes:**
-- Use `js_repl reset=true` on a new screenshot session to avoid identifier collisions.
-- Use `chromium.launch()` (Playwright is installed).
-- Reading a `.png` in `/home/user/workspace/` with the `read` tool returns the image inline for visual review.
-- Prefer navigating to `url#anchor` and re-scrolling by absolute coordinates rather than relying on `scrollIntoView`, which can misfire with sticky headers.
+Use `reset: true` on `js_repl` for a new session so identifiers don't collide with prior REPL state.
 
 ---
 
-## 7. Feature image generation (for insights)
+## 10. Commit and push workflow
 
 ```bash
-asi-generate-image '<json_params_single_arg>'   # api_credentials=["llm-api:image"]
-# model: gpt_image_2
-# Then compress:
-magick <src>.png -resize 1600x -quality 82 -strip <slug>.jpg
-magick <src>.png -resize 1600x -quality 82 -strip <slug>.webp
-# Place both at public/insights/<slug>.{jpg,webp}
+# Pre-commit sweep on touched files
+grep -n $'[—–]' <files>                # em/en dash check
+grep -rn '\$28' src/                   # forbidden pricing check
+
+# Build must succeed
+npm run build
+
+# Commit
+git add <files>
+git -c user.email=admin@power-in-numbers.net -c user.name="Jay Davis" \
+  commit -m "type(scope): short description
+
+  Optional body: what changed and why."
+
+# Push (ALWAYS with the github api_credentials)
 ```
 
-Image aesthetic: navy-walled study, dim editorial light, brass and teal accents, symbolic objects (statute books, scales, ledgers, coins). No living faces.
+Then in a separate tool call with `api_credentials=["github"]`:
+
+```bash
+git push origin main
+```
+
+If the push fails with a transport error, wait a beat and retry once before assuming a bigger issue.
 
 ---
 
-## 8. Design tokens (from inline styles)
+## 11. Recent commits (context for the next session)
 
-- **Palette:** navy-900 (primary bg), navy-800, teal-400, teal-500, teal-700 (accents), slate-200/500/700 (neutrals), cream `#FBF7EE` with border `#E9DEC1` (notes/asides), white cards.
-- **Radii:** `--radius-lg` for cards.
-- **Type:** serif for headings (`var(--font-serif)`), sans for body, mono uppercase for eyebrows/labels (`var(--font-mono)`).
-- **Card styles used repeatedly:**
-  - `.state-block` — teal-500 bottom border on the h2 header row.
-  - `.attorney-row` — white card, slate-200 border, teal-400 hover border, translateY(-2px) on hover.
-  - `.partner-card` — white with a teal-500 left accent, mono-uppercase "FEATURED MEMBER BENEFIT" eyebrow.
-  - `.network-note` — navy background block on `/attorneys`.
-  - `.network-disclaimer` — cream aside on `/attorneys`.
-- **Motto:** `SAVE · EARN · PROTECT` (only place the middle dot is used).
+Newest first, most recent 10:
 
----
+- `fe6b8f5` fix(partners/hub): include promotional flyers in Texas resource count
+- `d7e1545` content(partners): add The Ladder flyer and swap Gap digital to fillable
+- `48469c4` content(partners): replace The Gap flyer artwork with logo-corrected version
+- `de01399` feat(partners): add Promotional Media category with The Gap flyer (Texas)
+- `dba458c` chore(insights): hide newsletter signup pending activation
+- `e747864` content(site): update contact phone to 888-364-0999
+- `3cd0b95` feat(intake): write Reference field back into Airtable record after create
+- `465bf17` fix(partners): reset submit button on Submit another intake so it's clickable
+- `08e0c2d` feat(partners): add blank Texas intake PDF download alongside Open the form
+- `8f8f164` style(a11y): boost readability on figcaptions, consent, metric labels, and normalize footer hours
 
-## 9. Recent commit history (for context)
-
-```
-c42ad05 content(services): reframe Curated Savings as dynamic catalog, remove specifics
-94714fe fix(services): remove unverified Curated Savings bullets
-0f323ae content(site): unify attorney network to 90+, strengthen vetted/proven framing
-0f994cc content(attorneys): expand to full 50-state featured, preferred network
-5a4065d content(services): frame Curated Savings as a living catalog that grows with membership at no cost
-2d72fa0 content(services): add Tax2Go DeSoto 20% member discount to Curated Savings section
-5b111a9 feat(insights): publish 'The 2030 tax-lien surplus reform' article
-6a52216 content(attorneys): add three-layer selection methodology (Super Lawyers patent, EG research, VERIDEX)
-bf1cd6e content(attorneys): tighten hero description to 'rigorously vetted and preferred attorneys'
-4ee5b22 content(attorneys): correct membership description to reflect close-of-home activation and life-of-deed protection
-8d9de9d content(attorneys): reframe CTA to 'Learn about membership' since network is member-only
-c8bb2a0 content(attorneys): add NY firms Weiss and Radow, add network-selection disclaimer
-f707ec0 content(attorneys): replace Long Legal Group with The Weaver Law Firm
-```
+Full history: `git log --oneline -50` in the repo.
 
 ---
 
-## 10. Common gotchas from prior sessions
+## 12. Common gotchas from prior sessions
 
-- **`scrollIntoView` misfires** with sticky headers plus reveal animations. Use absolute-coord scroll: `getBoundingClientRect().top + window.scrollY - 80`.
-- **Reveal animations hide content in screenshots.** Always inject the reveal override CSS.
+- **Uploaded attachments occasionally arrive empty** (0-byte folder). Ask the user to re-attach; that's always resolved it.
+- **`scrollIntoView` misfires** with sticky headers + reveal animations. Use absolute-coord scroll: `getBoundingClientRect().top + window.scrollY - 80`.
+- **Reveal animations hide content in screenshots.** Always inject the reveal-override CSS shown above.
 - **Astro build is fast (~2s).** Rebuild after every source change or the preview server serves stale HTML.
-- **State jump-nav anchors on `/attorneys`** are lowercased and hyphenated by `stateSlug()`: "New York" → `#new-york`.
-- **Delaware and Idaho** currently render as pending states with a cream note and no attorney cards.
-- **git-agent-proxy** transport has occasionally been fragile early in a session. If a push fails, wait a beat and retry once before assuming a bigger issue.
+- **Playwright: use `waitForURL`, not `waitForNavigation`** for the partner login submit; the latter times out.
+- **`git-agent-proxy`** transport has occasionally been fragile early in a session. Retry once before assuming a bigger issue.
 - **The `research-assistant` skill is not needed for editorial content.** Article writing is voice work, not research work.
+- **Do not silently edit the flyer artwork itself** even if it contains em-dashes or "life of your loan" phrasing. Those are inside designed PDFs, not body copy. Flag them but leave them alone unless the user asks.
 
 ---
 
-## 11. Open items / likely next asks
+## 13. Standing flags (adjacent issues, intentionally left alone per rule #7)
 
-Not blocking, but Jay may address these next:
+Not blockers, but the next session should be aware:
 
-- Coverage-strip on `/attorneys` currently reads **93 featured / 48 with confirmed local counsel / 50 covered**. The "90+" figure on Home and About is intentionally rounded. Confirm before syncing them.
-- If Jay eventually confirms Delaware or Idaho attorneys, add them to `attorneyNetwork` in `attorneys.ts` and their state-note field will be ignored automatically once `attorneys.length > 0`.
-- If the insights article `recurring-bills-slow-equity` grows into a series, its cover art aesthetic is already established (see §7).
-- Bios for the 89 attorneys without bios (currently only NY and TX have bios) will be added over time as Jay provides them.
+1. **Flyer artwork contains em-dashes** ("COVERED — EQUITY GUARDIANS") on both The Gap and The Ladder. Inside designed assets, not touched.
+2. **Flyer body says "for the life of your loan"** while rule #5 uses "for the life of the deed of trust." The bottom disclaimer on each flyer does say "deed of trust." Not touched.
+3. **Texas tile tagline reads "Member intake and closing paperwork."** Accurate before the flyers were added, incomplete now. Suggested rewrite: *"Member intake, closing paperwork, and buyer-facing flyers."* Awaiting confirmation.
+4. **Coverage strip on `/attorneys`** reads `93 featured / 48 with confirmed local counsel / 50 covered`, while Home and About use a rounded "90+" figure. Confirm before syncing.
+5. **Bios for the 89 attorneys without bios** (NY and TX have bios today) will be added over time as Jay provides them.
 
 ---
 
-## 12. When starting a new chat
+## 14. When starting a new chat
 
-Kick off the new chat with something like:
+Kick off the new chat with:
 
 > Read `/home/user/workspace/equityguardians/HANDOFF.md` in full, then wait for my next instruction.
 
