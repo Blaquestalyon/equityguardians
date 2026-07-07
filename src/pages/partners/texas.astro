@@ -1,0 +1,1254 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PartnerRibbon from '../../components/PartnerRibbon.astro';
+import { findStateBySlug } from '../../data/partner-states';
+
+const partner = (Astro.locals as any).partner as { name: string } | null;
+const displayName = partner?.name ?? 'Partner';
+const state = findStateBySlug('texas')!;
+---
+
+<BaseLayout
+  title="Texas · Partner Resources"
+  description="Texas resources for affiliated Buyer's Realtors. Member intake, closing paperwork, and more."
+  noIndex={true}
+>
+  <PartnerRibbon name={displayName} />
+
+  <section class="tx-hero">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/partners/hub">Resource Shop</a>
+        <span aria-hidden="true">/</span>
+        <span>Texas</span>
+      </nav>
+
+      <span class="eyebrow">Texas · {state.resources.length} {state.resources.length === 1 ? 'resource' : 'resources'} available</span>
+      <h1>Texas resources for affiliated Buyer's Realtors.</h1>
+      <p class="lede">
+        Everything you need to bring a Texas closing into Equity Guardians. All forms are stamped
+        with your name automatically. Fill out one intake form per closing, working only from the
+        paperwork already in hand.
+      </p>
+    </div>
+  </section>
+
+  <section class="tx-shelf">
+    <div class="container">
+      <div class="shelf-header">
+        <h2>Available resources</h2>
+        <p class="shelf-note">More Texas resources will appear here as they are released.</p>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-meta">
+          <span class="resource-kind">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+            Form
+          </span>
+          <span class="resource-id">EG-INTAKE-TX-v1.0</span>
+        </div>
+        <h3 class="resource-title">Texas Member Intake Form</h3>
+        <p class="resource-desc">
+          Fill out once per closing, working only from the paperwork already in hand. Every field
+          is tagged with its source: CD (Closing Disclosure), PC (Executed Purchase Contract),
+          MLS (MLS listing), R (You). Fields marked Optional may be left blank.
+        </p>
+        <a href="#intake-form" class="resource-open">
+          Open the form
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="tx-form-section" id="intake-form">
+    <div class="container form-container">
+
+      <!-- Fake letterhead so the printed page reads like the PDF -->
+      <div class="form-letterhead">
+        <div class="letterhead-left">
+          <div class="lh-logo">
+            <img src="/logo-mark.png" alt="" width="48" height="48" />
+            <div>
+              <div class="lh-name">EQUITY GUARDIANS</div>
+              <div class="lh-motto">SAVE · EARN · PROTECT</div>
+            </div>
+          </div>
+        </div>
+        <div class="letterhead-right">
+          <div class="lh-title">MEMBER INTAKE FORM</div>
+          <div class="lh-sub">Texas · Form ID: EG-INTAKE-TX-v1.0</div>
+        </div>
+      </div>
+
+      <div class="form-guidance">
+        <h3>How to complete this form</h3>
+        <p>
+          Fill out one form per closing, working only from the paperwork already in hand. Every
+          field is tagged with its source. Fields marked Optional may be left blank. Do not
+          contact the buyer to complete this form. If an answer is not in these documents, leave
+          it blank.
+        </p>
+        <p class="legend">
+          <strong>CD</strong> = Closing Disclosure / settlement statement ·
+          <strong>PC</strong> = Executed purchase contract ·
+          <strong>MLS</strong> = MLS listing ·
+          <strong>R</strong> = You (Realtor)
+        </p>
+      </div>
+
+      <form id="intake-form-el" class="intake-form" method="post" action="/api/partners/intake/texas" novalidate>
+
+        <!-- ==================== SECTION A ==================== -->
+        <fieldset class="section">
+          <legend>
+            <span class="section-letter">A</span>
+            <span class="section-title">Submission &amp; Deal Tracking</span>
+          </legend>
+
+          <div class="row">
+            <div class="field col-12">
+              <label for="referring_realtor">
+                Referring Realtor <span class="req">*</span>
+                <span class="tag">R</span>
+              </label>
+              <input id="referring_realtor" name="referring_realtor" type="text" required value={displayName} />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="brokerage">Brokerage <span class="tag">R / PC</span></label>
+              <input id="brokerage" name="brokerage" type="text" />
+            </div>
+            <div class="field col-6">
+              <label for="eg_partner_id">EG Partner ID <span class="tag">EG</span></label>
+              <input id="eg_partner_id" name="eg_partner_id" type="text" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="realtor_email">Realtor email <span class="tag">R</span></label>
+              <input id="realtor_email" name="realtor_email" type="email" inputmode="email" />
+            </div>
+            <div class="field col-6">
+              <label for="realtor_phone">Realtor phone <span class="tag">R</span></label>
+              <input id="realtor_phone" name="realtor_phone" type="tel" inputmode="tel" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="closing_date">Closing date <span class="req">*</span> <span class="tag">CD</span></label>
+              <input id="closing_date" name="closing_date" type="date" required />
+            </div>
+            <div class="field col-6">
+              <label for="date_completed">Date form completed <span class="tag">R</span></label>
+              <input id="date_completed" name="date_completed" type="date" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ==================== SECTION B ==================== -->
+        <fieldset class="section">
+          <legend>
+            <span class="section-letter">B</span>
+            <span class="section-title">Member Identity &amp; Contact</span>
+          </legend>
+
+          <div class="row">
+            <div class="field col-12">
+              <label for="member_1_name">
+                Member 1 full name <span class="req">*</span>
+                <span class="tag">CD / PC</span>
+              </label>
+              <input id="member_1_name" name="member_1_name" type="text" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label for="member_2_name">Member 2 full name (if any) <span class="tag">CD / PC</span></label>
+              <input id="member_2_name" name="member_2_name" type="text" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-8">
+              <label for="additional_members">Additional members on title (names) <span class="tag">CD / PC</span></label>
+              <input id="additional_members" name="additional_members" type="text" />
+            </div>
+            <div class="field col-4">
+              <label for="buyers_on_title"># buyers on title <span class="tag">CD / PC</span></label>
+              <input id="buyers_on_title" name="buyers_on_title" type="number" min="0" step="1" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label for="member_mailing_address">Member mailing address after closing <span class="tag">CD</span></label>
+              <input id="member_mailing_address" name="member_mailing_address" type="text" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="member_email">Member email <span class="tag optional">Optional · R</span></label>
+              <input id="member_email" name="member_email" type="email" inputmode="email" />
+            </div>
+            <div class="field col-6">
+              <label for="member_phone">Member phone <span class="tag optional">Optional · R</span></label>
+              <input id="member_phone" name="member_phone" type="tel" inputmode="tel" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ==================== SECTION C ==================== -->
+        <fieldset class="section">
+          <legend>
+            <span class="section-letter">C</span>
+            <span class="section-title">Property Profile</span>
+          </legend>
+
+          <div class="row">
+            <div class="field col-12">
+              <label for="property_street">
+                Property street address <span class="req">*</span>
+                <span class="tag">CD / PC / MLS</span>
+              </label>
+              <input id="property_street" name="property_street" type="text" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-4">
+              <label for="property_city">City <span class="tag">CD / PC / MLS</span></label>
+              <input id="property_city" name="property_city" type="text" />
+            </div>
+            <div class="field col-4">
+              <label for="property_county">County <span class="tag">CD / MLS</span></label>
+              <input id="property_county" name="property_county" type="text" />
+            </div>
+            <div class="field col-2">
+              <label for="property_state">State <span class="tag">CD</span></label>
+              <input id="property_state" name="property_state" type="text" value="TX" maxlength="2" />
+            </div>
+            <div class="field col-2">
+              <label for="property_zip">ZIP <span class="tag">CD / MLS</span></label>
+              <input id="property_zip" name="property_zip" type="text" inputmode="numeric" maxlength="10" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label class="group-label">Property type <span class="tag">MLS / PC</span></label>
+              <div class="radio-group" role="radiogroup" aria-label="Property type">
+                <label class="radio">
+                  <input type="radio" name="property_type" value="Single-family" />
+                  <span>Single-family</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="property_type" value="Condo" />
+                  <span>Condo</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="property_type" value="Townhouse" />
+                  <span>Townhouse</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="property_type" value="2-4 unit" />
+                  <span>2 to 4 unit</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="property_type" value="Other" />
+                  <span>Other</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-4">
+              <label for="year_built">Year built <span class="tag">MLS</span></label>
+              <input id="year_built" name="year_built" type="number" min="1600" max="2100" step="1" />
+            </div>
+            <div class="field col-4">
+              <label for="square_footage">Square footage <span class="tag">MLS</span></label>
+              <input id="square_footage" name="square_footage" type="number" min="0" step="1" />
+            </div>
+            <div class="field col-4">
+              <label for="lot_size">Lot size <span class="tag optional">Optional · MLS</span></label>
+              <input id="lot_size" name="lot_size" type="text" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-4">
+              <label for="bedrooms">Bedrooms <span class="tag optional">Optional · MLS</span></label>
+              <input id="bedrooms" name="bedrooms" type="number" min="0" step="1" />
+            </div>
+            <div class="field col-4">
+              <label for="baths">Baths <span class="tag optional">Optional · MLS</span></label>
+              <input id="baths" name="baths" type="number" min="0" step="0.5" />
+            </div>
+            <div class="field col-4">
+              <label for="apn">APN / parcel number <span class="tag">CD / settlement</span></label>
+              <input id="apn" name="apn" type="text" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12 inline-check">
+              <label class="checkbox">
+                <input type="checkbox" id="hoa_applies" name="hoa_applies" value="Yes" />
+                <span>HOA applies to this property <span class="tag">CD / MLS</span></span>
+              </label>
+              <div class="inline-input" data-when="hoa_applies">
+                <label for="hoa_name" class="inline-label">HOA name:</label>
+                <input id="hoa_name" name="hoa_name" type="text" disabled />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label for="legal_description">Legal description <span class="tag optional">Optional · PC / settlement</span></label>
+              <textarea id="legal_description" name="legal_description" rows="3"></textarea>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ==================== SECTION D ==================== -->
+        <fieldset class="section">
+          <legend>
+            <span class="section-letter">D</span>
+            <span class="section-title">Transaction &amp; Buyer Profile</span>
+          </legend>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="purchase_price">Purchase price ($) <span class="tag">CD / PC / MLS</span></label>
+              <input id="purchase_price" name="purchase_price" type="number" min="0" step="1" />
+            </div>
+            <div class="field col-6">
+              <label for="seller_concessions">Seller concessions / credits ($) <span class="tag optional">Optional · CD</span></label>
+              <input id="seller_concessions" name="seller_concessions" type="number" min="0" step="1" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label class="group-label">
+                Purchase type <span class="req">*</span> <span class="tag">CD</span>
+              </label>
+              <div class="radio-group" role="radiogroup" aria-label="Purchase type">
+                <label class="radio">
+                  <input type="radio" name="purchase_type" value="Financed" required />
+                  <span>Financed</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="purchase_type" value="Cash" required />
+                  <span>Cash</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label class="group-label">
+                Occupancy / use <span class="hint">(Primary/Secondary = owner-occupant · Investment = investor)</span> <span class="tag">R</span>
+              </label>
+              <div class="radio-group" role="radiogroup" aria-label="Occupancy">
+                <label class="radio">
+                  <input type="radio" name="occupancy" value="Primary residence" />
+                  <span>Primary residence</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="occupancy" value="Secondary home" />
+                  <span>Secondary home</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="occupancy" value="Investment" />
+                  <span>Investment</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label class="checkbox">
+                <input type="checkbox" name="first_time_buyer_program" value="Yes" />
+                <span>First-time-buyer program appears on the Closing Disclosure <span class="tag optional">Optional · CD</span></span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ==================== SECTION E ==================== -->
+        <fieldset class="section section-loan" id="section-e">
+          <legend>
+            <span class="section-letter">E</span>
+            <span class="section-title">Loan &amp; Financing</span>
+            <span class="section-hint">Complete only if Purchase type = Financed</span>
+          </legend>
+
+          <div class="row">
+            <div class="field col-12">
+              <label for="lender_name">Lender name <span class="tag">CD</span></label>
+              <input id="lender_name" name="lender_name" type="text" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-4">
+              <label for="loan_amount">Loan amount ($) <span class="tag">CD</span></label>
+              <input id="loan_amount" name="loan_amount" type="number" min="0" step="1" />
+            </div>
+            <div class="field col-4">
+              <label for="down_payment">Down payment ($) <span class="tag">CD / settlement</span></label>
+              <input id="down_payment" name="down_payment" type="number" min="0" step="1" />
+            </div>
+            <div class="field col-4">
+              <label for="ltv">LTV at closing (%) <span class="tag optional">Optional · CD</span></label>
+              <input id="ltv" name="ltv" type="number" min="0" max="150" step="0.01" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label class="group-label">Loan type <span class="tag">CD</span></label>
+              <div class="radio-group" role="radiogroup" aria-label="Loan type">
+                <label class="radio">
+                  <input type="radio" name="loan_type" value="Conventional" />
+                  <span>Conventional</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="loan_type" value="FHA" />
+                  <span>FHA</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="loan_type" value="VA" />
+                  <span>VA</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="loan_type" value="USDA" />
+                  <span>USDA</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="loan_type" value="Other" />
+                  <span>Other</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="interest_rate">Interest rate (%) <span class="tag">CD</span></label>
+              <input id="interest_rate" name="interest_rate" type="number" min="0" max="30" step="0.001" />
+            </div>
+            <div class="field col-6">
+              <label for="loan_term">Loan term (years) <span class="tag">CD</span></label>
+              <input id="loan_term" name="loan_term" type="number" min="0" max="50" step="1" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label class="group-label">Rate type <span class="tag">CD</span></label>
+              <div class="radio-group" role="radiogroup" aria-label="Rate type">
+                <label class="radio">
+                  <input type="radio" name="rate_type" value="Fixed" />
+                  <span>Fixed</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="rate_type" value="ARM" />
+                  <span>ARM</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12 inline-check">
+              <label class="checkbox">
+                <input type="checkbox" id="pmi_present" name="pmi_present" value="Yes" />
+                <span>PMI / MIP present <span class="tag">CD</span></span>
+              </label>
+              <div class="inline-input" data-when="pmi_present">
+                <label for="pmi_monthly" class="inline-label">Monthly amount ($):</label>
+                <input id="pmi_monthly" name="pmi_monthly" type="number" min="0" step="0.01" disabled />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12 inline-check">
+              <label class="checkbox">
+                <input type="checkbox" id="escrow_present" name="escrow_present" value="Yes" />
+                <span>Escrow / impound account for taxes &amp; insurance <span class="tag optional">Optional · CD</span></span>
+              </label>
+              <div class="inline-input" data-when="escrow_present">
+                <label for="escrow_monthly" class="inline-label">Monthly T&amp;I ($):</label>
+                <input id="escrow_monthly" name="escrow_monthly" type="number" min="0" step="0.01" disabled />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="first_payment_date">First payment date <span class="tag optional">Optional · CD / note</span></label>
+              <input id="first_payment_date" name="first_payment_date" type="date" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label class="checkbox">
+                <input type="checkbox" name="prepayment_penalty" value="Yes" />
+                <span>Loan has a prepayment penalty <span class="tag optional">Optional · CD</span></span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ==================== ACTIONS ==================== -->
+        <div class="form-footer">
+          <div class="confidential-note">
+            Confidential. Equity Guardians internal use only. Complete from closing documents; do
+            not contact the buyer.
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" id="print-blank">Print blank form</button>
+            <button type="submit" class="btn btn-primary" id="submit-btn">Submit intake</button>
+          </div>
+          <div class="form-status" role="status" aria-live="polite" id="form-status"></div>
+        </div>
+      </form>
+
+      <!-- Confirmation view (revealed on success) -->
+      <div class="confirmation" id="confirmation" hidden>
+        <div class="check-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="56" height="56"><circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 24l7 7 13-14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h2>Intake submitted.</h2>
+        <p class="confirmation-lede">
+          Thank you, <span id="conf-name">{displayName}</span>. The Texas Member Intake Form has
+          been recorded for <span id="conf-member">the member</span>. You can print or save a copy
+          of the submitted form below for your records.
+        </p>
+        <dl class="confirmation-meta">
+          <div><dt>Form ID</dt><dd>EG-INTAKE-TX-v1.0</dd></div>
+          <div><dt>Submitted at</dt><dd id="conf-time"></dd></div>
+          <div><dt>Reference</dt><dd id="conf-ref">Recorded</dd></div>
+        </dl>
+        <div class="confirmation-actions">
+          <button type="button" class="btn btn-primary" id="print-submitted">Print / save as PDF</button>
+          <a href="/partners/hub" class="btn btn-ghost">Back to Resource Shop</a>
+          <button type="button" class="btn btn-ghost" id="submit-another">Submit another intake</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    const form = document.getElementById('intake-form-el');
+    if (!form) return;
+    const status = document.getElementById('form-status');
+    const submitBtn = document.getElementById('submit-btn');
+    const printBlank = document.getElementById('print-blank');
+    const confirmation = document.getElementById('confirmation');
+    const confName = document.getElementById('conf-name');
+    const confMember = document.getElementById('conf-member');
+    const confTime = document.getElementById('conf-time');
+    const confRef = document.getElementById('conf-ref');
+    const printSubmitted = document.getElementById('print-submitted');
+    const submitAnother = document.getElementById('submit-another');
+    const sectionE = document.getElementById('section-e');
+
+    // Toggle a paired "when X is checked, enable field Y" behavior.
+    // We disable the paired input so blank inputs don't post ghost data.
+    function bindPairs() {
+      document.querySelectorAll('.inline-check').forEach((wrap) => {
+        const cb = wrap.querySelector('input[type="checkbox"]');
+        const paired = wrap.querySelector('.inline-input');
+        if (!cb || !paired) return;
+        const inputs = paired.querySelectorAll('input, textarea, select');
+        const sync = () => {
+          const on = cb.checked;
+          paired.classList.toggle('is-enabled', on);
+          inputs.forEach((el) => { el.disabled = !on; if (!on) el.value = ''; });
+        };
+        cb.addEventListener('change', sync);
+        sync();
+      });
+    }
+
+    // Purchase-type = Cash disables Section E.
+    function bindLoanSection() {
+      const purchaseRadios = document.querySelectorAll('input[name="purchase_type"]');
+      const sync = () => {
+        const checked = form.querySelector('input[name="purchase_type"]:checked');
+        const val = checked ? checked.value : '';
+        const disable = val === 'Cash';
+        if (!sectionE) return;
+        sectionE.classList.toggle('is-disabled', disable);
+        sectionE.querySelectorAll('input, textarea, select').forEach((el) => {
+          if (el.name === 'purchase_type') return;
+          // Respect the inline-input paired disable state when re-enabling.
+          if (disable) {
+            el.disabled = true;
+            if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+            else el.value = '';
+          } else {
+            // Re-enable, then re-run pair sync so paired inputs stay disabled if their checkbox is off.
+            el.disabled = false;
+          }
+        });
+        if (!disable) bindPairs();
+      };
+      purchaseRadios.forEach((r) => r.addEventListener('change', sync));
+      sync();
+    }
+
+    bindPairs();
+    bindLoanSection();
+
+    // "Print blank form": trigger the browser print dialog on the current page,
+    // but hide the confirmation view first if it happens to be showing.
+    if (printBlank) {
+      printBlank.addEventListener('click', () => {
+        document.body.classList.add('printing-form');
+        window.print();
+        setTimeout(() => document.body.classList.remove('printing-form'), 500);
+      });
+    }
+
+    if (printSubmitted) {
+      printSubmitted.addEventListener('click', () => {
+        document.body.classList.add('printing-submitted');
+        window.print();
+        setTimeout(() => document.body.classList.remove('printing-submitted'), 500);
+      });
+    }
+
+    if (submitAnother) {
+      submitAnother.addEventListener('click', () => {
+        confirmation.hidden = true;
+        form.hidden = false;
+        // Reset all fields except the pre-filled referring realtor name.
+        const kept = form.referring_realtor?.value;
+        form.reset();
+        if (kept && form.referring_realtor) form.referring_realtor.value = kept;
+        // Re-run bindings after reset.
+        bindPairs();
+        bindLoanSection();
+        window.scrollTo({ top: form.offsetTop - 100, behavior: 'smooth' });
+      });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!status || !submitBtn) return;
+
+      status.textContent = '';
+      status.className = 'form-status';
+
+      // Native HTML5 required-check
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting…';
+
+      try {
+        const fd = new FormData(form);
+        const res = await fetch('/api/partners/intake/texas', {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: fd,
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+          if (res.status === 401) {
+            status.innerHTML = 'Your session expired. <a href="/partners">Sign in again</a> to submit.';
+          } else {
+            status.textContent = data.error || 'Submission failed. Please try again.';
+          }
+          status.className = 'form-status form-status-error';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit intake';
+          return;
+        }
+
+        // Success: fill and reveal the confirmation panel.
+        if (confName) confName.textContent = fd.get('referring_realtor') || 'Partner';
+        if (confMember) confMember.textContent = String(fd.get('member_1_name') || 'the member');
+        if (confTime) confTime.textContent = new Date().toLocaleString();
+        if (confRef && data.recordId) confRef.textContent = data.recordId;
+
+        confirmation.hidden = false;
+        form.hidden = true;
+        window.scrollTo({ top: (confirmation.offsetTop || 0) - 100, behavior: 'smooth' });
+      } catch (err) {
+        status.textContent = 'Network error. Please try again in a moment.';
+        status.className = 'form-status form-status-error';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit intake';
+      }
+    });
+  })();
+</script>
+
+<style>
+  /* ---------- Hero ---------- */
+  .tx-hero {
+    background: linear-gradient(180deg, #FBF7EE 0%, #FFFFFF 100%);
+    padding: 3.5rem 0 2rem;
+    border-bottom: 1px solid var(--slate-200);
+  }
+  .crumbs {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--slate-500);
+    margin-bottom: 1.25rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .crumbs a { color: var(--slate-500); text-decoration: none; border-bottom: 1px solid transparent; }
+  .crumbs a:hover { color: var(--navy-900); border-color: var(--teal-500); }
+  .crumbs span[aria-hidden] { opacity: 0.5; }
+
+  .tx-hero .eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-700);
+    font-weight: 600;
+    padding-bottom: 0.55rem;
+    border-bottom: 2px solid var(--teal-500);
+    margin-bottom: 1rem;
+  }
+  .tx-hero h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+    color: var(--navy-900);
+    margin: 0 0 0.75rem;
+    line-height: 1.1;
+    max-width: 22ch;
+    letter-spacing: -0.01em;
+  }
+  .tx-hero .lede {
+    max-width: 60ch;
+    color: var(--slate-600);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ---------- Resource shelf card ---------- */
+  .tx-shelf { padding: 2rem 0 3rem; }
+  .shelf-header { margin-bottom: 1.5rem; }
+  .shelf-header h2 {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: var(--navy-900);
+    margin: 0 0 0.35rem;
+  }
+  .shelf-note { color: var(--slate-500); font-size: 0.9rem; margin: 0; }
+
+  .resource-card {
+    max-width: 720px;
+    background: white;
+    border: 1px solid var(--slate-200);
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 2px 8px rgba(10, 25, 48, 0.04);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .resource-card:hover {
+    box-shadow: 0 12px 32px rgba(10, 25, 48, 0.1);
+    transform: translateY(-2px);
+  }
+  .resource-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.85rem;
+  }
+  .resource-kind {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(20, 184, 166, 0.12);
+    color: var(--teal-700);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+  }
+  .resource-id {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--slate-500);
+  }
+  .resource-title {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    color: var(--navy-900);
+    margin: 0 0 0.5rem;
+  }
+  .resource-desc {
+    color: var(--slate-600);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 1.1rem;
+  }
+  .resource-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--navy-900);
+    color: white;
+    padding: 0.65rem 1.1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .resource-open:hover { background: var(--navy-800); transform: translateY(-1px); }
+
+  /* ---------- Form Section ---------- */
+  .tx-form-section {
+    padding: 3rem 0 5rem;
+    background: #F7F9FC;
+  }
+  .form-container { max-width: 900px; }
+
+  /* Letterhead */
+  .form-letterhead {
+    background: var(--navy-900);
+    color: white;
+    padding: 1.25rem 1.75rem;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .lh-logo { display: flex; align-items: center; gap: 0.85rem; }
+  .lh-logo img { display: block; }
+  .lh-name {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .lh-motto {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    color: var(--teal-400);
+    font-weight: 600;
+  }
+  .letterhead-right { text-align: right; }
+  .lh-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    color: white;
+    font-weight: 700;
+  }
+  .lh-sub {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    color: var(--teal-400);
+    margin-top: 0.35rem;
+  }
+
+  /* Guidance panel */
+  .form-guidance {
+    background: #FBF7EE;
+    border: 1px solid #E9DEC1;
+    border-top: 0;
+    padding: 1.25rem 1.75rem;
+    color: var(--navy-900);
+  }
+  .form-guidance h3 {
+    font-family: var(--font-sans);
+    font-size: 0.98rem;
+    margin: 0 0 0.5rem;
+    font-weight: 700;
+    color: var(--navy-900);
+  }
+  .form-guidance p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--slate-700, #334155);
+    margin: 0 0 0.5rem;
+  }
+  .form-guidance .legend {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--navy-800);
+    margin: 0;
+  }
+  .form-guidance .legend strong { color: var(--teal-700); font-weight: 700; }
+
+  /* Form body */
+  .intake-form {
+    background: white;
+    border: 1px solid var(--slate-200);
+    border-top: 0;
+    border-radius: 0 0 12px 12px;
+    padding: 0 0 1.5rem;
+    box-shadow: 0 8px 32px rgba(10, 25, 48, 0.06);
+  }
+
+  .section {
+    border: none;
+    padding: 1.75rem 1.75rem 0.5rem;
+    margin: 0;
+  }
+  .section + .section { border-top: 1px solid var(--slate-200); margin-top: 0.75rem; padding-top: 1.75rem; }
+
+  .section legend {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    flex-wrap: wrap;
+  }
+  .section-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--navy-900);
+    color: white;
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 8px;
+  }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--navy-900);
+    letter-spacing: -0.005em;
+  }
+  .section-hint {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-700);
+    font-weight: 600;
+    margin-left: auto;
+  }
+
+  .section.is-disabled { opacity: 0.5; pointer-events: none; }
+
+  .row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem 1rem;
+    margin-bottom: 1rem;
+  }
+  .col-12 { grid-column: span 12; }
+  .col-8 { grid-column: span 8; }
+  .col-6 { grid-column: span 6; }
+  .col-4 { grid-column: span 4; }
+  .col-2 { grid-column: span 2; }
+
+  @media (max-width: 720px) {
+    .col-8, .col-6, .col-4, .col-2 { grid-column: span 12; }
+  }
+
+  .field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .field label,
+  .field .group-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--navy-900);
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .field .req { color: #B91C1C; margin-left: 0.15rem; }
+  .field .hint {
+    font-weight: 400;
+    color: var(--slate-500);
+    font-size: 0.78rem;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-700);
+    font-weight: 600;
+    margin-left: auto;
+  }
+  .tag.optional { color: var(--slate-500); text-transform: none; letter-spacing: 0.06em; font-size: 0.7rem; }
+
+  .field input:not([type="checkbox"]):not([type="radio"]),
+  .field textarea,
+  .field select {
+    font: inherit;
+    font-size: 0.94rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--slate-200);
+    border-radius: 8px;
+    background: #FDFDFC;
+    color: var(--navy-900);
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .field textarea { resize: vertical; min-height: 72px; font-family: inherit; }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none;
+    border-color: var(--teal-500);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+  }
+  .field input:disabled, .field textarea:disabled { background: #F1F3F6; color: var(--slate-500); }
+
+  /* Radios & checkboxes */
+  .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.85rem;
+  }
+  .radio, .checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--slate-200);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--navy-900);
+    transition: border-color 0.2s, background 0.2s;
+    font-weight: 500;
+  }
+  .radio:hover, .checkbox:hover { border-color: var(--teal-500); }
+  .radio input, .checkbox input {
+    accent-color: var(--teal-700);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+  .radio:has(input:checked) {
+    background: rgba(20, 184, 166, 0.08);
+    border-color: var(--teal-500);
+  }
+  .checkbox:has(input:checked) {
+    background: rgba(10, 25, 48, 0.05);
+    border-color: var(--navy-800);
+  }
+
+  .inline-check {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .inline-input {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding-left: 0.85rem;
+    opacity: 0.5;
+  }
+  .inline-input.is-enabled { opacity: 1; }
+  .inline-label {
+    font-size: 0.85rem;
+    color: var(--navy-900);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .inline-input input { flex: 1; max-width: 260px; }
+
+  /* Footer / actions */
+  .form-footer {
+    padding: 1.75rem 1.75rem 0.5rem;
+    border-top: 1px solid var(--slate-200);
+    margin-top: 1rem;
+  }
+  .confidential-note {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--slate-500);
+    margin-bottom: 1rem;
+  }
+  .form-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font: inherit;
+    font-size: 0.94rem;
+    font-weight: 600;
+    padding: 0.75rem 1.35rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    border: 1px solid transparent;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-primary {
+    background: var(--navy-900);
+    color: white;
+    border-color: var(--navy-900);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--navy-800);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(10, 25, 48, 0.2);
+  }
+  .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+  .btn-ghost {
+    background: white;
+    color: var(--navy-900);
+    border-color: var(--slate-200);
+  }
+  .btn-ghost:hover { border-color: var(--navy-800); }
+
+  .form-status {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--slate-500);
+    min-height: 1.2em;
+  }
+  .form-status-error { color: #B91C1C; }
+  .form-status a { color: var(--teal-700); }
+
+  /* Confirmation */
+  .confirmation {
+    background: white;
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(10, 25, 48, 0.06);
+    border: 1px solid var(--slate-200);
+  }
+  .check-icon { color: var(--teal-700); margin-bottom: 1rem; }
+  .confirmation h2 {
+    font-family: var(--font-serif);
+    font-size: 1.9rem;
+    color: var(--navy-900);
+    margin: 0 0 0.5rem;
+  }
+  .confirmation-lede {
+    color: var(--slate-600);
+    line-height: 1.6;
+    margin: 0 0 2rem;
+    max-width: 44ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .confirmation-meta {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 0 auto 2rem;
+    padding: 1.25rem 1.5rem;
+    background: #FBF7EE;
+    border: 1px solid #E9DEC1;
+    border-radius: 10px;
+    max-width: 540px;
+    text-align: left;
+  }
+  .confirmation-meta > div { display: flex; flex-direction: column; gap: 0.2rem; }
+  .confirmation-meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--slate-500);
+    font-weight: 600;
+  }
+  .confirmation-meta dd {
+    font-size: 0.92rem;
+    color: var(--navy-900);
+    margin: 0;
+    font-weight: 500;
+  }
+  .confirmation-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- Print styles ---------- */
+  @media print {
+    .partner-ribbon,
+    header,
+    footer,
+    .tx-hero,
+    .tx-shelf,
+    .crumbs,
+    .form-footer,
+    .form-actions,
+    .form-status,
+    .confirmation-actions,
+    .confidential-note { display: none !important; }
+
+    body { background: white !important; }
+    .tx-form-section { background: white !important; padding: 0 !important; }
+    .form-container { max-width: none !important; padding: 0 !important; }
+    .intake-form { box-shadow: none !important; border: 0 !important; }
+    .form-letterhead { border-radius: 0 !important; }
+    .section { break-inside: avoid; page-break-inside: avoid; }
+    .row { break-inside: avoid; page-break-inside: avoid; }
+
+    .field input, .field textarea, .radio, .checkbox {
+      border-color: #888 !important;
+      background: white !important;
+      color: black !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .radio:has(input:checked), .checkbox:has(input:checked) {
+      background: #E9F5F3 !important;
+    }
+  }
+</style>
