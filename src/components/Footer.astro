@@ -61,6 +61,7 @@ const year = new Date().getFullYear();
         <ul class="legal-links">
           <li><a href="/privacy">Privacy Policy</a></li>
           <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="/partners" class="partner-link">Partner Realtors</a></li>
         </ul>
       </div>
       <p class="disclaimer">
@@ -156,6 +157,8 @@ const year = new Date().getFullYear();
   .legal-links { display: flex; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
   .legal-links a { color: rgba(255,255,255,0.7); text-decoration: none; }
   .legal-links a:hover { color: rgba(255,255,255,0.95); text-decoration: underline; }
+  .legal-links .partner-link { color: rgba(255,255,255,0.5); }
+  .legal-links .partner-link:hover { color: var(--teal-400); text-decoration: underline; }
 
   @media (max-width: 900px) {
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
