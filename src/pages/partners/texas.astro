@@ -657,6 +657,16 @@ const state = findStateBySlug('texas')!;
         const kept = form.referring_realtor?.value;
         form.reset();
         if (kept && form.referring_realtor) form.referring_realtor.value = kept;
+        // Restore the submit button (it was left disabled after the prior success).
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit intake';
+        }
+        // Clear any lingering status message from the previous submission.
+        if (status) {
+          status.textContent = '';
+          status.className = 'form-status';
+        }
         // Re-run bindings after reset.
         bindPairs();
         bindLoanSection();
