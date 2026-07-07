@@ -35,6 +35,11 @@ export const partnerStates: PartnerState[] = [
         kind: 'form',
         description: 'Fill out once per closing, working only from the paperwork already in hand. Auto-attributed to your name.',
       },
+      {
+        title: 'Partner Realtor Enrollment Form',
+        kind: 'form',
+        description: 'One-time enrollment for affiliated Buyer\'s Realtors. Company-wide, surfaced here while Texas is the first live state.',
+      },
     ],
   },
 

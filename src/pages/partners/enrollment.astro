@@ -1,0 +1,945 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PartnerRibbon from '../../components/PartnerRibbon.astro';
+
+const partner = (Astro.locals as any).partner as { name: string } | null;
+const displayName = partner?.name ?? 'Partner';
+---
+
+<BaseLayout
+  title="Partner Realtor Enrollment"
+  description="One-time enrollment for affiliated Equity Guardians Partner Realtors."
+  noIndex={true}
+>
+  <PartnerRibbon name={displayName} />
+
+  <section class="en-hero">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/partners/hub">Resource Shop</a>
+        <span aria-hidden="true">/</span>
+        <a href="/partners/texas">Texas</a>
+        <span aria-hidden="true">/</span>
+        <span>Enrollment</span>
+      </nav>
+
+      <span class="eyebrow">Company-wide · Form ID EG-ENROLL-US-v1.0</span>
+      <h1>Partner Realtor Enrollment Form</h1>
+      <p class="lede">
+        Complete this once to enroll as an Equity Guardians Partner Realtor. It collects your
+        information only. Your Partner Realtor Agreement is signed separately. Fields marked with
+        an asterisk (*) are required.
+      </p>
+    </div>
+  </section>
+
+  <section class="en-form-section" id="enrollment-form">
+    <div class="container form-container">
+
+      <div class="form-letterhead">
+        <div class="letterhead-left">
+          <div class="lh-logo">
+            <img src="/logo-mark.png" alt="" width="48" height="48" />
+            <div>
+              <div class="lh-name">EQUITY GUARDIANS</div>
+              <div class="lh-motto">SAVE · EARN · PROTECT</div>
+            </div>
+          </div>
+        </div>
+        <div class="letterhead-right">
+          <div class="lh-title">PARTNER REALTOR ENROLLMENT</div>
+          <div class="lh-sub">Company-wide · Form ID: EG-ENROLL-US-v1.0</div>
+        </div>
+      </div>
+
+      <div class="form-guidance">
+        <h3>Before you begin</h3>
+        <p>
+          This form collects your identity, brokerage, and practice profile. Your Partner Realtor
+          Agreement is a separate document, signed elsewhere. Enter the Agreement version you have
+          been sent (for example, EG-PRA-TX-v1.0) in Section E so we can match this enrollment to
+          the correct signed agreement.
+        </p>
+        <p class="legend">
+          Have on hand: your license number, license expiration, brokerage details, sponsoring
+          broker contact info, and the states and counties you serve.
+        </p>
+      </div>
+
+      <form
+        id="enrollment-form-el"
+        class="intake-form"
+        method="post"
+        action="/api/partners/intake/enrollment"
+        novalidate
+      >
+
+        <!-- ==================== SECTION A ==================== -->
+        <fieldset class="section">
+          <legend>
+            <span class="section-letter">A</span>
+            <span class="section-title">Submission &amp; Partner Tracking</span>
+          </legend>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="eg_partner_id">EG Partner ID <span class="tag optional">Office use</span></label>
+              <input id="eg_partner_id" name="eg_partner_id" type="text" placeholder="Leave blank if you don't have one" />
+            </div>
+            <div class="field col-6">
+              <label for="enrollment_date">Enrollment date <span class="tag optional">Office use</span></label>
+              <input id="enrollment_date" name="enrollment_date" type="date" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="form_completed_date">Date form completed <span class="req">*</span></label>
+              <input id="form_completed_date" name="form_completed_date" type="date" required />
+            </div>
+            <div class="field col-6">
+              <label for="referral_source">How did you hear about Equity Guardians?</label>
+              <input id="referral_source" name="referral_source" type="text" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ==================== SECTION B ==================== -->
+        <fieldset class="section">
+          <legend>
+            <span class="section-letter">B</span>
+            <span class="section-title">Agent Identity &amp; Contact</span>
+          </legend>
+
+          <div class="row">
+            <div class="field col-12">
+              <label for="agent_full_name">Agent full name <span class="req">*</span></label>
+              <input id="agent_full_name" name="agent_full_name" type="text" required value={displayName} />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="agent_license_number">Real estate license number <span class="req">*</span></label>
+              <input id="agent_license_number" name="agent_license_number" type="text" required />
+            </div>
+            <div class="field col-3">
+              <label for="license_state">License state(s) <span class="req">*</span></label>
+              <input id="license_state" name="license_state" type="text" required placeholder="e.g. TX" />
+            </div>
+            <div class="field col-3">
+              <label for="license_expiration_date">License expiration <span class="req">*</span></label>
+              <input id="license_expiration_date" name="license_expiration_date" type="date" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-4">
+              <label for="license_type">License type <span class="req">*</span></label>
+              <select id="license_type" name="license_type" required>
+                <option value="">Select one</option>
+                <option value="Salesperson">Salesperson</option>
+                <option value="Broker">Broker</option>
+                <option value="Broker Associate">Broker Associate</option>
+              </select>
+            </div>
+            <div class="field col-4">
+              <label for="years_licensed">Years licensed</label>
+              <input id="years_licensed" name="years_licensed" type="number" min="0" step="1" />
+            </div>
+            <div class="field col-4">
+              <label for="preferred_contact_method">Preferred contact</label>
+              <select id="preferred_contact_method" name="preferred_contact_method">
+                <option value="">Select one</option>
+                <option value="Email">Email</option>
+                <option value="Phone">Phone</option>
+                <option value="Text">Text</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="agent_email">Email <span class="req">*</span></label>
+              <input id="agent_email" name="agent_email" type="email" inputmode="email" required />
+            </div>
+            <div class="field col-6">
+              <label for="agent_phone">Phone <span class="req">*</span></label>
+              <input id="agent_phone" name="agent_phone" type="tel" inputmode="tel" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label for="agent_mailing_address">Mailing address <span class="req">*</span></label>
+              <input id="agent_mailing_address" name="agent_mailing_address" type="text" required />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ==================== SECTION C ==================== -->
+        <fieldset class="section">
+          <legend>
+            <span class="section-letter">C</span>
+            <span class="section-title">Brokerage &amp; Sponsoring Broker</span>
+          </legend>
+
+          <div class="row">
+            <div class="field col-8">
+              <label for="brokerage_name">Brokerage name <span class="req">*</span></label>
+              <input id="brokerage_name" name="brokerage_name" type="text" required />
+            </div>
+            <div class="field col-4">
+              <label for="brokerage_license_number">Brokerage license #</label>
+              <input id="brokerage_license_number" name="brokerage_license_number" type="text" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label for="brokerage_address">Brokerage address <span class="req">*</span></label>
+              <input id="brokerage_address" name="brokerage_address" type="text" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-8">
+              <label for="sponsoring_broker_name">Sponsoring broker name <span class="req">*</span></label>
+              <input id="sponsoring_broker_name" name="sponsoring_broker_name" type="text" required />
+            </div>
+            <div class="field col-4">
+              <label for="sponsoring_broker_license_number">Sponsoring broker license #</label>
+              <input id="sponsoring_broker_license_number" name="sponsoring_broker_license_number" type="text" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="sponsoring_broker_email">Sponsoring broker email <span class="req">*</span></label>
+              <input id="sponsoring_broker_email" name="sponsoring_broker_email" type="email" inputmode="email" required />
+            </div>
+            <div class="field col-6">
+              <label for="sponsoring_broker_phone">Sponsoring broker phone <span class="req">*</span></label>
+              <input id="sponsoring_broker_phone" name="sponsoring_broker_phone" type="tel" inputmode="tel" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-8">
+              <label for="contracting_entity_name">Contracting party (legal name on the Partner Realtor Agreement) <span class="req">*</span></label>
+              <input id="contracting_entity_name" name="contracting_entity_name" type="text" required />
+            </div>
+            <div class="field col-4">
+              <label for="contracting_entity_type">Entity type</label>
+              <select id="contracting_entity_type" name="contracting_entity_type">
+                <option value="">Select one</option>
+                <option value="Individual">Individual</option>
+                <option value="LLC">LLC</option>
+                <option value="Team">Team</option>
+                <option value="Brokerage">Brokerage</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ==================== SECTION D ==================== -->
+        <fieldset class="section">
+          <legend>
+            <span class="section-letter">D</span>
+            <span class="section-title">Practice Profile &amp; Markets Served</span>
+          </legend>
+
+          <div class="row">
+            <div class="field col-8">
+              <label for="states_served">States served <span class="req">*</span></label>
+              <input id="states_served" name="states_served" type="text" required placeholder="e.g. TX, LA" />
+            </div>
+            <div class="field col-4">
+              <label for="practice_role">Practice role</label>
+              <select id="practice_role" name="practice_role">
+                <option value="">Select one</option>
+                <option value="Individual agent">Individual agent</option>
+                <option value="Team lead">Team lead</option>
+                <option value="Broker-owner">Broker-owner</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label for="counties_markets_served">Counties / markets served <span class="req">*</span></label>
+              <input id="counties_markets_served" name="counties_markets_served" type="text" required placeholder="e.g. Harris, Fort Bend, Montgomery" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-6">
+              <label for="primary_mls_board">Primary MLS / board</label>
+              <input id="primary_mls_board" name="primary_mls_board" type="text" />
+            </div>
+            <div class="field col-6">
+              <label for="estimated_annual_closings">Estimated annual closings</label>
+              <input id="estimated_annual_closings" name="estimated_annual_closings" type="number" min="0" step="1" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ==================== SECTION E ==================== -->
+        <fieldset class="section">
+          <legend>
+            <span class="section-letter">E</span>
+            <span class="section-title">Agreement, Consents &amp; Signature</span>
+          </legend>
+
+          <div class="row">
+            <div class="field col-12">
+              <label class="checkbox">
+                <input type="checkbox" id="partner_agreement_ack" name="partner_agreement_ack" value="Yes" required />
+                <span>I have read and agree to the Equity Guardians Partner Realtor Agreement. <span class="req">*</span></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label for="partner_agreement_version">Partner Realtor Agreement version signed <span class="req">*</span></label>
+              <input id="partner_agreement_version" name="partner_agreement_version" type="text" required placeholder="e.g. EG-PRA-TX-v1.0" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-12">
+              <label class="checkbox">
+                <input type="checkbox" id="terms_privacy_ack" name="terms_privacy_ack" value="Yes" required />
+                <span>I agree to the Equity Guardians <a href="/terms" target="_blank" rel="noopener">Terms of Service</a> and <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>. <span class="req">*</span></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-6">
+              <label class="checkbox">
+                <input type="checkbox" name="marketing_optin" value="Yes" />
+                <span>Opt in to co-branded marketing materials.</span>
+              </label>
+            </div>
+            <div class="field col-6">
+              <label class="checkbox">
+                <input type="checkbox" name="cobrand_assets_provided" value="Yes" />
+                <span>Headshot / logo provided for co-branding.</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field col-8">
+              <label for="agent_signature">Agent signature (typed) <span class="req">*</span></label>
+              <input id="agent_signature" name="agent_signature" type="text" required placeholder="Type your full legal name" />
+            </div>
+            <div class="field col-4">
+              <label for="signature_date">Date <span class="req">*</span></label>
+              <input id="signature_date" name="signature_date" type="date" required />
+            </div>
+          </div>
+
+          <p class="signature-note">
+            Typing your full name above serves as your signature for this enrollment record. Your
+            Partner Realtor Agreement itself is signed separately as a countersigned PDF.
+          </p>
+        </fieldset>
+
+        <!-- ==================== ACTIONS ==================== -->
+        <div class="form-footer">
+          <div class="confidential-note">
+            Confidential. Equity Guardians partner enrollment. Duplicate submissions are versioned
+            in our records rather than overwritten, so it is safe to resubmit if a field needs
+            correction.
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" id="print-blank">Print blank form</button>
+            <button type="submit" class="btn btn-primary" id="submit-btn">Submit enrollment</button>
+          </div>
+          <div class="form-status" role="status" aria-live="polite" id="form-status"></div>
+        </div>
+      </form>
+
+      <!-- Confirmation view (revealed on success) -->
+      <div class="confirmation" id="confirmation" hidden>
+        <div class="check-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="56" height="56"><circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 24l7 7 13-14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h2>Enrollment submitted.</h2>
+        <p class="confirmation-lede">
+          Thank you, <span id="conf-name">{displayName}</span>. Your Partner Realtor enrollment
+          has been recorded. Save the reference below in case you need to contact us about this
+          submission.
+        </p>
+        <dl class="confirmation-meta">
+          <div><dt>Form ID</dt><dd>EG-ENROLL-US-v1.0</dd></div>
+          <div><dt>Submitted at</dt><dd id="conf-time"></dd></div>
+          <div><dt>Reference</dt><dd id="conf-ref">Recorded</dd></div>
+          <div><dt>Version</dt><dd id="conf-version">v1</dd></div>
+        </dl>
+        <p class="confirmation-note" id="conf-duplicate-note" hidden>
+          We already had an enrollment on file with matching license number or email, so this
+          submission was saved as a new version. Your prior submissions were preserved for our
+          records.
+        </p>
+        <div class="confirmation-actions">
+          <button type="button" class="btn btn-primary" id="print-submitted">Print / save as PDF</button>
+          <a href="/partners/texas" class="btn btn-ghost">Back to Texas resources</a>
+          <button type="button" class="btn btn-ghost" id="submit-another">Submit another enrollment</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    const form = document.getElementById('enrollment-form-el');
+    if (!form) return;
+    const status = document.getElementById('form-status');
+    const submitBtn = document.getElementById('submit-btn');
+    const printBlank = document.getElementById('print-blank');
+    const confirmation = document.getElementById('confirmation');
+    const confName = document.getElementById('conf-name');
+    const confTime = document.getElementById('conf-time');
+    const confRef = document.getElementById('conf-ref');
+    const confVersion = document.getElementById('conf-version');
+    const confDupNote = document.getElementById('conf-duplicate-note');
+    const printSubmitted = document.getElementById('print-submitted');
+    const submitAnother = document.getElementById('submit-another');
+
+    // Prefill today's date on the two date-of-completion fields for convenience.
+    const today = new Date().toISOString().slice(0, 10);
+    ['form_completed_date', 'signature_date'].forEach((n) => {
+      const el = form.elements.namedItem(n);
+      if (el && !el.value) el.value = today;
+    });
+
+    if (printBlank) {
+      printBlank.addEventListener('click', () => {
+        document.body.classList.add('printing-form');
+        window.print();
+        setTimeout(() => document.body.classList.remove('printing-form'), 500);
+      });
+    }
+
+    if (printSubmitted) {
+      printSubmitted.addEventListener('click', () => {
+        document.body.classList.add('printing-submitted');
+        window.print();
+        setTimeout(() => document.body.classList.remove('printing-submitted'), 500);
+      });
+    }
+
+    if (submitAnother) {
+      submitAnother.addEventListener('click', () => {
+        confirmation.hidden = true;
+        form.hidden = false;
+        const kept = form.agent_full_name?.value;
+        form.reset();
+        if (kept && form.agent_full_name) form.agent_full_name.value = kept;
+        ['form_completed_date', 'signature_date'].forEach((n) => {
+          const el = form.elements.namedItem(n);
+          if (el && !el.value) el.value = today;
+        });
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit enrollment';
+        }
+        if (status) {
+          status.textContent = '';
+          status.className = 'form-status';
+        }
+        window.scrollTo({ top: form.offsetTop - 100, behavior: 'smooth' });
+      });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!status || !submitBtn) return;
+
+      status.textContent = '';
+      status.className = 'form-status';
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting…';
+
+      try {
+        const fd = new FormData(form);
+        const res = await fetch('/api/partners/intake/enrollment', {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: fd,
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+          if (res.status === 401) {
+            status.innerHTML = 'Your session expired. <a href="/partners">Sign in again</a> to submit.';
+          } else {
+            status.textContent = data.error || 'Submission failed. Please try again.';
+          }
+          status.className = 'form-status form-status-error';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit enrollment';
+          return;
+        }
+
+        if (confName) confName.textContent = fd.get('agent_full_name') || 'Partner';
+        if (confTime) confTime.textContent = new Date().toLocaleString();
+        if (confRef && data.reference) confRef.textContent = data.reference;
+        if (confVersion) confVersion.textContent = 'v' + (data.version || 1);
+        if (confDupNote) confDupNote.hidden = !data.isDuplicate;
+
+        confirmation.hidden = false;
+        form.hidden = true;
+        window.scrollTo({ top: (confirmation.offsetTop || 0) - 100, behavior: 'smooth' });
+      } catch (err) {
+        status.textContent = 'Network error. Please try again in a moment.';
+        status.className = 'form-status form-status-error';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit enrollment';
+      }
+    });
+  })();
+</script>
+
+<style>
+  /* Hero */
+  .en-hero {
+    background: linear-gradient(180deg, #FBF7EE 0%, #FFFFFF 100%);
+    padding: 3.5rem 0 2rem;
+    border-bottom: 1px solid var(--slate-200);
+  }
+  .crumbs {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--slate-500);
+    margin-bottom: 1.25rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .crumbs a { color: var(--slate-500); text-decoration: none; border-bottom: 1px solid transparent; }
+  .crumbs a:hover { color: var(--navy-900); border-color: var(--teal-500); }
+  .crumbs span[aria-hidden] { opacity: 0.5; }
+
+  .en-hero .eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-700);
+    font-weight: 600;
+    padding-bottom: 0.55rem;
+    border-bottom: 2px solid var(--teal-500);
+    margin-bottom: 1rem;
+  }
+  .en-hero h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+    color: var(--navy-900);
+    margin: 0 0 0.75rem;
+    line-height: 1.1;
+    max-width: 22ch;
+    letter-spacing: -0.01em;
+  }
+  .en-hero .lede {
+    max-width: 62ch;
+    color: var(--slate-600);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Form section */
+  .en-form-section {
+    padding: 2.5rem 0 5rem;
+    background: #F7F9FC;
+  }
+  .form-container { max-width: 900px; }
+
+  .form-letterhead {
+    background: var(--navy-900);
+    color: white;
+    padding: 1.25rem 1.75rem;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .lh-logo { display: flex; align-items: center; gap: 0.85rem; }
+  .lh-logo img { display: block; }
+  .lh-name {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .lh-motto {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    color: var(--teal-400);
+    font-weight: 600;
+  }
+  .letterhead-right { text-align: right; }
+  .lh-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    color: white;
+    font-weight: 700;
+  }
+  .lh-sub {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    color: var(--teal-400);
+    margin-top: 0.35rem;
+  }
+
+  .form-guidance {
+    background: #FBF7EE;
+    border: 1px solid #E9DEC1;
+    border-top: 0;
+    padding: 1.25rem 1.75rem;
+    color: var(--navy-900);
+  }
+  .form-guidance h3 {
+    font-family: var(--font-sans);
+    font-size: 0.98rem;
+    margin: 0 0 0.5rem;
+    font-weight: 700;
+    color: var(--navy-900);
+  }
+  .form-guidance p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--slate-700, #334155);
+    margin: 0 0 0.5rem;
+  }
+  .form-guidance .legend {
+    font-size: 0.85rem;
+    color: var(--navy-800);
+    margin: 0;
+  }
+
+  .intake-form {
+    background: white;
+    border: 1px solid var(--slate-200);
+    border-top: 0;
+    border-radius: 0 0 12px 12px;
+    padding: 0 0 1.5rem;
+    box-shadow: 0 8px 32px rgba(10, 25, 48, 0.06);
+  }
+
+  .section {
+    border: none;
+    padding: 1.75rem 1.75rem 0.5rem;
+    margin: 0;
+  }
+  .section + .section { border-top: 1px solid var(--slate-200); margin-top: 0.75rem; padding-top: 1.75rem; }
+
+  .section legend {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    flex-wrap: wrap;
+  }
+  .section-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--navy-900);
+    color: white;
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 8px;
+  }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--navy-900);
+    letter-spacing: -0.005em;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem 1rem;
+    margin-bottom: 1rem;
+  }
+  .col-12 { grid-column: span 12; }
+  .col-8 { grid-column: span 8; }
+  .col-6 { grid-column: span 6; }
+  .col-4 { grid-column: span 4; }
+  .col-3 { grid-column: span 3; }
+  .col-2 { grid-column: span 2; }
+
+  @media (max-width: 720px) {
+    .col-8, .col-6, .col-4, .col-3, .col-2 { grid-column: span 12; }
+  }
+
+  .field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .field label,
+  .field .group-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--navy-900);
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .field .req { color: #B91C1C; margin-left: 0.15rem; }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-700);
+    font-weight: 600;
+    margin-left: auto;
+  }
+  .tag.optional { color: var(--slate-500); text-transform: none; letter-spacing: 0.06em; font-size: 0.7rem; }
+
+  .field input:not([type="checkbox"]):not([type="radio"]),
+  .field textarea,
+  .field select {
+    font: inherit;
+    font-size: 0.94rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--slate-200);
+    border-radius: 8px;
+    background: #FDFDFC;
+    color: var(--navy-900);
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .field select { padding-right: 2.25rem; }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none;
+    border-color: var(--teal-500);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+  }
+
+  .checkbox {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid var(--slate-200);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--navy-900);
+    transition: border-color 0.2s, background 0.2s;
+    font-weight: 500;
+    line-height: 1.45;
+    width: 100%;
+  }
+  .checkbox:hover { border-color: var(--teal-500); }
+  .checkbox input {
+    accent-color: var(--teal-700);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+  .checkbox:has(input:checked) {
+    background: rgba(10, 25, 48, 0.05);
+    border-color: var(--navy-800);
+  }
+  .checkbox a { color: var(--teal-700); }
+
+  .signature-note {
+    font-size: 0.82rem;
+    color: var(--slate-500);
+    line-height: 1.5;
+    margin: 0.5rem 0 0;
+  }
+
+  .form-footer {
+    padding: 1.75rem 1.75rem 0.5rem;
+    border-top: 1px solid var(--slate-200);
+    margin-top: 1rem;
+  }
+  .confidential-note {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--slate-500);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  .form-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font: inherit;
+    font-size: 0.94rem;
+    font-weight: 600;
+    padding: 0.75rem 1.35rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    border: 1px solid transparent;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-primary {
+    background: var(--navy-900);
+    color: white;
+    border-color: var(--navy-900);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--navy-800);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(10, 25, 48, 0.2);
+  }
+  .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+  .btn-ghost {
+    background: white;
+    color: var(--navy-900);
+    border-color: var(--slate-200);
+  }
+  .btn-ghost:hover { border-color: var(--navy-800); }
+
+  .form-status {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--slate-500);
+    min-height: 1.2em;
+  }
+  .form-status-error { color: #B91C1C; }
+  .form-status a { color: var(--teal-700); }
+
+  .confirmation {
+    background: white;
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(10, 25, 48, 0.06);
+    border: 1px solid var(--slate-200);
+  }
+  .check-icon { color: var(--teal-700); margin-bottom: 1rem; }
+  .confirmation h2 {
+    font-family: var(--font-serif);
+    font-size: 1.9rem;
+    color: var(--navy-900);
+    margin: 0 0 0.5rem;
+  }
+  .confirmation-lede {
+    color: var(--slate-600);
+    line-height: 1.6;
+    margin: 0 auto 2rem;
+    max-width: 48ch;
+  }
+  .confirmation-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+    gap: 1.25rem 2rem;
+    margin: 0 auto 1.5rem;
+    padding: 1.25rem 1.5rem;
+    background: #FBF7EE;
+    border: 1px solid #E9DEC1;
+    border-radius: 10px;
+    max-width: 560px;
+    text-align: left;
+  }
+  .confirmation-meta > div { display: flex; flex-direction: column; gap: 0.2rem; }
+  .confirmation-meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--slate-500);
+    font-weight: 600;
+  }
+  .confirmation-meta dd {
+    font-size: 0.92rem;
+    color: var(--navy-900);
+    margin: 0;
+    font-weight: 500;
+    word-break: break-word;
+  }
+  .confirmation-note {
+    color: var(--slate-600);
+    line-height: 1.55;
+    max-width: 52ch;
+    margin: 0 auto 1.5rem;
+    font-size: 0.9rem;
+    background: rgba(20, 184, 166, 0.08);
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    border-radius: 10px;
+    padding: 0.85rem 1.15rem;
+  }
+  .confirmation-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media print {
+    .partner-ribbon,
+    header,
+    footer,
+    .en-hero,
+    .crumbs,
+    .form-footer,
+    .form-actions,
+    .form-status,
+    .confirmation-actions,
+    .confidential-note { display: none !important; }
+
+    body { background: white !important; }
+    .en-form-section { background: white !important; padding: 0 !important; }
+    .form-container { max-width: none !important; padding: 0 !important; }
+    .intake-form { box-shadow: none !important; border: 0 !important; }
+    .form-letterhead { border-radius: 0 !important; }
+    .section { break-inside: avoid; page-break-inside: avoid; }
+    .row { break-inside: avoid; page-break-inside: avoid; }
+
+    .field input, .field textarea, .field select, .checkbox {
+      border-color: #888 !important;
+      background: white !important;
+      color: black !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .checkbox:has(input:checked) {
+      background: #E9F5F3 !important;
+    }
+  }
+</style>
