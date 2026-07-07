@@ -14,7 +14,7 @@ export const site = {
       line2: 'New York, NY 10007',
       country: 'United States',
     },
-    hours: 'Monday – Friday · 9:00 AM – 5:00 PM (EST)',
+    hours: 'Monday to Friday, 9:00 AM to 5:00 PM (EST)',
   },
   social: {
     linkedin: '#',
