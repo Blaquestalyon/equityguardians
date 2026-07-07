@@ -41,10 +41,10 @@ export const partnerStates: PartnerState[] = [
         description: 'One-time enrollment for affiliated Buyer\'s Realtors. Company-wide, surfaced here while Texas is the first live state.',
       },
       {
-        title: 'Sponsoring Broker Acknowledgment (DRAFT)',
+        title: 'Sponsoring Broker Acknowledgment',
         kind: 'document',
         description: 'Broker-signed acknowledgment covering supervision, disclosure, and compensation terms for affiliated Buyer\'s Realtors. Download, sign, and return outside the portal.',
-        href: '/partners/texas/forms/EG-Texas-Sponsoring-Broker-Acknowledgment-v1.0-DRAFT.pdf',
+        href: '/partners/texas/forms/EG-Texas-Sponsoring-Broker-Acknowledgment-v1.0.pdf',
       },
     ],
   },
