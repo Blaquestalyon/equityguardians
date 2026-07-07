@@ -1,0 +1,106 @@
+---
+// Slim identity ribbon that sits at the very top of every gated partner
+// page: brand mark on the left, signed-in name + sign-out on the right.
+// Rendered above the normal site header so the partner scope is always
+// visible without stealing hierarchy from the site nav.
+interface Props {
+  name: string;
+}
+const { name } = Astro.props as Props;
+---
+
+<div class="partner-ribbon" role="banner">
+  <div class="ribbon-inner">
+    <a href="/partners/hub" class="ribbon-brand" aria-label="Partner hub">
+      <span class="ribbon-eyebrow">Partner Portal</span>
+      <span class="ribbon-sep" aria-hidden="true">·</span>
+      <span class="ribbon-tag">Equity Guardians</span>
+    </a>
+
+    <div class="ribbon-actions">
+      <span class="ribbon-user" aria-label="Signed in as">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg>
+        <span>{name}</span>
+      </span>
+      <form method="post" action="/api/partners/logout" class="ribbon-logout">
+        <button type="submit" class="ribbon-logout-btn">Sign out</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  .partner-ribbon {
+    background: var(--navy-900);
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .ribbon-inner {
+    max-width: var(--container-max, 1200px);
+    margin: 0 auto;
+    padding: 0.55rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .ribbon-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    text-decoration: none;
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .ribbon-eyebrow { color: var(--teal-400); font-weight: 600; }
+  .ribbon-sep { opacity: 0.4; }
+  .ribbon-tag { color: rgba(255, 255, 255, 0.85); }
+
+  .ribbon-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .ribbon-user {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+  }
+  .ribbon-user svg { opacity: 0.7; }
+
+  .ribbon-logout { margin: 0; }
+  .ribbon-logout-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .ribbon-logout-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 600px) {
+    .ribbon-inner { padding: 0.5rem 1rem; gap: 0.5rem; }
+    .ribbon-brand .ribbon-tag { display: none; }
+    .ribbon-user span:last-child {
+      max-width: 130px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+</style>

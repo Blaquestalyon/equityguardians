@@ -1,17 +1,399 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PartnerRibbon from '../../components/PartnerRibbon.astro';
+import { sortedStates } from '../../data/partner-states';
 
-// Placeholder. Replaced with the real states grid in the next commit.
-// Auth is enforced by middleware; if this renders, the visitor is signed in.
-const partner = (Astro.locals as any).partner as { name: string } | null;
+const partner = (Astro.locals as any).partner as { name: string; expiresAt: number } | null;
+const displayName = partner?.name ?? 'Partner';
+
+const states = sortedStates();
+const active = states.filter((s) => s.status === 'active');
+const coming = states.filter((s) => s.status !== 'active');
+const totalResources = active.reduce((n, s) => n + s.resources.length, 0);
 ---
 
-<BaseLayout title="Partner Hub" description="Equity Guardians partner resource portal." noIndex={true}>
-  <section class="container" style="padding:5rem 1.25rem;">
-    <h1>Welcome, {partner?.name || 'Partner'}.</h1>
-    <p>Hub coming online in the next update.</p>
-    <p style="margin-top:2rem;">
-      <a href="/api/partners/logout">Sign out</a>
-    </p>
+<BaseLayout
+  title="Partner Hub"
+  description="Equity Guardians resource shop for affiliated Buyer's Realtors."
+  noIndex={true}
+>
+  <PartnerRibbon name={displayName} />
+
+  <section class="hub-hero">
+    <div class="container">
+      <span class="eyebrow">Resource Shop · Affiliated Buyer's Realtors</span>
+      <h1>Everything you need to onboard a member, in one place.</h1>
+      <p class="lede">
+        Forms, closing documents, and training resources organized by state. Everything here is
+        free. Pick your state to see what is available.
+      </p>
+
+      <div class="hub-stats" role="list">
+        <div class="stat" role="listitem">
+          <span class="stat-num">{active.length}</span>
+          <span class="stat-label">States live</span>
+        </div>
+        <div class="stat" role="listitem">
+          <span class="stat-num">{totalResources}</span>
+          <span class="stat-label">Resources available</span>
+        </div>
+        <div class="stat" role="listitem">
+          <span class="stat-num">{coming.length}</span>
+          <span class="stat-label">Coming soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hub-shop">
+    <div class="container">
+      <div class="shop-toolbar">
+        <div class="shop-filters" role="tablist" aria-label="Filter states">
+          <button class="chip is-active" data-filter="all" role="tab" aria-selected="true">All states</button>
+          <button class="chip" data-filter="active" role="tab" aria-selected="false">Live now</button>
+          <button class="chip" data-filter="coming" role="tab" aria-selected="false">Coming soon</button>
+        </div>
+        <label class="shop-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="search" id="state-search" placeholder="Search a state" aria-label="Search states" />
+        </label>
+      </div>
+
+      <ul class="state-grid" id="state-grid">
+        {states.map((s) => {
+          const isActive = s.status === 'active';
+          const count = s.resources.length;
+          return (
+            <li class:list={["state-tile", isActive ? "is-active" : "is-coming"]} data-status={isActive ? "active" : "coming"} data-name={s.name.toLowerCase()}>
+              {isActive ? (
+                <a href={`/partners/${s.slug}`} class="tile-link">
+                  <div class="tile-topline">
+                    <span class="tile-badge tile-badge-live">
+                      <span class="dot" aria-hidden="true"></span>
+                      Live
+                    </span>
+                    <span class="tile-count">{count} {count === 1 ? 'resource' : 'resources'}</span>
+                  </div>
+                  <h2 class="tile-state">{s.name}</h2>
+                  {s.tagline && <p class="tile-tagline">{s.tagline}</p>}
+                  <div class="tile-cta">
+                    <span>Browse resources</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              ) : (
+                <div class="tile-link tile-link-inert" aria-disabled="true">
+                  <div class="tile-topline">
+                    <span class="tile-badge tile-badge-soon">Coming soon</span>
+                  </div>
+                  <h2 class="tile-state">{s.name}</h2>
+                  <p class="tile-tagline">Resources will appear here as we activate this state.</p>
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+
+      <p class="empty-note" id="empty-note" hidden>No states match your search.</p>
+    </div>
   </section>
 </BaseLayout>
+
+<script is:inline>
+  (function () {
+    const chips = document.querySelectorAll('.chip');
+    const tiles = Array.from(document.querySelectorAll('#state-grid .state-tile'));
+    const search = document.getElementById('state-search');
+    const emptyNote = document.getElementById('empty-note');
+
+    let currentFilter = 'all';
+    let currentQuery = '';
+
+    function apply() {
+      let visible = 0;
+      tiles.forEach((tile) => {
+        const status = tile.getAttribute('data-status');
+        const name = tile.getAttribute('data-name') || '';
+        const matchesFilter =
+          currentFilter === 'all' ||
+          (currentFilter === 'active' && status === 'active') ||
+          (currentFilter === 'coming' && status === 'coming');
+        const matchesQuery = !currentQuery || name.includes(currentQuery);
+        const show = matchesFilter && matchesQuery;
+        tile.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      if (emptyNote) emptyNote.hidden = visible !== 0;
+    }
+
+    chips.forEach((c) => {
+      c.addEventListener('click', () => {
+        chips.forEach((cc) => { cc.classList.remove('is-active'); cc.setAttribute('aria-selected', 'false'); });
+        c.classList.add('is-active'); c.setAttribute('aria-selected', 'true');
+        currentFilter = c.getAttribute('data-filter') || 'all';
+        apply();
+      });
+    });
+
+    if (search) {
+      search.addEventListener('input', (e) => {
+        currentQuery = String(e.target.value || '').trim().toLowerCase();
+        apply();
+      });
+    }
+  })();
+</script>
+
+<style>
+  /* ---------- Hero ---------- */
+  .hub-hero {
+    background: linear-gradient(180deg, #FBF7EE 0%, #FFFFFF 100%);
+    padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 4vw, 3rem);
+    border-bottom: 1px solid var(--slate-200);
+  }
+  .hub-hero .eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-700);
+    font-weight: 600;
+    padding-bottom: 0.55rem;
+    border-bottom: 2px solid var(--teal-500);
+    margin-bottom: 1rem;
+  }
+  .hub-hero h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+    color: var(--navy-900);
+    margin: 0 0 0.8rem;
+    line-height: 1.1;
+    max-width: 22ch;
+    letter-spacing: -0.01em;
+  }
+  .hub-hero .lede {
+    max-width: 60ch;
+    color: var(--slate-600);
+    font-size: 1.02rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .hub-stats {
+    margin-top: 2rem;
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .stat { display: flex; flex-direction: column; gap: 0.2rem; }
+  .stat-num {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    color: var(--navy-900);
+    font-weight: 600;
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--slate-500);
+    font-weight: 600;
+  }
+
+  /* ---------- Shop toolbar ---------- */
+  .hub-shop { padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(4rem, 8vw, 6rem); }
+  .shop-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .shop-filters { display: inline-flex; gap: 0.4rem; flex-wrap: wrap; }
+  .chip {
+    background: white;
+    border: 1px solid var(--slate-200);
+    color: var(--slate-600);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.85rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    font-weight: 600;
+  }
+  .chip:hover { border-color: var(--teal-500); color: var(--navy-900); }
+  .chip.is-active {
+    background: var(--navy-900);
+    color: white;
+    border-color: var(--navy-900);
+  }
+
+  .shop-search {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    border: 1px solid var(--slate-200);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    color: var(--slate-500);
+    min-width: 240px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .shop-search:focus-within {
+    border-color: var(--teal-500);
+    box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.12);
+    color: var(--navy-900);
+  }
+  .shop-search input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font: inherit;
+    font-size: 0.9rem;
+    color: var(--navy-900);
+    width: 100%;
+  }
+
+  /* ---------- Grid ---------- */
+  .state-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .state-tile { display: flex; }
+  .tile-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 200px;
+    padding: 1.25rem 1.35rem 1.15rem;
+    background: white;
+    border: 1px solid var(--slate-200);
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--navy-900);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    position: relative;
+  }
+  .state-tile.is-active .tile-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(10, 25, 48, 0.12), 0 2px 6px rgba(10, 25, 48, 0.05);
+    border-color: var(--teal-500);
+  }
+  .state-tile.is-coming .tile-link {
+    background: #FBFBF9;
+    border-style: dashed;
+    color: var(--slate-500);
+    cursor: not-allowed;
+  }
+
+  .tile-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.9rem;
+  }
+  .tile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+  }
+  .tile-badge-live {
+    background: rgba(20, 184, 166, 0.12);
+    color: var(--teal-700);
+  }
+  .tile-badge-live .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--teal-500);
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+  }
+  .tile-badge-soon {
+    background: rgba(148, 163, 184, 0.15);
+    color: var(--slate-600);
+  }
+  .tile-count {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--slate-500);
+    font-weight: 600;
+  }
+
+  .tile-state {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    margin: 0 0 0.35rem;
+    color: var(--navy-900);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .state-tile.is-coming .tile-state { color: var(--slate-500); }
+
+  .tile-tagline {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--slate-600);
+    margin: 0;
+  }
+  .state-tile.is-coming .tile-tagline { color: var(--slate-500); font-style: normal; }
+
+  .tile-cta {
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--navy-800);
+    font-weight: 700;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--slate-200);
+    transition: color 0.2s, gap 0.2s;
+  }
+  .state-tile.is-active .tile-link:hover .tile-cta {
+    color: var(--teal-700);
+    gap: 0.6rem;
+  }
+  .tile-cta svg { transition: transform 0.2s; }
+  .state-tile.is-active .tile-link:hover .tile-cta svg { transform: translateX(3px); }
+
+  .empty-note {
+    margin-top: 2rem;
+    color: var(--slate-500);
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 640px) {
+    .hub-stats { gap: 1.5rem; }
+    .shop-toolbar { flex-direction: column; align-items: stretch; }
+    .shop-search { width: 100%; }
+  }
+</style>
