@@ -123,8 +123,18 @@ export const attorneyNetwork: StateGroup[] = [
   },
   {
     state: 'Delaware',
-    attorneys: [],
-    note: 'Coverage under active build-out. Members with matters in Delaware are routed through our nearest partnering jurisdiction while local counsel is confirmed.',
+    attorneys: [
+      {
+        name: 'Erin K. Brignola',
+        firm: 'Gellert Seitz Busenkell & Brown',
+        website: 'https://www.gsbblaw.com/erinkbrignola',
+      },
+      {
+        name: 'Stacey Weisblatt, Esq.',
+        firm: 'Stern & Eisenberg',
+        website: 'https://sterneisenberg.com/',
+      },
+    ],
   },
   {
     state: 'Florida',
@@ -173,8 +183,18 @@ export const attorneyNetwork: StateGroup[] = [
   },
   {
     state: 'Idaho',
-    attorneys: [],
-    note: 'Coverage under active build-out. Members with matters in Idaho are routed through our nearest partnering jurisdiction while local counsel is confirmed.',
+    attorneys: [
+      {
+        name: 'Kim Reeves',
+        firm: 'Hopkins Roden',
+        website: 'https://www.hopkinsroden.com/foreclosure-defense-legal-services',
+      },
+      {
+        name: 'Arnold L. Wagner',
+        firm: 'McConnell Wagner Sykes + Stacey PLLC',
+        website: 'https://www.mwsslawyers.com/',
+      },
+    ],
   },
   {
     state: 'Illinois',
