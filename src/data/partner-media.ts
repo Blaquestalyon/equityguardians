@@ -59,7 +59,7 @@ export const texasFlyers: Flyer[] = [
         href: '/partners/texas/media/the-gap/EG-Buyer-Flyer-The-Gap-DIGITAL.pdf',
         filename: 'EG-Buyer-Flyer-The-Gap-DIGITAL.pdf',
         note: 'Screen viewing, email, and standard laser / inkjet printing.',
-        fileSize: '33 KB',
+        fileSize: '105 KB',
       },
       {
         kind: 'print',
@@ -67,7 +67,7 @@ export const texasFlyers: Flyer[] = [
         href: '/partners/texas/media/the-gap/EG-Buyer-Flyer-The-Gap-PRINT-CMYK-bleed.pdf',
         filename: 'EG-Buyer-Flyer-The-Gap-PRINT-CMYK-bleed.pdf',
         note: 'For a professional printer: CMYK color, crop marks, and bleed. Do not open in a browser preview.',
-        fileSize: '37 KB',
+        fileSize: '105 KB',
       },
       {
         kind: 'image',
@@ -75,7 +75,7 @@ export const texasFlyers: Flyer[] = [
         href: '/partners/texas/media/the-gap/EG-Buyer-Flyer-The-Gap-cover.jpg',
         filename: 'EG-Buyer-Flyer-The-Gap-cover.jpg',
         note: 'High-resolution image for social posts and email signatures.',
-        fileSize: '322 KB',
+        fileSize: '340 KB',
       },
     ],
   },
