@@ -78,7 +78,7 @@ export const POST: APIRoute = async ({ request }) => {
     return jsonResponse(
       {
         error:
-          'Our contact system is not fully configured yet. Please email admin@equityguardians.com or call +1 (888) 954-0999. (Server missing AIRTABLE_TOKEN or AIRTABLE_BASE_ID)',
+          'Our contact system is not fully configured yet. Please email admin@equityguardians.com or call +1 (888) 364-0999. (Server missing AIRTABLE_TOKEN or AIRTABLE_BASE_ID)',
       },
       503,
     );
@@ -120,7 +120,7 @@ export const POST: APIRoute = async ({ request }) => {
       const errText = await res.text();
       console.error('[contact] Airtable error', res.status, errText);
       // Surface a helpful hint to the operator in the response body without leaking secrets.
-      let hint = 'Please email admin@equityguardians.com or call +1 (888) 954-0999.';
+      let hint = 'Please email admin@equityguardians.com or call +1 (888) 364-0999.';
       if (res.status === 401 || res.status === 403) {
         hint = 'Airtable rejected our credentials (401/403). Check AIRTABLE_TOKEN scope & base access.';
       } else if (res.status === 404) {

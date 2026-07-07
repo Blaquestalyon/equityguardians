@@ -7,8 +7,8 @@ export const site = {
   url: 'https://equityguardians.com',
   contact: {
     email: 'admin@equityguardians.com',
-    phone: '+1 (888) 954-0999',
-    phoneHref: 'tel:+18889540999',
+    phone: '+1 (888) 364-0999',
+    phoneHref: 'tel:+18883640999',
     address: {
       line1: '1 World Trade Center, 85th Floor',
       line2: 'New York, NY 10007',
