@@ -231,6 +231,32 @@ export const POST: APIRoute = async ({ request }) => {
 
     const airtableResp = await res.json().catch(() => ({}));
     const recordId = airtableResp?.records?.[0]?.id || null;
+
+    // Write the record ID back into the record so it's visible in the grid view.
+    // If this fails (e.g., the "Reference" field doesn't exist), we log and
+    // still return success. The submission itself already landed.
+    if (recordId) {
+      try {
+        const patchRes = await fetch(url, {
+          method: 'PATCH',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            records: [{ id: recordId, fields: { Reference: recordId } }],
+            typecast: true,
+          }),
+        });
+        if (!patchRes.ok) {
+          const patchErr = await patchRes.text();
+          console.warn('[intake/texas] Reference write-back failed', patchRes.status, patchErr);
+        }
+      } catch (patchErr) {
+        console.warn('[intake/texas] Reference write-back threw', patchErr);
+      }
+    }
+
     return json({ ok: true, recordId });
   } catch (err) {
     console.error('[intake/texas] Unexpected error', err);
