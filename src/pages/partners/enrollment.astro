@@ -71,6 +71,7 @@ const displayName = partner?.name ?? 'Partner';
         class="intake-form"
         method="post"
         action="/api/partners/intake/enrollment"
+        enctype="multipart/form-data"
         novalidate
       >
 
@@ -325,9 +326,34 @@ const displayName = partner?.name ?? 'Partner';
             </div>
             <div class="field col-6">
               <label class="checkbox">
-                <input type="checkbox" name="cobrand_assets_provided" value="Yes" />
+                <input type="checkbox" id="cobrand_assets_provided" name="cobrand_assets_provided" value="Yes" />
                 <span>Headshot / logo provided for co-branding.</span>
               </label>
+            </div>
+          </div>
+
+          <div class="row cobrand-uploads" id="cobrand-uploads" hidden>
+            <div class="field col-6">
+              <label for="headshot_file">Headshot <span class="tag optional">Optional</span></label>
+              <input
+                id="headshot_file"
+                name="headshot_file"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                data-max-mb="5"
+              />
+              <p class="hint">JPG, PNG, or WebP. Up to 5 MB.</p>
+            </div>
+            <div class="field col-6">
+              <label for="logo_file">Brokerage logo <span class="tag optional">Optional</span></label>
+              <input
+                id="logo_file"
+                name="logo_file"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                data-max-mb="5"
+              />
+              <p class="hint">JPG, PNG, or WebP. Up to 5 MB. Transparent PNG preferred.</p>
             </div>
           </div>
 
@@ -419,6 +445,26 @@ const displayName = partner?.name ?? 'Partner';
       if (el && !el.value) el.value = today;
     });
 
+    // Show the file upload row only when the co-branding provider checkbox is on.
+    const cobrandToggle = document.getElementById('cobrand_assets_provided');
+    const cobrandUploads = document.getElementById('cobrand-uploads');
+    const headshotInput = document.getElementById('headshot_file');
+    const logoInput = document.getElementById('logo_file');
+    function syncCobrandUploads() {
+      if (!cobrandToggle || !cobrandUploads) return;
+      const on = cobrandToggle.checked;
+      cobrandUploads.hidden = !on;
+      if (!on) {
+        // Clear pending file selections so nothing is uploaded if user un-opts.
+        if (headshotInput) headshotInput.value = '';
+        if (logoInput) logoInput.value = '';
+      }
+    }
+    if (cobrandToggle) {
+      cobrandToggle.addEventListener('change', syncCobrandUploads);
+      syncCobrandUploads();
+    }
+
     if (printBlank) {
       printBlank.addEventListener('click', () => {
         document.body.classList.add('printing-form');
@@ -468,6 +514,31 @@ const displayName = partner?.name ?? 'Partner';
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
+      }
+
+      // Client-side guard: file size and type. Files are optional even when opted in.
+      const MAX_MB = 5;
+      const MAX_BYTES = MAX_MB * 1024 * 1024;
+      const ALLOWED = ['image/jpeg', 'image/png', 'image/webp'];
+      const filesToCheck = [
+        { input: headshotInput, label: 'Headshot' },
+        { input: logoInput, label: 'Brokerage logo' },
+      ];
+      for (const { input, label } of filesToCheck) {
+        if (!input || !input.files || input.files.length === 0) continue;
+        const f = input.files[0];
+        if (f.size > MAX_BYTES) {
+          status.textContent = label + ' is ' + (f.size / 1024 / 1024).toFixed(1) + ' MB. Please choose a file under ' + MAX_MB + ' MB.';
+          status.className = 'form-status form-status-error';
+          input.focus();
+          return;
+        }
+        if (!ALLOWED.includes(f.type)) {
+          status.textContent = label + ' must be JPG, PNG, or WebP.';
+          status.className = 'form-status form-status-error';
+          input.focus();
+          return;
+        }
       }
 
       submitBtn.disabled = true;
@@ -725,6 +796,35 @@ const displayName = partner?.name ?? 'Partner';
     margin-left: auto;
   }
   .tag.optional { color: var(--slate-500); text-transform: none; letter-spacing: 0.06em; font-size: 0.7rem; }
+
+  .field .hint {
+    color: var(--slate-500);
+    font-size: 0.8rem;
+    margin: 0.35rem 0 0;
+    line-height: 1.4;
+  }
+
+  .field input[type="file"] {
+    padding: 0.5rem 0.65rem;
+    font: inherit;
+    color: var(--slate-700);
+    background: white;
+    border: 1px dashed var(--slate-300);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .field input[type="file"]:hover { border-color: var(--teal-500); background: #FBFEFE; }
+  .field input[type="file"]::file-selector-button {
+    font: inherit;
+    background: var(--navy-900);
+    color: white;
+    border: 0;
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem;
+    margin-right: 0.75rem;
+    cursor: pointer;
+  }
+  .field input[type="file"]::file-selector-button:hover { background: var(--navy-800, #10233F); }
 
   .field input:not([type="checkbox"]):not([type="radio"]),
   .field textarea,

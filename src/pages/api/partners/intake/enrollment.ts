@@ -60,18 +60,72 @@ function json(body: unknown, status = 200): Response {
   });
 }
 
-async function parseBody(request: Request): Promise<EnrollmentPayload> {
+// Text fields plus any File uploads that came in with the form.
+interface ParsedRequest {
+  body: EnrollmentPayload;
+  headshot: File | null;
+  logo: File | null;
+}
+
+async function parseBody(request: Request): Promise<ParsedRequest> {
   const ct = request.headers.get('content-type') || '';
   if (ct.includes('application/json')) {
-    return (await request.json().catch(() => ({}))) as EnrollmentPayload;
+    // JSON path preserved for API-only integrations; no files supported here.
+    const j = (await request.json().catch(() => ({}))) as EnrollmentPayload;
+    return { body: j, headshot: null, logo: null };
   }
   const form = await request.formData();
   const out: any = {};
+  let headshot: File | null = null;
+  let logo: File | null = null;
   form.forEach((v, k) => {
+    if (v instanceof File) {
+      // Ignore empty file inputs (browsers send an empty File when nothing chosen).
+      if (!v.name || v.size === 0) return;
+      if (k === 'headshot_file') headshot = v;
+      else if (k === 'logo_file') logo = v;
+      return;
+    }
     if (out[k] !== undefined) out[k] = [out[k], String(v)].flat().join(', ');
     else out[k] = String(v);
   });
-  return out as EnrollmentPayload;
+  return { body: out as EnrollmentPayload, headshot, logo };
+}
+
+// Airtable upload-attachment endpoint. Accepts base64 content up to 5 MB.
+// Docs: https://airtable.com/developers/web/api/upload-attachment
+async function uploadAttachment(
+  baseId: string,
+  recordId: string,
+  fieldName: string,
+  file: File,
+  token: string,
+): Promise<{ ok: true } | { ok: false; status: number; body: string }> {
+  const buf = await file.arrayBuffer();
+  // Convert ArrayBuffer -> base64 without blowing the call stack for large files.
+  const bytes = new Uint8Array(buf);
+  let binary = '';
+  const chunkSize = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    binary += String.fromCharCode.apply(null, Array.from(bytes.subarray(i, i + chunkSize)));
+  }
+  const base64 = Buffer.from(binary, 'binary').toString('base64');
+
+  const url = `https://content.airtable.com/v0/${baseId}/${recordId}/${encodeURIComponent(fieldName)}/uploadAttachment`;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      contentType: file.type || 'application/octet-stream',
+      file: base64,
+      filename: file.name,
+    }),
+  });
+  if (!res.ok) return { ok: false, status: res.status, body: await res.text() };
+  return { ok: true };
 }
 
 // Pretty labels for Airtable columns. Order matters visually in the base.
@@ -170,10 +224,32 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   let body: EnrollmentPayload;
+  let headshot: File | null;
+  let logo: File | null;
   try {
-    body = await parseBody(request);
+    const parsed = await parseBody(request);
+    body = parsed.body;
+    headshot = parsed.headshot;
+    logo = parsed.logo;
   } catch {
     return json({ error: 'Invalid request body.' }, 400);
+  }
+
+  // Server-side validation of file uploads (client also validates, but never trust the client).
+  const MAX_BYTES = 5 * 1024 * 1024;
+  const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
+  const fileChecks: Array<[File | null, string]> = [
+    [headshot, 'Headshot'],
+    [logo, 'Brokerage logo'],
+  ];
+  for (const [f, label] of fileChecks) {
+    if (!f) continue;
+    if (f.size > MAX_BYTES) {
+      return json({ error: `${label} exceeds the 5 MB limit.` }, 400);
+    }
+    if (!ALLOWED_TYPES.has(f.type)) {
+      return json({ error: `${label} must be JPG, PNG, or WebP.` }, 400);
+    }
   }
 
   // Server-side validation of the required fields (matches the PDF's * marks
@@ -388,6 +464,25 @@ export const POST: APIRoute = async ({ request }) => {
       }
     }
 
+    // Upload attachments (headshot + logo) if the opt-in provided them. These are
+    // best-effort: upload failures are logged and surfaced in the response but do
+    // not fail the submission (the row is already written).
+    const attachmentWarnings: string[] = [];
+    if (recordId && headshot) {
+      const r = await uploadAttachment(baseId, recordId, 'Headshot', headshot, token);
+      if (!r.ok) {
+        console.warn('[intake/enrollment] Headshot upload failed', r.status, r.body);
+        attachmentWarnings.push('headshot');
+      }
+    }
+    if (recordId && logo) {
+      const r = await uploadAttachment(baseId, recordId, 'Logo', logo, token);
+      if (!r.ok) {
+        console.warn('[intake/enrollment] Logo upload failed', r.status, r.body);
+        attachmentWarnings.push('logo');
+      }
+    }
+
     return json({
       ok: true,
       recordId,
@@ -395,6 +490,7 @@ export const POST: APIRoute = async ({ request }) => {
       version,
       isDuplicate,
       priorSubmissions: priorRecords.length,
+      attachmentWarnings,
     });
   } catch (err) {
     console.error('[intake/enrollment] Unexpected error', err);
