@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Placeholder. Replaced with the real states grid in the next commit.
+// Auth is enforced by middleware; if this renders, the visitor is signed in.
+const partner = (Astro.locals as any).partner as { name: string } | null;
+---
+
+<BaseLayout title="Partner Hub" description="Equity Guardians partner resource portal." noIndex={true}>
+  <section class="container" style="padding:5rem 1.25rem;">
+    <h1>Welcome, {partner?.name || 'Partner'}.</h1>
+    <p>Hub coming online in the next update.</p>
+    <p style="margin-top:2rem;">
+      <a href="/api/partners/logout">Sign out</a>
+    </p>
+  </section>
+</BaseLayout>
