@@ -28,7 +28,7 @@ export const partnerStates: PartnerState[] = [
     name: 'Texas',
     slug: 'texas',
     status: 'active',
-    tagline: 'Member intake and closing paperwork.',
+    tagline: 'Enrollment, member intake, and closing paperwork.',
     resources: [
       {
         title: 'Texas Member Intake Form',
