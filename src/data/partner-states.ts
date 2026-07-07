@@ -46,6 +46,18 @@ export const partnerStates: PartnerState[] = [
         description: 'Broker-signed acknowledgment covering supervision, disclosure, and compensation terms for affiliated Buyer\'s Realtors. Download, sign, and return outside the portal.',
         href: '/partners/texas/forms/EG-Texas-Sponsoring-Broker-Acknowledgment-v1.0.pdf',
       },
+      {
+        title: 'Commission Disbursement Authorization',
+        kind: 'document',
+        description: 'Texas CDA authorizing the title company to disburse commission at closing. Download, complete, and route through your brokerage.',
+        href: '/partners/texas/forms/EG-Texas-Commission-Disbursement-Authorization-v1.0.pdf',
+      },
+      {
+        title: 'Payee Sheet',
+        kind: 'document',
+        description: 'Payee information sheet for title-company disbursement. Download, complete, and submit with your CDA.',
+        href: '/partners/texas/forms/EG-Payee-Sheet-v1.0.pdf',
+      },
     ],
   },
 
