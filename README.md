@@ -28,7 +28,7 @@ npm run build
 npm run preview         # serves the built app on $PORT (default 4321)
 ```
 
-Railway automatically runs `npm run build` then `npm run preview` (via `start` in `railway.json`).
+Railway builds with Railpack on Node 20 (the service variable `RAILPACK_NODE_VERSION`), runs `npm run build`, then starts `node ./dist/server/entry.mjs` — the Start Command in the service's Settings. The repo has no `railway.json`.
 
 ## Environment variables
 
@@ -64,7 +64,7 @@ Extra fields are safely ignored by the endpoint.
 
 1. Push this repo to GitHub (already done).
 2. In Railway → **New Project → Deploy from GitHub repo** → pick `equityguardians`.
-3. Railway detects `railway.json` and runs `npm run build`, then `npm run preview`.
+3. In the service's **Settings**, set the Start Command to `node ./dist/server/entry.mjs` (`npm start` is `astro dev`, never for production), and under **Variables** add `RAILPACK_NODE_VERSION=20`. Railway runs `npm run build` itself.
 4. Add the environment variables above.
 5. Add a custom domain (`equityguardians.com`) under **Settings → Networking**.
 
